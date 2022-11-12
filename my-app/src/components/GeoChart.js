@@ -34,6 +34,8 @@ function GeoChart({geodata, wwtpdata}){
 
         const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
 
+        var radius = d3.scaleSqrt().domain([0, 10146131]).range([0, 15]);
+        
         svg.selectAll(".country")
         .data(geodata.features)
         .join("path")
@@ -60,9 +62,9 @@ function GeoChart({geodata, wwtpdata}){
         .enter()
         .append("circle")
         .attr("fill", function(d, i){
-            if (d.properties.LEVEL == "Advanced"){
+            if (d.properties.LEVEL === "Advanced"){
                 return "green"
-            } else if (d.properties.LEVEL == "Secondary"){
+            } else if (d.properties.LEVEL === "Secondary"){
                 return "yellow"
             } else{
                 return "red"
@@ -76,13 +78,11 @@ function GeoChart({geodata, wwtpdata}){
         .attr("cy", function(d) {
         return projection(d.geometry.coordinates)[1];
         })
-        .attr("r", 0.3)
+        //.attr("r", 0.3)
+        .attr("r", function(d) { return radius(d.properties.POP_SERVED); })
         .attr("class", "locations");
 
-
-        
         var zoom = d3.zoom().on("zoom", function (event) {
-            
             d3.select('svg g').attr("transform", event.transform)
         })
         svg.call(zoom);
