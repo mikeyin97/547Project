@@ -1,8 +1,9 @@
 import React, {useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
 import './GeoChart.css';
+import { color } from 'd3';
 
-function GeoChart({geodata, wwtpdata}){
+function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
     const svgRef = useRef();
     const wrapperRef = useRef();
     const barRef = useRef();
@@ -32,10 +33,8 @@ function GeoChart({geodata, wwtpdata}){
         const svgCanvas = d3.select(svgRef.current)
         const svg = svgCanvas.select("g");
 
-        const barCanvas = d3.select(barRef.current)
-        const barsvg = barCanvas.select("g");
-        const xax = barsvg.select("#xax");
-        const yax = barsvg.select("#yax");
+
+        const barCanvases = d3.selectAll(".graph");
 
         svg.selectAll(".country")
         .data(geodata.features)
@@ -55,53 +54,163 @@ function GeoChart({geodata, wwtpdata}){
             }
         });
 
-        var width = 500;
-        var height = 400;
-        var margintop = 50;
-        var marginleft = 80;
-        // bar chart x-axis
-        
-        var x = d3.scaleBand()
-        .range([ 0, width ])
-        .domain(selectedCountriesStrings.map(function(d) { return d; }))
-        .padding(0.2);
-        
-        xax
-        .call(d3.axisBottom(x))
-        .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
-        .selectAll("text")
-        .attr("transform", "translate(-10,0)rotate(-45)")
-        .style("text-anchor", "end");
 
-        var y = d3.scaleLinear()
-        .domain([0, height])
-        .range([ 400, 0]);
-        
-        yax
-        .attr("transform", "translate(" + marginleft + "," + margintop + ")")
-        .call(d3.axisLeft(y));
+        barCanvases.each(function(d, i){
+            // to do => check if selected country is in the csvs
+            const barCanvas = d3.select(this);
+            const barsvg = barCanvas.select("g");
+            const xax = barsvg.select("#xax");
+            const yax = barsvg.select("#yax");
+            var width = 700;
+            var height = 400;
+            var margintop = 50;
+            var marginleft = 80;
+            // bar chart x-axis
+            
+            
+            var x = d3.scaleBand()
+            .range([ 0, width ])
+            .domain(selectedCountriesStrings.map(function(d) { return d; }))
+            .padding(0.2);
 
-        console.log(x("Canada"));
-        console.log(y(100));
+            
+            var subgroups = ["Primary", "Secondary", "Advanced"]
 
-        barsvg.selectAll("rect:not(#bg)").remove();
+            var xSubgroup = d3.scaleBand()
+            .domain(subgroups)
+            .range([0, x.bandwidth()])
+            .padding([0.05])
 
-        barsvg.selectAll("bar")
-        .data(selectedCountriesStrings)
-        .enter()
-        .append("rect")
-        .attr("transform", "translate(" + marginleft + "," + margintop + ")")
-        .attr("x", function(d) { 
-            return x(d);
+
+            var col = d3.scaleOrdinal()
+            .domain(subgroups)
+            .range(['#e41a1c','#377eb8','#4daf4a'])
+            
+            
+
+            xax
+            .call(d3.axisBottom(x))
+            .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
+            .selectAll("text")
+            .attr("transform", "translate(-10,0)rotate(-45)")
+            .style("text-anchor", "end");
+
+            var y = null;
+            var maxH = 0;
+
+            if (i == 0) { //treatment level
+                selectedCountriesStrings.forEach((country) => {
+                    for (const [key, value] of Object.entries(levelcounts[country])) {
+                        maxH = Math.max(maxH, value + 4);
+                    }
+                })
+            } else if (i == 1) { // dilution factor
+                selectedCountriesStrings.forEach((country) => {
+                    maxH = Math.max(maxH, aggcounts[country].DF_mean + 100);
+                })
+            } else if (i == 2) { // population served
+                selectedCountriesStrings.forEach((country) => {
+                    maxH = Math.max(maxH, aggcounts[country].POP_SERVED_mean + 100);
+                })
+            }
+            
+            var y = d3.scaleLinear()
+            .domain([0, maxH])
+            .range([ height, 0]);
+            
+            yax
+            .attr("transform", "translate(" + marginleft + "," + margintop + ")")
+            .call(d3.axisLeft(y));
+
+            barsvg.selectAll("rect:not(#bg)").remove();
+
+            if ((i == 1) || (i == 2)){
+                barsvg.selectAll("bar")
+                .data(selectedCountriesStrings)
+                .enter()
+                .append("rect")
+                .attr("transform", "translate(" + marginleft + "," + margintop + ")")
+                .attr("x", function(d) { 
+                    return x(d);
+                })
+                .attr("y", function(d) {
+                    var val = 0;
+                    var aggcount = aggcounts[d];
+                    if (i == 0) { //treatment level
+                        val = 100;
+                    } else if (i == 1) { // dilution factor
+                        val = aggcount.DF_mean
+                    } else if (i == 2) { // population served
+                        val = aggcount.POP_SERVED_mean
+                    }
+                    return y(val);
+                })
+                .attr("width", x.bandwidth())
+                .attr("height", function(d) { 
+                    var val = 0;
+                    var aggcount = aggcounts[d];
+                    if (i == 0) { //treatment level
+                        val = 100;
+                    } else if (i == 1) { // dilution factor
+                        val = aggcount.DF_mean
+                    } else if (i == 2) { // population served
+                        val = aggcount.POP_SERVED_mean
+                    }
+                    return height - y(val); })
+                .attr("fill", function(d) { 
+                    return "#69b3a2"
+                    }
+                );
+            } else if (i == 0) {
+                barsvg.append("g").selectAll("g")
+                .data(selectedCountriesStrings)
+                .enter()
+                .append("g")
+                
+                .attr("transform", function(d){
+                    return ("translate(" + (marginleft + x(d)) + "," + margintop + ")")
+                })
+                .selectAll("rect")
+                .data(function(d) {
+                    var newdata = []
+                    subgroups.forEach((group) => {
+                        newdata.push([d, group])
+                    })
+                    return newdata;
+                })
+                .enter()
+                .append("rect")
+                // .attr("test", function(d){
+                //     console.log(d);
+                // })
+                .attr("x", function(d) {
+                    return xSubgroup(d[1]);
+                })
+                .attr("y", function(d) {
+                    console.log(levelcounts[d[0]])
+                    if (d[1] in levelcounts[d[0]]){
+                        return y(levelcounts[d[0]][d[1]]);
+                    } else {
+                        return 0;
+                    }
+
+                    
+                })
+                .attr("width", xSubgroup.bandwidth())
+                .attr("height", function(d) {
+                    if (d[1] in levelcounts[d[0]]){
+                        return height - y(levelcounts[d[0]][d[1]]);
+                    } else {
+                        return 0;
+                    }} )
+                .attr("fill", function(d) {
+                    return col(d);
+                })
+                
+            }
+            
+
         })
-        .attr("y", function(d) {
-
-            return y(100);
-        })
-        .attr("width", x.bandwidth())
-        .attr("height", function(d) { return height - y(100); })
-        .attr("fill", "#69b3a2");
-          
         
     }, [selectedCountriesStrings]);
 
@@ -110,21 +219,24 @@ function GeoChart({geodata, wwtpdata}){
         svgCanvas.selectAll("*").remove();
         const svg = svgCanvas.append("g");
 
-        const barCanvas = d3.select(barRef.current)
-        barCanvas.selectAll("*").remove();
-        const barsvg = barCanvas.append("g");
-        const xax = barsvg.append("g").attr("id","xax");
-        const yax = barsvg.append("g").attr("id","yax");
+        const barCanvases = d3.selectAll(".graph");
+        barCanvases.each(function(d, i){
+            const barCanvas = d3.select(this);
+            barCanvas.selectAll("*").remove();
+            const barsvg = barCanvas.append("g");
+            const xax = barsvg.append("g").attr("id","xax");
+            const yax = barsvg.append("g").attr("id","yax");
 
-        barsvg.append('rect')
-        .attr('x', "0")
-        .attr('y', "0")
-        .attr("id","bg")
-        .attr('width', '100%')
-        .attr('height', '100%')
-        .attr('stroke', 'black')
-        .attr('fill', '#d0e7fd')
-        .attr('z-index', '0');
+            barsvg.append('rect')
+            .attr('x', "0")
+            .attr('y', "0")
+            .attr("id","bg")
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('stroke', 'black')
+            .attr('fill', '#d0e7fd')
+            .attr('z-index', '0');
+        })
 
         const width = 1500;
         const height = 1000;
@@ -187,16 +299,26 @@ function GeoChart({geodata, wwtpdata}){
         //     <div><p>Hello</p></div>
         //     <svg ref = {svgRef} style={{height:"1000px", width:"1000px", "backgroundColor" :"#000e26"}}></svg>
         // </div>
-        <div ref = {wrapperRef} style={{height:"1000px", width:"100%"}}>
-            <div id = "left"><p>{getAndUpdateCountries(selectedCountries)}</p>
-                <div id = "panel">
-                    <svg ref = {barRef} style={{height:"550px", width:"100%"}}></svg>
-
+        <div ref = {wrapperRef} style={{height:"100%", width:"100%"}}>
+            <div id = "left"><h3>{getAndUpdateCountries(selectedCountries)}</h3>
+                <div id = "panel1" className = "panel">
+                    <p> Treatment Level </p>
+                    <svg ref = {barRef} className = "graph" style={{height:"550px", width:"100%"}}></svg>
+                </div>
+                <div id = "panel2" className = "panel">
+                    <p> Dilution Factor </p>
+                    <svg ref = {barRef} className = "graph" style={{height:"550px", width:"100%"}}></svg>
+                </div>
+                <div id = "panel3" className = "panel">
+                    <p> Population Served </p>
+                    <svg ref = {barRef} className = "graph" style={{height:"550px", width:"100%"}}></svg>
                 </div>
             
-            
+                <div id = "panel4" className = "panel">
+                    <p>yay </p>
+                </div>
             </div>
-            <div id = "right"><svg ref = {svgRef} style={{height:"1000px", width:"100%"}}></svg></div>
+            <div id = "right"><svg ref = {svgRef} style={{height:"100%", width:"100%", viewBox:"0 0 100 100"}}></svg></div>
         </div>
     )
 }

@@ -2,12 +2,14 @@
     display:inline-block;
     float:left;
     width: 35%;
+    height: 120%;
 }
 
 #right{
     display:inline-block;
     float:right;
     width: 65%;
+    height: 100%;
 }
 
 #bg2 {
@@ -23,4 +25,22 @@
 
 g{
     z-index: 10;
+}
+
+html, body{
+    overflow-y: hidden;
+    height:100%;
+}
+
+#left{
+    overflow-y: auto;
+    height: 100%
+}
+
+#root{
+    height: 100%
+}
+
+.App{
+    height: 100%
 }
