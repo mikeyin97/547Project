@@ -99,7 +99,6 @@ function GeoChart({geodata, wwtpdata}){
         //     <svg ref = {svgRef} style={{height:"1000px", width:"1000px", "backgroundColor" :"#000e26"}}></svg>
         // </div>
         <div ref = {wrapperRef} style={{height:"1000px", width:"100%"}}>
-                    
             <div id = "left"><p>{selectedCountry ? selectedCountry.properties.admin : "Hello"}</p></div>
             <div id = "right"><svg ref = {svgRef} style={{height:"1000px", width:"100%"}}></svg></div>
         </div>
