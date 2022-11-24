@@ -44,3 +44,8 @@ html, body{
 .App{
     height: 100%
 }
+
+
+#geochart{
+    display: none;
+}

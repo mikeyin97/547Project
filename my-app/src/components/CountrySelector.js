@@ -299,7 +299,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
         //     <div><p>Hello</p></div>
         //     <svg ref = {svgRef} style={{height:"1000px", width:"1000px", "backgroundColor" :"#000e26"}}></svg>
         // </div>
-        <div ref = {wrapperRef} style={{height:"100%", width:"100%"}}>
+        <div id ="countryselector" ref = {wrapperRef} style={{height:"100%", width:"100%"}}>
             <div id = "left"><h3>{getAndUpdateCountries(selectedCountries)}</h3>
                 <div id = "panel1" className = "panel">
                     <p> Treatment Level </p>
