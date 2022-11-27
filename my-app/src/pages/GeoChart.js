@@ -8,7 +8,6 @@ function GeoChart({geodata, wwtpdata}){
     const [selectedCountry, setSelectedCountry] = useState(null);
     var zoom = null;
     // const dimensions = useResizeObserver(wrapperRef);
-    
     function onCountryClick(event, feature) {
         const svg = d3.select(svgRef.current).select("g");
         setSelectedCountry(selectedCountry === feature ? null : feature); // fix for usa and russia
@@ -86,12 +85,8 @@ function GeoChart({geodata, wwtpdata}){
             d3.select('svg g').attr("transform", event.transform)
         })
         svg.call(zoom);
-
-
-
     }, [geodata, selectedCountry, wwtpdata]);
     
-
     return (
         // <div ref = {wrapperRef} style={{height:"1000px", width:"2000px", "backgroundColor" :"#000e26"}}>
             
@@ -102,6 +97,6 @@ function GeoChart({geodata, wwtpdata}){
             <div id = "left"><p>{selectedCountry ? selectedCountry.properties.admin : "Hello"}</p></div>
             <div id = "right"><svg ref = {svgRef} style={{height:"1000px", width:"100%"}}></svg></div>
         </div>
-    )
+    );
 }
 export default GeoChart;
