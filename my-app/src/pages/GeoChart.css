@@ -1,14 +1,15 @@
 #left{
-    display:inline-block;
+    display:flex;
     float:left;
-    width: 35%;
-    height: 120%;
+    width: 25%;
+    flex-direction: column;
+    overflow-y: auto;     
 }
 
 #right{
-    display:inline-block;
+    display:flexbox;
     float:right;
-    width: 65%;
+    width: 75%;
     height: 100%;
 }
 
