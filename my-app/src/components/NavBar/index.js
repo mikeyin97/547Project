@@ -14,19 +14,19 @@ return (
 	<Nav>
 		<Bars />
 		<NavMenu>
-		<NavLink to='/about' activeStyle>
+		<NavLink to='/about' className={(navData) => (navData.isActive ? "active-style" : 'none')}>
 			About
 		</NavLink>
-		<NavLink to='/overview' activeStyle>
+		<NavLink to='/overview' className={(navData) => (navData.isActive ? "active-style" : 'none')}>
 			Overview
 		</NavLink>
-		<NavLink to='/comparison' activeStyle>
+		<NavLink to='/comparison' className={(navData) => (navData.isActive ? "active-style" : 'none')}>
 			Comparison
 		</NavLink>
-		<NavLink to='/distribution' activeStyle>
+		<NavLink to='/distribution' className={(navData) => (navData.isActive ? "active-style" : 'none')}>
 			Global Distribution
 		</NavLink>
-		<NavLink to='/contacts' activeStyle>
+		<NavLink to='/contacts' className={(navData) => (navData.isActive ? "active-style" : 'none')}>
 			Contacts
 		</NavLink>
 		{/* Second Nav */}
