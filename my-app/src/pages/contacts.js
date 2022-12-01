@@ -12,7 +12,7 @@ export default function ReactComponent() {
 
   useEffect(fetchData, []);
   useEffect(handleResizeEvent, []);
-  useEffect(initVis, [ data ]);
+  useEffect(initVis, [ data, width, height ]);
   useEffect(updateVisOnResize, [ width, height ]);
 
   function fetchData() {
