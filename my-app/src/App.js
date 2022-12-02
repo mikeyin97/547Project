@@ -9,8 +9,10 @@ import Overview from './pages/overview';
 import Contacts from './pages/contacts';
 import GeoChart from './pages/GeoChart';
 import CountrySelector from './pages/CountrySelector';
+import WorldMap from './pages/WorldMap'
 
 import geodata from "./data/customgeo.json";
+import worlddata from "./data/world_map_reduced.json"
 import wwtpdata from "./data/wwtpdata.json";
 import status_counts from "./data/status_counts.json";
 import agg_counts from "./data/agg_counts.json";
