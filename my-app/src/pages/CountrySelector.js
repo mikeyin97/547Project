@@ -16,6 +16,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
     const [selectedCountriesCounts, setSelectedCountriesCounts] = useState({});
     const [hoveredCountry, setHoveredCountry] = useState(null);
     const [countryIndex, setCountryIndex] = useState(-1);
+    const [clicked, setClicked] = useState(true);
 
     var zoom = null;
     // const dimensions = useResizeObserver(wrapperRef);
@@ -34,7 +35,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
             } 
             setSelectedCountriesCounts(copy);
         }
-        
+        setClicked(Math.random())
         setHoveredCountry(feature.properties.brk_name);
         
     }
@@ -142,6 +143,11 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
     }
 
     useEffect(() => {
+        var ylabels = document.getElementsByClassName("ylabels");
+        [...ylabels].forEach(label => {
+            label.style.display = "inline";
+        });
+
         var countriesStr = document.getElementById("countriesStr")
         countriesStr.innerHTML = (getAndUpdateCountries(selectedCountriesStrings, selectedCountriesCounts, selectedCountry)); 
         const svgCanvas = d3.select(svgRef.current)
@@ -175,7 +181,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
             var width = 400;
             var height = 300;
             var margintop = 20;
-            var marginleft = 80;
+            var marginleft = 120;
             // bar chart x-axis
             
             var x = d3.scaleBand()
@@ -195,6 +201,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
             .domain(subgroups)
             .range(['#e41a1c','#377eb8','#4daf4a'])
 
+        
             xax
             .call(d3.axisBottom(x))
             .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
@@ -227,6 +234,27 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
                     } catch{}
                     
                 })
+            } else if (i === 3) { // design capacity
+                selectedCountriesStrings.forEach((country) => {
+                    try{
+                        maxH = Math.max(maxH, aggcounts[country].DESIGN_CAP_mean + 100);
+                    } catch{}
+                    
+                })
+            } else if (i === 4) { // river discharge
+                selectedCountriesStrings.forEach((country) => {
+                    try{
+                        maxH = Math.max(maxH, aggcounts[country].RIVER_DIS_mean + 100);
+                    } catch{}
+                    
+                })
+            } else if (i === 5) { // waste discharge
+                selectedCountriesStrings.forEach((country) => {
+                    try{
+                        maxH = Math.max(maxH, aggcounts[country].WASTE_DIS_mean + 100);
+                    } catch{}
+                    
+                })
             }
             
             var y = d3.scaleLinear()
@@ -238,8 +266,9 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
             .call(d3.axisLeft(y));
 
             barsvg.selectAll("rect:not(#bg)").remove();
+            
 
-            if ((i === 1) || (i === 2)){
+            if ((i === 1) || (i === 2) || (i === 3) || (i === 4) || (i === 5)) {
                 barsvg.selectAll("bar")
                 .data(selectedCountriesStrings)
                 .enter()
@@ -259,6 +288,12 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
                             val = aggcount.DF_mean
                         } else if (i === 2) { // population served
                             val = aggcount.POP_SERVED_mean
+                        } else if (i === 3) { // design capacity
+                            val = aggcount.DESIGN_CAP_mean
+                        } else if (i === 4) { // outfall discharge
+                            val = aggcount.RIVER_DIS_mean
+                        }  else if (i === 5) { // outfall discharge
+                            val = aggcount.WASTE_DIS_mean
                         }
                         return y(val);
                     }catch{}
@@ -287,6 +322,12 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
                             val = aggcount.DF_mean
                         } else if (i === 2) { // population served
                             val = aggcount.POP_SERVED_mean
+                        } else if (i === 3) { // design capacity
+                            val = aggcount.DESIGN_CAP_mean
+                        } else if (i === 4) { // outfall discharge
+                            val = aggcount.RIVER_DIS_mean
+                        }  else if (i === 5) { // outfall discharge
+                            val = aggcount.WASTE_DIS_mean
                         }
                         return height - y(val);
                         } catch{}
@@ -352,9 +393,39 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
                 .attr("fill", function(d) {
                     return col(d);
                 })
+
+
+
+                var size = 10
+                barsvg.selectAll("mydots")
+                .data(subgroups)
+                .enter()
+                .append("rect")
+                    .attr("x", 50)
+                    .attr("y", function(d,i){ return 50 + i*(size+5)}) // 100 is where the first dot appears. 25 is the distance between dots
+                    .attr("width", size)
+                    .attr("height", size)
+                    .style("fill", function(d){ return col(d)})
+                    .attr("transform", "translate(500,-10)")
+
+                barsvg.selectAll("mylabels")
+                .data(subgroups)
+                .enter()
+                .append("text")
+                    .attr("x", 100 + size*1.2)
+                    .attr("y", function(d,i){ return 50 + i*(size+5) + (size/2)}) // 100 is where the first dot appears. 25 is the distance between dots
+                    .style("fill", function(d){ return col(d)})
+                    .text(function(d){ return d})
+                    .attr("text-anchor", "left")
+                    .style("alignment-baseline", "middle")
+                    .attr("transform", "translate(350,-10)")
+
+
+
+
             }
         })
-    }, [selectedCountriesStrings]);
+    }, [selectedCountriesStrings, selectedCountry, maxCount, clicked]);
 
     useEffect(() => {
         var xaxvals = document.querySelectorAll("[type=xaxval]");  
@@ -386,6 +457,32 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
             .attr('stroke', 'black')
             .attr('fill', '#d0e7fd')
             .attr('z-index', '0');
+
+            barsvg.append("text")
+            .attr("class", "ylabels")
+            .attr("text-anchor", "end")
+            .attr("y", 10)
+            .attr("x", 50)
+            .attr("dy", "1.8em")
+            .attr("dx", "-100px")
+            .attr("text-align", "center")
+            .attr("transform", "rotate(-90)")
+            .attr("display", "none")
+            .text(function() {
+                if (i== 0){
+                    return "Count"
+                } else if (i==1){
+                    return "DF"
+                } else if (i==2){
+                    return "Population"
+                } else if (i==3){
+                    return "Design Capacity (m^3 / day)"
+                } else if (i==4){
+                    return "Outfall Discharge (m^3 / day)"
+                } else if (i==5){
+                    return "Wastewater Discharge (m^3 / day)"
+                }
+            });
         })
 
         const width = 1200;
@@ -458,27 +555,27 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
         <div id ="countryselector" ref = {wrapperRef} style={{height:"100%", width:"100%"}}>
             <div id = "left"><h3 id = "countriesStr"></h3>
                 <div id = "panel1" className = "panel l">
-                    <Tooltip title={<h2>Number of WWTPs at each level of treatment</h2>} arrow placement="right"><Button sx={{ m: 1 }}>Treatment Level</Button></Tooltip>
+                    <Tooltip title={<h2>Number of WWTPs at each level of treatment</h2>} arrow placement="right"><Button sx={{ m: 1 }}>Country WWTPs at Each Treatment Level</Button></Tooltip>
                     <svg ref = {barRef} className = "graph" style={{height:"400px", width:"100%"}}></svg>
                 </div>
                 <div id = "panel2" className = "panel r">
-                    <p> Dilution Factor </p>
+                    <Tooltip title={<h2>Average dilution factor (DF) within the country. DF is the ratio of contaminant concentration in the effluent water to the receiving water.</h2>} arrow placement="right"><Button sx={{ m: 1 }}>Dilution Factor</Button></Tooltip>
                     <svg ref = {barRef} className = "graph" style={{height:"400px", width:"100%"}}></svg>
                 </div>
                 <div id = "panel3" className = "panel l">
-                    <p> Population Served </p>
+                    <Tooltip title={<h2>Average population served by each WWTP within the country</h2>} arrow placement="right"><Button sx={{ m: 1 }}>Population Served</Button></Tooltip>
                     <svg ref = {barRef} className = "graph" style={{height:"400px", width:"100%"}}></svg>
                 </div>
                 <div id = "panel4" className = "panel r">
-                    <p> Design Capacity </p>
+                    <Tooltip title={<h2>Average design capacity for each WWTP within the country. **This value is only reported for countries in Europe and the United States</h2>} arrow placement="right"><Button sx={{ m: 1 }}>Design Capacity**</Button></Tooltip>
                     <svg ref = {barRef} className = "graph" style={{height:"400px", width:"100%"}}></svg>
                 </div>
                 <div id = "panel5" className = "panel l">
-                    <p> River Discharge </p>
+                    <Tooltip title={<h2>Average volume of discharge into rivers based on WWTP outfall location (0 for ocean discharge) </h2>} arrow placement="right"><Button sx={{ m: 1 }}>Outfall Discharge</Button></Tooltip>
                     <svg ref = {barRef} className = "graph" style={{height:"400px", width:"100%"}}></svg>
                 </div>
                 <div id = "panel6" className = "panel r">
-                    <p> Wastewater Discharge </p>
+                    <Tooltip title={<h2>Average volume of total wastewater discharged by each WWTP within the country</h2>} arrow placement="right"><Button sx={{ m: 1 }}>Wastewater Discharge</Button></Tooltip>
                     <svg ref = {barRef} className = "graph" style={{height:"400px", width:"100%"}}></svg>
                 </div>
                 
