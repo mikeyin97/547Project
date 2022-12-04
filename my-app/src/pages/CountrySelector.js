@@ -8,13 +8,17 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
     const barRef = useRef();
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [maxCount, setMaxCount] = useState(false);
+
     const [selectedCountriesStrings, setSelectedCountriesStrings] = useState(new Set());
     const [selectedCountriesCounts, setSelectedCountriesCounts] = useState({});
+    const [hoveredCountry, setHoveredCountry] = useState(null);
+    const [countryIndex, setCountryIndex] = useState(-1);
 
     var zoom = null;
     // const dimensions = useResizeObserver(wrapperRef);
     
     function onCountryClick(event, feature) {
+        
         if (!maxCount) {
             setSelectedCountry(feature); 
             setSelectedCountriesStrings(selectedCountriesStrings => new Set([...selectedCountriesStrings, feature.properties.brk_name]));
@@ -26,22 +30,97 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
             setSelectedCountriesCounts(copy);
         }
         
+        setHoveredCountry(feature.properties.brk_name);
+        
     }
+
+    useEffect(() => {
+        if (selectedCountriesStrings.has(hoveredCountry)) {
+            setCountryIndex([...selectedCountriesStrings].indexOf(hoveredCountry));
+        } else {
+            setCountryIndex(-1);
+        }
+    }, [hoveredCountry, selectedCountry]);
+
+    useEffect(() => {
+        var bars = document.querySelectorAll("[type=barchartbar]");   
+        var xaxvals = document.querySelectorAll("[type=xaxval]");   
+        var countries = document.getElementsByClassName("country");
+        if (countryIndex != -1){
+            var country = [...selectedCountriesStrings][countryIndex];
+            
+
+            [...bars].forEach((bar) => {
+                if (bar.classList.contains(country.split(' ').join(''))){
+                    bar.style.filter = "brightness(50%)";
+                } else {
+                    bar.style.filter = "brightness(100%)";
+                }
+                
+            });
+
+            var clonexaxvals = [...xaxvals]
+            clonexaxvals.forEach((val) => {
+                var compare = val.innerHTML.split(' ').join('')
+                if (compare == (country.split(' ').join(''))){
+                    val.style.color = "#04290e";
+                    val.style.fontWeight = "900";
+                } else {
+                    val.style.color = "black";
+                    val.style.fontWeight = "20";
+                }
+                
+            });
+
+            [...countries].forEach((c) => {
+                var compare = c.getAttribute("countryName").split(' ').join('')
+                if (compare == (country.split(' ').join(''))){
+                    c.style.filter = "brightness(80%)";
+                } else {
+                    c.style.filter = "brightness(100%)";
+                }
+
+
+            })
+
+        } else{
+
+            [...bars].forEach((bar) => {
+                bar.style.filter = "brightness(100%)";
+                
+            })
+
+            var clonexaxvals = [...xaxvals]
+            clonexaxvals.forEach((val) => {
+                val.style.fontWeight = "20";
+                val.style.color = "black";
+
+                
+            });
+
+
+            [...countries].forEach((c) => {
+               
+                c.style.filter = "brightness(100%)";
+
+
+
+            })
+        }
+        
+    }, [countryIndex]);
 
 
 
 
     function getAndUpdateCountries(countriesStrings, countryCounts, country){
         if (country){
-            console.log(countriesStrings, countryCounts, country.properties.brk_name);
-
             if (countryCounts[country.properties.brk_name] == true){
                 countryCounts[country.properties.brk_name] = false
             } else if (countryCounts[country.properties.brk_name] == false){
                 countriesStrings.delete(country.properties.brk_name)
                 delete countryCounts[country.properties.brk_name]; 
             }
-            console.log(countriesStrings, countryCounts, country.properties.brk_name);
         }
         
 
@@ -58,8 +137,8 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
     }
 
     useEffect(() => {
-
-        
+        var countriesStr = document.getElementById("countriesStr")
+        countriesStr.innerHTML = (getAndUpdateCountries(selectedCountriesStrings, selectedCountriesCounts, selectedCountry)); 
         const svgCanvas = d3.select(svgRef.current)
         const svg = svgCanvas.select("g");
         const barCanvases = d3.selectAll(".graph");
@@ -96,7 +175,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
             
             var x = d3.scaleBand()
             .range([ 0, width ])
-            .domain([...selectedCountriesStrings].map(function(d) { return d; }))
+            .domain([...selectedCountriesStrings].map(function(d) { return d}))
             .padding(0.2);
   
             var subgroups = ["Primary", "Secondary", "Advanced"]
@@ -115,6 +194,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
             .call(d3.axisBottom(x))
             .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
             .selectAll("text")
+            .attr("type", "xaxval")
             .attr("transform", "translate(-10,0)rotate(-45)")
             .style("text-anchor", "end");
 
@@ -160,6 +240,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
                 .enter()
                 .append("rect")
                 .attr("transform", "translate(" + marginleft + "," + margintop + ")")
+                
                 .attr("x", function(d) { 
                     return x(d);
                 })
@@ -178,7 +259,19 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
                     }catch{}
                     
                 })
+                .attr("class", function(d){
+                    try{
+                        return d.split(' ').join(''); ;
+                    } catch{}
+                })
+                .attr("type", "barchartbar")
                 .attr("width", x.bandwidth())
+                .on("mouseover", function(event, d){
+                    onCountryHover(event, d);
+                })
+                .on("mouseout", function(event, d){
+                    onCountryExit(event, d);
+                })
                 .attr("height", function(d) { 
                     try{
                         var val = 0;
@@ -193,6 +286,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
                         return height - y(val);
                         } catch{}
                      })
+                     
                 .attr("fill", function(d) { 
                     return "#69b3a2"
                     }
@@ -219,6 +313,14 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
                 // .attr("test", function(d){
                 //     console.log(d);
                 // })
+                .attr("class", function(d){return d[0].split(' ').join('');})
+                .attr("type", "barchartbar")
+                .on("mouseover", function(event, d){
+                    onCountryHover(event, d[0]);
+                })
+                .on("mouseout", function(event, d){
+                    onCountryExit(event, d[0]);
+                })
                 .attr("x", function(d) {
                     return xSubgroup(d[1]);
                 })
@@ -248,6 +350,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
             }
         })
     }, [selectedCountriesStrings]);
+
 
     useEffect(() => {
         const svgCanvas = d3.select(svgRef.current)
@@ -293,10 +396,19 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
         svg.selectAll(".country")
         .data(geodata.features)
         .join("path")
+        
+        
         .on("click", (event, feature) => {
             onCountryClick(event, feature)
         })
+        .on("mouseout", (event, feature) => {
+            onCountryExit(event, feature.properties.brk_name)
+        })
+        .on("mouseover", (event, feature) => {
+            onCountryHover(event, feature.properties.brk_name)
+        })
         .attr("class", "country")
+        .attr("countryName", function(feature) {return feature.properties.brk_name;})
         .transition()
         .duration(1000)
         .attr("stroke-width", 0.3)
@@ -317,6 +429,13 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
         
         svg.call(zoom);
     }, [geodata, wwtpdata]);
+
+    function onCountryHover(event, feature){
+        setHoveredCountry(feature);
+    }
+    function onCountryExit(event, feature){
+        setHoveredCountry(null);
+    }
     
     return (
         // <div ref = {wrapperRef} style={{height:"1000px", width:"2000px", "backgroundColor" :"#000e26"}}>
@@ -325,7 +444,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
         //     <svg ref = {svgRef} style={{height:"1000px", width:"1000px", "backgroundColor" :"#000e26"}}></svg>
         // </div>
         <div id ="countryselector" ref = {wrapperRef} style={{height:"100%", width:"100%"}}>
-            <div id = "left"><h3>{getAndUpdateCountries(selectedCountriesStrings, selectedCountriesCounts, selectedCountry)}</h3>
+            <div id = "left"><h3 id = "countriesStr"></h3>
                 <div id = "panel1" className = "panel">
                     <p> Treatment Level </p>
                     <svg ref = {barRef} className = "graph" style={{height:"550px", width:"100%"}}></svg>
