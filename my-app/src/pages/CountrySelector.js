@@ -1,6 +1,9 @@
 import React, {useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
 import './GeoChart.css';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+
 
 function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
     const svgRef = useRef();
@@ -18,8 +21,10 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
     // const dimensions = useResizeObserver(wrapperRef);
     
     function onCountryClick(event, feature) {
-        
-        if (!maxCount) {
+        var a = document.getElementById("countriesStr").innerHTML.indexOf("(");
+        var b = document.getElementById("countriesStr").innerHTML.indexOf("/10");
+        var count = parseInt(document.getElementById("countriesStr").innerHTML.slice(a+1, b))
+        if (count <= 9) {
             setSelectedCountry(feature); 
             setSelectedCountriesStrings(selectedCountriesStrings => new Set([...selectedCountriesStrings, feature.properties.brk_name]));
             
@@ -126,10 +131,10 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
 
         var countryStringsSet = new Set(countriesStrings);
         var setcount = countryStringsSet.size;
-        if (setcount >= 9) {
+        if (setcount >= 11) {
             setMaxCount(true);
         } 
-        var str = "Selected Countries (" + setcount + "/8): "
+        var str = "Selected Countries (" + setcount + "/10): "
         countryStringsSet.forEach((country) => {
             str = str + country + ", "
         })
@@ -351,6 +356,13 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
         })
     }, [selectedCountriesStrings]);
 
+    useEffect(() => {
+        var xaxvals = document.querySelectorAll("[type=xaxval]");  
+        [...xaxvals].forEach((val) => {
+            xaxvals.onmouseover = function(){onCountryHover(null, val.innerHTML)}
+            
+        });
+    }, [selectedCountriesStrings])
 
     useEffect(() => {
         const svgCanvas = d3.select(svgRef.current)
@@ -445,18 +457,31 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
         // </div>
         <div id ="countryselector" ref = {wrapperRef} style={{height:"100%", width:"100%"}}>
             <div id = "left"><h3 id = "countriesStr"></h3>
-                <div id = "panel1" className = "panel">
-                    <p> Treatment Level </p>
-                    <svg ref = {barRef} className = "graph" style={{height:"550px", width:"100%"}}></svg>
+                <div id = "panel1" className = "panel l">
+                    <Tooltip title={<h2>Number of WWTPs at each level of treatment</h2>} arrow placement="right"><Button sx={{ m: 1 }}>Treatment Level</Button></Tooltip>
+                    <svg ref = {barRef} className = "graph" style={{height:"400px", width:"100%"}}></svg>
                 </div>
-                <div id = "panel2" className = "panel">
+                <div id = "panel2" className = "panel r">
                     <p> Dilution Factor </p>
-                    <svg ref = {barRef} className = "graph" style={{height:"550px", width:"100%"}}></svg>
+                    <svg ref = {barRef} className = "graph" style={{height:"400px", width:"100%"}}></svg>
                 </div>
-                <div id = "panel3" className = "panel">
+                <div id = "panel3" className = "panel l">
                     <p> Population Served </p>
-                    <svg ref = {barRef} className = "graph" style={{height:"550px", width:"100%"}}></svg>
+                    <svg ref = {barRef} className = "graph" style={{height:"400px", width:"100%"}}></svg>
                 </div>
+                <div id = "panel4" className = "panel r">
+                    <p> Design Capacity </p>
+                    <svg ref = {barRef} className = "graph" style={{height:"400px", width:"100%"}}></svg>
+                </div>
+                <div id = "panel5" className = "panel l">
+                    <p> River Discharge </p>
+                    <svg ref = {barRef} className = "graph" style={{height:"400px", width:"100%"}}></svg>
+                </div>
+                <div id = "panel6" className = "panel r">
+                    <p> Wastewater Discharge </p>
+                    <svg ref = {barRef} className = "graph" style={{height:"400px", width:"100%"}}></svg>
+                </div>
+                
             
                 <div id = "panel4" className = "panel">
                     <p>yay </p>

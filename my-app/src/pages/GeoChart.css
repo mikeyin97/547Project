@@ -1,5 +1,4 @@
 #left{
-    display:flex;
     float:left;
     width: 50%;
     flex-direction: column;
@@ -7,10 +6,25 @@
 }
 
 #right{
-    display:flexbox;
+    position: relative;
     float:right;
     width: 50%;
     height: 100%;
+}
+
+.l{
+    float: left;
+    width: 50%;
+
+}
+.r{
+    float: right;
+    width: 50%;
+
+}
+
+.panel{
+    height:500px;
 }
 
 #bg2 {
