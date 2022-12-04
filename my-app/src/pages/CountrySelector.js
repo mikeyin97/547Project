@@ -7,27 +7,59 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
     const wrapperRef = useRef();
     const barRef = useRef();
     const [selectedCountry, setSelectedCountry] = useState(null);
-    const [selectedCountries, setSelectedCountries] = useState([]);
-    const [selectedCountriesStrings, setSelectedCountriesStrings] = useState([]);
-    
+    const [maxCount, setMaxCount] = useState(false);
+    const [selectedCountriesStrings, setSelectedCountriesStrings] = useState(new Set());
+    const [selectedCountriesCounts, setSelectedCountriesCounts] = useState({});
+
     var zoom = null;
     // const dimensions = useResizeObserver(wrapperRef);
     
     function onCountryClick(event, feature) {
-        setSelectedCountry(selectedCountry === feature ? null : feature); 
-        setSelectedCountries(selectedCountries => [...selectedCountries, feature]);
-        setSelectedCountriesStrings(selectedCountriesStrings => [...selectedCountriesStrings, feature.properties.brk_name]);
+        if (!maxCount) {
+            setSelectedCountry(feature); 
+            setSelectedCountriesStrings(selectedCountriesStrings => new Set([...selectedCountriesStrings, feature.properties.brk_name]));
+            
+            var copy = selectedCountriesCounts;
+            if (!(feature.properties.brk_name in copy)){
+                copy[feature.properties.brk_name] = true;
+            } 
+            setSelectedCountriesCounts(copy);
+        }
+        
     }
 
-    function getAndUpdateCountries(countries){
-        var str = "Selected Countries: "
-        countries.forEach((country) => {
-            str = str + country.properties.brk_name + ", "
+
+
+
+    function getAndUpdateCountries(countriesStrings, countryCounts, country){
+        if (country){
+            console.log(countriesStrings, countryCounts, country.properties.brk_name);
+
+            if (countryCounts[country.properties.brk_name] == true){
+                countryCounts[country.properties.brk_name] = false
+            } else if (countryCounts[country.properties.brk_name] == false){
+                countriesStrings.delete(country.properties.brk_name)
+                delete countryCounts[country.properties.brk_name]; 
+            }
+            console.log(countriesStrings, countryCounts, country.properties.brk_name);
+        }
+        
+
+        var countryStringsSet = new Set(countriesStrings);
+        var setcount = countryStringsSet.size;
+        if (setcount >= 9) {
+            setMaxCount(true);
+        } 
+        var str = "Selected Countries (" + setcount + "/8): "
+        countryStringsSet.forEach((country) => {
+            str = str + country + ", "
         })
         return (str);
     }
 
     useEffect(() => {
+
+        
         const svgCanvas = d3.select(svgRef.current)
         const svg = svgCanvas.select("g");
         const barCanvases = d3.selectAll(".graph");
@@ -36,14 +68,14 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
         .data(geodata.features)
         .join("path")
         .attr("stroke-width", function(feature) {
-            if (selectedCountriesStrings.includes(feature.properties.brk_name)){
+            if (selectedCountriesStrings.has(feature.properties.brk_name)){
                 return (1.0)
             } else{
                 return(0.3)
             }
         })
         .attr("stroke", function(feature) {
-            if (selectedCountriesStrings.includes(feature.properties.brk_name)){
+            if (selectedCountriesStrings.has(feature.properties.brk_name)){
                 return ("#fff900")
             } else {
                 return("#262626")
@@ -56,15 +88,15 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
             const barsvg = barCanvas.select("g");
             const xax = barsvg.select("#xax");
             const yax = barsvg.select("#yax");
-            var width = 700;
-            var height = 400;
-            var margintop = 50;
+            var width = 400;
+            var height = 300;
+            var margintop = 20;
             var marginleft = 80;
             // bar chart x-axis
             
             var x = d3.scaleBand()
             .range([ 0, width ])
-            .domain(selectedCountriesStrings.map(function(d) { return d; }))
+            .domain([...selectedCountriesStrings].map(function(d) { return d; }))
             .padding(0.2);
   
             var subgroups = ["Primary", "Secondary", "Advanced"]
@@ -89,17 +121,26 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
             var maxH = 0;
             if (i === 0) { //treatment level
                 selectedCountriesStrings.forEach((country) => {
-                    for (const [key, value] of Object.entries(levelcounts[country])) {
-                        maxH = Math.max(maxH, value + 4);
-                    }
+                    try{
+                        for (const [key, value] of Object.entries(levelcounts[country])) {
+                            maxH = Math.max(maxH, value + 4);
+                        }
+                    } catch{}
+                    
                 })
             } else if (i === 1) { // dilution factor
                 selectedCountriesStrings.forEach((country) => {
-                    maxH = Math.max(maxH, aggcounts[country].DF_mean + 100);
+                    try {
+                        maxH = Math.max(maxH, aggcounts[country].DF_mean + 100);
+                    } catch{}
+                    
                 })
             } else if (i === 2) { // population served
                 selectedCountriesStrings.forEach((country) => {
-                    maxH = Math.max(maxH, aggcounts[country].POP_SERVED_mean + 100);
+                    try{
+                        maxH = Math.max(maxH, aggcounts[country].POP_SERVED_mean + 100);
+                    } catch{}
+                    
                 })
             }
             
@@ -123,29 +164,35 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
                     return x(d);
                 })
                 .attr("y", function(d) {
-                    var val = 0;
-                    var aggcount = aggcounts[d];
-                    if (i === 0) { //treatment level
-                        val = 100;
-                    } else if (i === 1) { // dilution factor
-                        val = aggcount.DF_mean
-                    } else if (i === 2) { // population served
-                        val = aggcount.POP_SERVED_mean
-                    }
-                    return y(val);
+                    try{
+                        var val = 0;
+                        var aggcount = aggcounts[d];
+                        if (i === 0) { //treatment level
+                            val = 100;
+                        } else if (i === 1) { // dilution factor
+                            val = aggcount.DF_mean
+                        } else if (i === 2) { // population served
+                            val = aggcount.POP_SERVED_mean
+                        }
+                        return y(val);
+                    }catch{}
+                    
                 })
                 .attr("width", x.bandwidth())
                 .attr("height", function(d) { 
-                    var val = 0;
-                    var aggcount = aggcounts[d];
-                    if (i === 0) { //treatment level
-                        val = 100;
-                    } else if (i === 1) { // dilution factor
-                        val = aggcount.DF_mean
-                    } else if (i === 2) { // population served
-                        val = aggcount.POP_SERVED_mean
-                    }
-                    return height - y(val); })
+                    try{
+                        var val = 0;
+                        var aggcount = aggcounts[d];
+                        if (i === 0) { //treatment level
+                            val = 100;
+                        } else if (i === 1) { // dilution factor
+                            val = aggcount.DF_mean
+                        } else if (i === 2) { // population served
+                            val = aggcount.POP_SERVED_mean
+                        }
+                        return height - y(val);
+                        } catch{}
+                     })
                 .attr("fill", function(d) { 
                     return "#69b3a2"
                     }
@@ -176,20 +223,25 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
                     return xSubgroup(d[1]);
                 })
                 .attr("y", function(d) {
-                    console.log(levelcounts[d[0]])
-                    if (d[1] in levelcounts[d[0]]){
-                        return y(levelcounts[d[0]][d[1]]);
-                    } else {
-                        return 0;
-                    }      
+                    try{
+                        if (d[1] in levelcounts[d[0]]){
+                            return y(levelcounts[d[0]][d[1]]);
+                        } else {
+                            return 0;
+                        }    
+                    } catch{}
+                      
                 })
                 .attr("width", xSubgroup.bandwidth())
                 .attr("height", function(d) {
-                    if (d[1] in levelcounts[d[0]]){
-                        return height - y(levelcounts[d[0]][d[1]]);
-                    } else {
-                        return 0;
-                    }} )
+                    try{
+                        if (d[1] in levelcounts[d[0]]){
+                            return height - y(levelcounts[d[0]][d[1]]);
+                        } else {
+                            return 0;
+                        }} 
+                    catch{}}
+                    )
                 .attr("fill", function(d) {
                     return col(d);
                 })
@@ -221,8 +273,8 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
             .attr('z-index', '0');
         })
 
-        const width = 1500;
-        const height = 1000;
+        const width = 1200;
+        const height = 800;
         const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
         const pathGenerator = d3.geoPath().projection(projection);
         const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
@@ -249,7 +301,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
         .duration(1000)
         .attr("stroke-width", 0.3)
         .attr("stroke", function(feature) {
-            if (selectedCountriesStrings.includes(feature.properties.brk_name)){
+            if (selectedCountriesStrings.has(feature.properties.brk_name)){
                 return ("#ffffff")
             } else{
                 return("#262626")
@@ -273,7 +325,7 @@ function GeoChart({geodata, wwtpdata, statuscounts, levelcounts, aggcounts}){
         //     <svg ref = {svgRef} style={{height:"1000px", width:"1000px", "backgroundColor" :"#000e26"}}></svg>
         // </div>
         <div id ="countryselector" ref = {wrapperRef} style={{height:"100%", width:"100%"}}>
-            <div id = "left"><h3>{getAndUpdateCountries(selectedCountries)}</h3>
+            <div id = "left"><h3>{getAndUpdateCountries(selectedCountriesStrings, selectedCountriesCounts, selectedCountry)}</h3>
                 <div id = "panel1" className = "panel">
                     <p> Treatment Level </p>
                     <svg ref = {barRef} className = "graph" style={{height:"550px", width:"100%"}}></svg>
