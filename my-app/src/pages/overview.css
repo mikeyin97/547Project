@@ -1,0 +1,40 @@
+#left{
+    float:left;
+    width: 50%;
+    flex-direction: column;
+    overflow-y: auto;     
+}
+
+#right{
+    position: relative;
+    float:right;
+    width: 50%;
+    height: 100%;
+}
+
+#bg2 {
+    z-index: -10;
+    opacity: 0.5;
+}
+
+#bg {
+    z-index: -10;
+    opacity: 0.5;
+}
+
+/* Selects the root element of the document: <html> in the case of HTML */
+#root{
+    height: 100%;
+}
+
+/* The <g> SVG element is a container used to group other SVG elements */
+g{
+    z-index: 10;
+}
+
+/*
+html, body{
+    overflow-y: hidden;
+    height:100%;
+}
+*/

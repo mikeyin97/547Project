@@ -16,17 +16,18 @@ class OverviewComponent {
 
   initPage = () => {
     const { svgCanvas, props: { geodata } } = this;
-    svgCanvas.selectAll("*").remove();
+    // svgCanvas.selectAll("*").remove();
     const svg = svgCanvas.append("g");
 
     const barCanvases = d3.selectAll(".graph");
     barCanvases.each(function (d, i) {
       const barCanvas = d3.select(this);
-      barCanvas.selectAll("*").remove();
+      // barCanvas.selectAll("*").remove();
       const barsvg = barCanvas.append("g");
       barsvg.append("g").attr("id", "xax");
       barsvg.append("g").attr("id", "yax");
 
+      // The barchart panels
       barsvg.append('rect')
         .attr('x', "0")
         .attr('y', "0")
@@ -38,6 +39,7 @@ class OverviewComponent {
         .attr('z-index', '0');
     })
 
+    // map dimension
     const width = 1500;
     const height = 1000;
     const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
@@ -184,6 +186,14 @@ class OverviewComponent {
         }
         );
     })
+  }
+
+  resize = (width, height) => {
+    const { svgCanvas } = this;
+    svgCanvas.selectAll("*").remove();
+    const barCanvases = d3.selectAll(".graph");
+    barCanvases.each(function (d, i) {
+    });
   }
 }
 
