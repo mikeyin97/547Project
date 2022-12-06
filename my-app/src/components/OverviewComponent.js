@@ -10,34 +10,14 @@ class OverviewComponent {
     this.containerEl = containerEl;
     this.props = props;
     this.svgCanvas = d3.select(containerEl);
-    this.initPage();
+    this.initMap();
     this.initOverview();
   }
 
-  initPage = () => {
+  initMap = () => {
     const { svgCanvas, props: { geodata } } = this;
     // svgCanvas.selectAll("*").remove();
-    const svg = svgCanvas.append("g");
-
-    const barCanvases = d3.selectAll(".graph");
-    barCanvases.each(function (d, i) {
-      const barCanvas = d3.select(this);
-      // barCanvas.selectAll("*").remove();
-      const barsvg = barCanvas.append("g");
-      barsvg.append("g").attr("id", "xax");
-      barsvg.append("g").attr("id", "yax");
-
-      // The barchart panels
-      barsvg.append('rect')
-        .attr('x', "0")
-        .attr('y', "0")
-        .attr("id", "bg")
-        .attr('width', '100%')
-        .attr('height', '100%')
-        .attr('stroke', 'black')
-        .attr('fill', '#d0e7fd')
-        .attr('z-index', '0');
-    })
+    const gmap = svgCanvas.append("g");
 
     // map dimension
     const width = 1500;
@@ -46,17 +26,18 @@ class OverviewComponent {
     const pathGenerator = d3.geoPath().projection(projection);
     const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
 
-    svg.append('rect')
+    // map attributes
+    gmap.append('rect')
       .attr('x', "-500%")
       .attr('y', "-500%")
       .attr('width', '1000%')
       .attr('height', '1000%')
       .attr('stroke', 'black')
       .attr('fill', '#69a3b2')
-      .attr("id", "bg2")
+      .attr("id", "bgmap")
       .attr('z-index', '0');
 
-    svg.selectAll(".country")
+    gmap.selectAll(".country")
       .data(geodata.features)
       .join("path")
       .attr("class", "country")
@@ -65,37 +46,40 @@ class OverviewComponent {
       .attr("stroke-width", 0.3)
       .attr('z-index', '100')
       .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
-      .attr("d", feature => pathGenerator(feature));
+      .attr("d", feature => pathGenerator(feature))
+      .attr("stroke", feature => "#262626");
 
     var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", function (event) {
       d3.select('#right svg g').attr("transform", event.transform)
     })
-    svg.call(zoom);
+    gmap.call(zoom);
   }
 
   initOverview = () => {
-    const { svgCanvas, props: { geodata, aggcounts } } = this;
-    // group all boundaries together
-    const svg = svgCanvas.select("g");
+    const { props: { aggcounts } } = this;
     const barCanvases = d3.selectAll(".graph");
 
-    // draw the geographic boundaries
-    svg.selectAll(".country")
-      .data(geodata.features)
-      .join("path")
-      .attr("stroke-width", function (feature) {
-        return (0.3)
-      })
-      .attr("stroke", function (feature) {
-        return ("#262626")
-      });
-
-    // set up the bar charts
     barCanvases.each(function (d, i) {
       const barCanvas = d3.select(this);
-      const barsvg = barCanvas.select("g");
-      const xax = barsvg.select("#xax");
-      const yax = barsvg.select("#yax");
+      // barCanvas.selectAll("*").remove();
+      const gbar = barCanvas.append("g");
+      gbar.append("g").attr("id", "xax");
+      gbar.append("g").attr("id", "yax");
+
+      const xax = gbar.select("#xax");
+      const yax = gbar.select("#yax");
+
+      // The barchart panels
+      gbar.append('rect')
+        .attr('x', "0")
+        .attr('y', "0")
+        .attr("id", "bgbar")
+        .attr('width', '100%')
+        .attr('height', '100%')
+        .attr('stroke', 'black')
+        .attr('fill', '#d0e7fd')
+        .attr('z-index', '0');
+
       // define the scales
       var width = 1550,
         height = 330,
@@ -145,10 +129,10 @@ class OverviewComponent {
         .attr("transform", "translate(" + marginleft + "," + margintop + ")")
         .call(d3.axisLeft(yScale));
 
-      barsvg.selectAll("rect:not(#bg)").remove();
+      // barsvg.selectAll("rect:not(#bgbar)").remove();
 
       // draw bars
-      barsvg.selectAll("bar")
+      gbar.selectAll("bar")
         .data(countries)
         .enter()
         .append("rect")
@@ -185,7 +169,7 @@ class OverviewComponent {
           return "#69b3a2"
         }
         );
-    })
+    });
   }
 
   resize = (width, height) => {

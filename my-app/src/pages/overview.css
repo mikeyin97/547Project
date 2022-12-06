@@ -12,12 +12,12 @@
     height: 100%;
 }
 
-#bg2 {
+#bgmap {
     z-index: -10;
-    opacity: 0.5;
+    opacity: 0.2;
 }
 
-#bg {
+#bgbar {
     z-index: -10;
     opacity: 0.5;
 }
@@ -38,3 +38,19 @@ html, body{
     height:100%;
 }
 */
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
+  }
+  .svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 0;
+  }
+  
