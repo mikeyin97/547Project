@@ -2,26 +2,44 @@ import * as d3 from 'd3';
 
 class OverviewComponent {
 
-  containerEl;
+  mapContainer;
+  barContainer;
+  mapCanvas;
+  barCanvases;
   props;
-  svgCanvas;
 
-  constructor(containerEl, props) {
-    this.containerEl = containerEl;
+  constructor(mapContainer, barContainer, props) {
+    this.mapContainer = mapContainer;
+    this.barContainer = barContainer;
     this.props = props;
-    this.svgCanvas = d3.select(containerEl);
+    this.mapCanvas = d3.select(mapContainer)
+      .append('div')
+      // contianer class
+      .classed('svg-container', true)
+      .append("svg")
+      // attributes needed for no arbitrary width and height
+      .attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox", "0 0 1000 400")
+      // Class to make it responsive.
+      .classed("svg-content-responsive", true);
+    this.barCanvases = d3.select(barContainer);
     this.initMap();
     this.initOverview();
   }
 
   initMap = () => {
-    const { svgCanvas, props: { geodata } } = this;
-    // svgCanvas.selectAll("*").remove();
-    const gmap = svgCanvas.append("g");
+    const { mapCanvas, props: { geodata } } = this;
+    // mapCanvas.selectAll("*").remove();
+    const gmap = mapCanvas.append("g");
+    //svgCanvas.classed("svg-container", true)
+    //.attr("preserveAspectRatio", "xMinYMin meet")
+    //.attr("viewBox", "0 0 100 100")
+    // Class to make it responsive.
+    //.classed("svg-content-responsive", true)
 
     // map dimension
-    const width = 1500;
-    const height = 1000;
+    const width = 1000;
+    const height = 400;
     const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
     const pathGenerator = d3.geoPath().projection(projection);
     const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
@@ -62,7 +80,10 @@ class OverviewComponent {
     barCanvases.each(function (d, i) {
       const barCanvas = d3.select(this);
       // barCanvas.selectAll("*").remove();
-      const gbar = barCanvas.append("g");
+      const barSVG = barCanvas.append('svg')
+        .attr('height', '100%')
+        .attr('width', '100%');
+      const gbar = barSVG.append("g");
       gbar.append("g").attr("id", "xax");
       gbar.append("g").attr("id", "yax");
 
@@ -82,9 +103,9 @@ class OverviewComponent {
 
       // define the scales
       var width = 1550,
-        height = 330,
+        height = 200,
         margintop = 50,
-        marginleft = 50;
+        marginleft = 100;
 
       // all countries
       const countries = Object.keys(aggcounts)
@@ -173,8 +194,8 @@ class OverviewComponent {
   }
 
   resize = (width, height) => {
-    const { svgCanvas } = this;
-    svgCanvas.selectAll("*").remove();
+    const { mapCanvas } = this;
+    mapCanvas.selectAll("*").remove();
     const barCanvases = d3.selectAll(".graph");
     barCanvases.each(function (d, i) {
     });
