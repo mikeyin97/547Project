@@ -46,10 +46,8 @@ class OverviewComponent {
 
     // map attributes
     gmap.append('rect')
-      .attr('x', "-500%")
-      .attr('y', "-500%")
-      .attr('width', '1000%')
-      .attr('height', '1000%')
+      .attr('width', '100%')
+      .attr('height', '100%')
       .attr('stroke', 'black')
       .attr('fill', '#69a3b2')
       .attr("id", "bgmap")
@@ -68,7 +66,7 @@ class OverviewComponent {
       .attr("stroke", feature => "#262626");
 
     var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", function (event) {
-      d3.select('#right svg g').attr("transform", event.transform)
+      d3.select('#panel1 svg g').attr("transform", event.transform)
     })
     gmap.call(zoom);
   }

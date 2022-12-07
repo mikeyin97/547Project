@@ -48,6 +48,9 @@ function Overview({ geodata, wwtpdata, aggcounts }) {
     return (
         <div id="overview" ref={wrapperRef} style={{ height: "100%", width: "100%" }}>
             <div id="left" style={{ width: "80%" }}><h3>Country Overview</h3>
+                <div id="panel1">
+                    <div ref={svgRef}> </div>
+                </div>
                 <div id="panel2" className="panel">
                     <p>Treated Wastewater Discharge </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "95%" }}></div>
@@ -62,7 +65,6 @@ function Overview({ geodata, wwtpdata, aggcounts }) {
                 </div>
             </div>
             <div id="right" style={{ width: "20%" }}>
-                <div ref={svgRef}> </div>
             </div>
         </div>
     )
