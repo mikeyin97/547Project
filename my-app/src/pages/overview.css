@@ -2,10 +2,30 @@
     display: flex;
 }
 
-#left {
+.left {
     float: left;
     flex-direction: column;
     overflow: scroll;
+}
+
+/* Works on Firefox */
+*::-webkit-scrollbar {
+    width: 18px;
+}
+
+*::-webkit-scrollbar-track {
+    /* color of the tracking area */
+    background: #9dd1e8;
+    padding: 2px 0;
+}
+
+*::-webkit-scrollbar-thumb {
+    /* color of the scroll thumb */
+    background-color: rgb(46, 179, 209);
+    /* roundness of the scroll thumb */
+    border: 1px solid rgba(0, 0, 0, 0.534);
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(70, 174, 205, 0.872);
 }
 
 #right {
@@ -25,7 +45,13 @@
 }
 
 /* Selects the root element of the document: <html> in the case of HTML */
-#root {}
+#root {
+    /*margin-top: 2%;*/
+    padding-bottom: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: lightsteelblue;
+}
 
 /* The <g> SVG element is a container used to group other SVG elements */
 g {
@@ -38,6 +64,13 @@ html, body{
     height:100%;
 }
 */
+
+.scroller {
+    width: 300px;
+    height: 100px;
+    overflow-y: scroll;
+    scrollbar-color: rebeccapurple green;
+}
 
 .svg-container {
     display: inline-block;
