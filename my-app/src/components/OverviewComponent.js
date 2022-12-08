@@ -65,9 +65,12 @@ class OverviewComponent {
       .attr("d", feature => pathGenerator(feature))
       .attr("stroke", feature => "#262626");
 
-    var zoom = d3.zoom().on("zoom", function (event) {
-      d3.select('#panel1 svg g').attr("transform", event.transform)
-    })
+    var zoom = d3.zoom()
+      .scaleExtent([1, 10])
+      .translateExtent([[0, 0], [width, height]])
+      .on("zoom", function (event) {
+        d3.select('#panel1 svg g').attr("transform", event.transform)
+      })
     gmap.call(zoom);
   }
 
