@@ -26,7 +26,7 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home/>} />
         <Route exact path='/about' element={<About/>} />
-        <Route exact path='/overview' element={<Overview geodata = {geodata} wwtpdata = {wwtpdata} aggcounts = {agg_counts}/>} />
+        <Route exact path='/overview' element={<Overview geodata = {geodata} wwtpdata = {wwtpdata} aggcounts = {agg_counts} levelcounts = {level_counts} statuscounts = {status_counts}/> } />
         <Route exact path='/comparison' element={<CountrySelector geodata = {geodata} wwtpdata = {wwtpdata} statuscounts = {status_counts} levelcounts = {level_counts} aggcounts = {agg_counts}/>} />
         <Route exact path='/distribution' element={<GeoChart geodata = {geodata} wwtpdata = {wwtpdata}/>} />
         <Route exact path='/contacts' element={<Contacts/>} />

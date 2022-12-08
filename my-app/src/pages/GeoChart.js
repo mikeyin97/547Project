@@ -77,8 +77,8 @@ function GeoChart({geodata, wwtpdata}){
         .attr("cy", function(d) {
         return projection(d.geometry.coordinates)[1];
         })
-        //.attr("r", 0.3)
-        .attr("r", function(d) { return radius(d.properties.POP_SERVED); })
+        .attr("r", 0.3)
+        //.attr("r", function(d) { return radius(d.properties.POP_SERVED); })
         .attr("class", "locations");
 
         var zoom = d3.zoom().on("zoom", function (event) {
@@ -89,8 +89,7 @@ function GeoChart({geodata, wwtpdata}){
     
     return (
         <div id = "geochart" ref = {wrapperRef} style={{height:"1000px", width:"100%"}}>
-            <div id = "left"><p>{selectedCountry ? selectedCountry.properties.admin : "Hello"}</p></div>
-            <div id = "right"><svg ref = {svgRef} style={{height:"1000px", width:"100%"}}></svg></div>
+            <div id = "right"><svg ref = {svgRef} style={{height:"100%", width:"100%"}}></svg></div>
         </div>
     );
 }
