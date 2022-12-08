@@ -1,1 +1,598 @@
-{"Afghanistan": {"Not Reported": 5}, "Albania": {"Not Reported": 6}, "Algeria": {"Not Reported": 116}, "American Samoa": {"Not Reported": 1}, "Angola": {"Not Reported": 8}, "Antigua and Barbuda": {"Not Reported": 1}, "Argentina": {"Not Reported": 143}, "Armenia": {"Not Reported": 5}, "Aruba": {"Not Reported": 3}, "Australia": {"Operational": 1199, "Under Construction": 24, "Decommissioned": 10, "Non-Operational": 1}, "Austria": {"Not Reported": 628, "Closed": 6}, "Azerbaijan": {"Not Reported": 8}, "Bahamas": {"Not Reported": 3}, "Bahrain": {"Not Reported": 2}, "Bangladesh": {"Not Reported": 16}, "Barbados": {"Not Reported": 1}, "Belarus": {"Not Reported": 348}, "Belgium": {"Not Reported": 389, "Closed": 21}, "Belize": {"Not Reported": 2}, "Bhutan": {"Not Reported": 2}, "Bolivia": {"Not Reported": 26}, "Bosnia and Herzegovina": {"Not Reported": 13}, "Botswana": {"Not Reported": 5}, "Brazil": {"Not Reported": 2820}, "British Virgin Islands": {"Not Reported": 1}, "Brunei": {"Not Reported": 2}, "Bulgaria": {"Not Reported": 109, "Closed": 1}, "Burkina Faso": {"Not Reported": 1}, "Burundi": {"Not Reported": 2}, "Cabo Verde": {"Not Reported": 4}, "Cambodia": {"Not Reported": 7}, "Cameroon": {"Not Reported": 6}, "Canada": {"Operational": 2046, "Decommissioned": 18}, "Chad": {"Not Reported": 2}, "Chile": {"Not Reported": 46}, "China": {"Not Reported": 2486}, "Colombia": {"Not Reported": 63}, "Costa Rica": {"Not Reported": 21}, "Croatia": {"Not Reported": 80, "Closed": 3}, "Cuba": {"Not Reported": 26}, "Cura\u00e7ao": {"Not Reported": 1}, "Cyprus": {"Not Reported": 15, "Closed": 2}, "Czech Republic": {"Not Reported": 600, "Closed": 63}, "C\u00f4te d'Ivoire": {"Not Reported": 10}, "Democratic Republic of the Congo": {"Not Reported": 3}, "Denmark": {"Not Reported": 343, "Closed": 40}, "Dominican Republic": {"Not Reported": 12}, "Ecuador": {"Not Reported": 26}, "Egypt": {"Not Reported": 132}, "El Salvador": {"Not Reported": 6}, "Equatorial Guinea": {"Not Reported": 1}, "Estonia": {"Not Reported": 53, "Closed": 15}, "Ethiopia": {"Not Reported": 4}, "Fiji": {"Not Reported": 2}, "Finland": {"Not Reported": 163}, "Finland (Aland)": {"Not Reported": 1}, "France": {"Not Reported": 3618, "Closed": 4}, "France (Guadeloupe)": {"Not Reported": 19}, "France (Martinique)": {"Not Reported": 45}, "France (Mayotte)": {"Not Reported": 3}, "French Guiana": {"Not Reported": 37}, "French Polynesia": {"Not Reported": 1}, "Gabon": {"Not Reported": 1}, "Gambia": {"Not Reported": 1}, "Georgia": {"Not Reported": 5}, "Germany": {"Not Reported": 3840, "Closed": 417}, "Ghana": {"Not Reported": 10}, "Greece": {"Not Reported": 158}, "Guatemala": {"Not Reported": 8}, "Guinea": {"Not Reported": 2}, "Haiti": {"Not Reported": 10}, "Honduras": {"Not Reported": 6}, "Hong Kong": {"Not Reported": 30}, "Hungary": {"Not Reported": 745, "Closed": 4}, "Iceland": {"Not Reported": 11}, "India": {"Operational": 522, "Under Construction": 116, "Proposed": 81, "Non-Operational": 75, "Construction Completed": 20, "Not Reported": 2}, "Indonesia": {"Not Reported": 38}, "Iran": {"Not Reported": 134}, "Iraq": {"Not Reported": 73}, "Ireland": {"Not Reported": 166}, "Israel": {"Not Reported": 37}, "Italy": {"Not Reported": 3913, "Closed": 177}, "Jamaica": {"Not Reported": 13}, "Japan": {"Not Reported": 378}, "Jordan": {"Not Reported": 30}, "Kazakhstan": {"Not Reported": 40}, "Kenya": {"Not Reported": 24}, "Kosovo": {"Not Reported": 6}, "Kuwait": {"Not Reported": 7}, "Kyrgyzstan": {"Not Reported": 13}, "Laos": {"Not Reported": 2}, "Latvia": {"Not Reported": 73, "Closed": 16}, "Lebanon": {"Not Reported": 3}, "Lesotho": {"Not Reported": 15}, "Liberia": {"Not Reported": 1}, "Libya": {"Not Reported": 10}, "Lithuania": {"Not Reported": 74}, "Luxembourg": {"Not Reported": 32, "Closed": 3}, "Macao": {"Not Reported": 5}, "Macedonia": {"Not Reported": 3}, "Madagascar": {"Not Reported": 2}, "Malaysia": {"Not Reported": 484}, "Maldives": {"Not Reported": 4}, "Mali": {"Not Reported": 3}, "Malta": {"Not Reported": 4}, "Marshall Islands": {"Not Reported": 1}, "Mauritius": {"Not Reported": 2}, "Mexico": {"Not Reported": 2540}, "Micronesia": {"Not Reported": 1}, "Moldova": {"Not Reported": 47}, "Monaco": {"Not Reported": 1}, "Mongolia": {"Not Reported": 2}, "Montenegro": {"Not Reported": 3}, "Morocco": {"Not Reported": 27}, "Mozambique": {"Not Reported": 3}, "Myanmar": {"Not Reported": 2}, "Namibia": {"Not Reported": 18}, "Nepal": {"Not Reported": 8}, "Netherlands": {"Not Reported": 338, "Closed": 79}, "Netherlands (Sint Maarten)": {"Not Reported": 1}, "New Caledonia": {"Not Reported": 12}, "New Zealand": {"Not Reported": 317}, "New Zealand (Cook Islands)": {"Not Reported": 2}, "Nicaragua": {"Not Reported": 7}, "Niger": {"Not Reported": 3}, "Nigeria": {"Not Reported": 3}, "North Korea": {"Not Reported": 8}, "Northern Mariana Islands": {"Not Reported": 2}, "Norway": {"Not Reported": 313, "Closed": 17}, "Oman": {"Not Reported": 18}, "Pakistan": {"Not Reported": 25}, "Palau": {"Not Reported": 1}, "Palestina": {"Not Reported": 21}, "Panama": {"Not Reported": 8}, "Papua New Guinea": {"Not Reported": 2}, "Paraguay": {"Not Reported": 9}, "Peru": {"Not Reported": 184}, "Philippines": {"Not Reported": 51}, "Poland": {"Not Reported": 1574, "Closed": 94}, "Portugal": {"Not Reported": 474, "Closed": 26}, "Qatar": {"Not Reported": 7}, "Romania": {"Not Reported": 553}, "Russia": {"Not Reported": 1270}, "Rwanda": {"Not Reported": 3}, "Saint Kitts and Nevis": {"Not Reported": 2}, "Saint Lucia": {"Not Reported": 3}, "Saint-Martin": {"Not Reported": 2}, "Saudi Arabia": {"Not Reported": 58}, "Senegal": {"Not Reported": 9}, "Serbia": {"Not Reported": 13}, "Seychelles": {"Not Reported": 1}, "Sierra Leone": {"Not Reported": 1}, "Singapore": {"Not Reported": 4}, "Slovakia": {"Not Reported": 272, "Closed": 50}, "Slovenia": {"Not Reported": 89}, "South Africa": {"Not Reported": 964}, "South Korea": {"Not Reported": 87}, "South Sudan": {"Not Reported": 1}, "Spain": {"Not Reported": 2026, "Closed": 92}, "Sri Lanka": {"Not Reported": 13}, "Sudan": {"Not Reported": 2}, "Swaziland": {"Not Reported": 3}, "Sweden": {"Not Reported": 433, "Closed": 4}, "Switzerland": {"Not Reported": 758}, "Syria": {"Not Reported": 13}, "Taiwan": {"Not Reported": 83}, "Tajikistan": {"Not Reported": 5}, "Tanzania": {"Not Reported": 10}, "Thailand": {"Not Reported": 44}, "Togo": {"Not Reported": 3}, "Tonga": {"Not Reported": 2}, "Trinidad and Tobago": {"Not Reported": 5}, "Tunisia": {"Not Reported": 30}, "Turkey": {"Not Reported": 320}, "Turkmenistan": {"Not Reported": 3}, "Uganda": {"Not Reported": 17}, "Ukraine": {"Not Reported": 312}, "United Arab Emirates": {"Not Reported": 34}, "United Kingdom": {"Not Reported": 1857, "Closed": 30}, "United Kingdom (Montserrat)": {"Not Reported": 1}, "United States": {"Not Reported": 14626, "Projected": 193}, "Uruguay": {"Not Reported": 22}, "Uzbekistan": {"Not Reported": 35}, "Venezuela": {"Not Reported": 23}, "Vietnam": {"Not Reported": 11}, "Yemen": {"Not Reported": 2}, "Zambia": {"Not Reported": 13}, "Zimbabwe": {"Not Reported": 42}}
+{
+    "Afghanistan": {
+        "Not Reported": 5
+    },
+    "Albania": {
+        "Not Reported": 6
+    },
+    "Algeria": {
+        "Not Reported": 116
+    },
+    "American Samoa": {
+        "Not Reported": 1
+    },
+    "Angola": {
+        "Not Reported": 8
+    },
+    "Antigua and Barbuda": {
+        "Not Reported": 1
+    },
+    "Argentina": {
+        "Not Reported": 143
+    },
+    "Armenia": {
+        "Not Reported": 5
+    },
+    "Aruba": {
+        "Not Reported": 3
+    },
+    "Australia": {
+        "Operational": 1199,
+        "Under Construction": 24,
+        "Decommissioned": 10,
+        "Non-Operational": 1
+    },
+    "Austria": {
+        "Not Reported": 628,
+        "Closed": 6
+    },
+    "Azerbaijan": {
+        "Not Reported": 8
+    },
+    "Bahamas": {
+        "Not Reported": 3
+    },
+    "Bahrain": {
+        "Not Reported": 2
+    },
+    "Bangladesh": {
+        "Not Reported": 16
+    },
+    "Barbados": {
+        "Not Reported": 1
+    },
+    "Belarus": {
+        "Not Reported": 348
+    },
+    "Belgium": {
+        "Not Reported": 389,
+        "Closed": 21
+    },
+    "Belize": {
+        "Not Reported": 2
+    },
+    "Bhutan": {
+        "Not Reported": 2
+    },
+    "Bolivia": {
+        "Not Reported": 26
+    },
+    "Bosnia and Herzegovina": {
+        "Not Reported": 13
+    },
+    "Botswana": {
+        "Not Reported": 5
+    },
+    "Brazil": {
+        "Not Reported": 2820
+    },
+    "British Virgin Islands": {
+        "Not Reported": 1
+    },
+    "Brunei": {
+        "Not Reported": 2
+    },
+    "Bulgaria": {
+        "Not Reported": 109,
+        "Closed": 1
+    },
+    "Burkina Faso": {
+        "Not Reported": 1
+    },
+    "Burundi": {
+        "Not Reported": 2
+    },
+    "Cabo Verde": {
+        "Not Reported": 4
+    },
+    "Cambodia": {
+        "Not Reported": 7
+    },
+    "Cameroon": {
+        "Not Reported": 6
+    },
+    "Canada": {
+        "Operational": 2046,
+        "Decommissioned": 18
+    },
+    "Chad": {
+        "Not Reported": 2
+    },
+    "Chile": {
+        "Not Reported": 46
+    },
+    "China": {
+        "Not Reported": 2486
+    },
+    "Colombia": {
+        "Not Reported": 63
+    },
+    "Costa Rica": {
+        "Not Reported": 21
+    },
+    "Croatia": {
+        "Not Reported": 80,
+        "Closed": 3
+    },
+    "Cuba": {
+        "Not Reported": 26
+    },
+    "Cura\u00e7ao": {
+        "Not Reported": 1
+    },
+    "Cyprus": {
+        "Not Reported": 15,
+        "Closed": 2
+    },
+    "Czech Republic": {
+        "Not Reported": 600,
+        "Closed": 63
+    },
+    "C\u00f4te d'Ivoire": {
+        "Not Reported": 10
+    },
+    "Democratic Republic of the Congo": {
+        "Not Reported": 3
+    },
+    "Denmark": {
+        "Not Reported": 343,
+        "Closed": 40
+    },
+    "Dominican Republic": {
+        "Not Reported": 12
+    },
+    "Ecuador": {
+        "Not Reported": 26
+    },
+    "Egypt": {
+        "Not Reported": 132
+    },
+    "El Salvador": {
+        "Not Reported": 6
+    },
+    "Equatorial Guinea": {
+        "Not Reported": 1
+    },
+    "Estonia": {
+        "Not Reported": 53,
+        "Closed": 15
+    },
+    "Ethiopia": {
+        "Not Reported": 4
+    },
+    "Fiji": {
+        "Not Reported": 2
+    },
+    "Finland": {
+        "Not Reported": 163
+    },
+    "Finland (Aland)": {
+        "Not Reported": 1
+    },
+    "France": {
+        "Not Reported": 3618,
+        "Closed": 4
+    },
+    "France (Guadeloupe)": {
+        "Not Reported": 19
+    },
+    "France (Martinique)": {
+        "Not Reported": 45
+    },
+    "France (Mayotte)": {
+        "Not Reported": 3
+    },
+    "French Guiana": {
+        "Not Reported": 37
+    },
+    "French Polynesia": {
+        "Not Reported": 1
+    },
+    "Gabon": {
+        "Not Reported": 1
+    },
+    "Gambia": {
+        "Not Reported": 1
+    },
+    "Georgia": {
+        "Not Reported": 5
+    },
+    "Germany": {
+        "Not Reported": 3840,
+        "Closed": 417
+    },
+    "Ghana": {
+        "Not Reported": 10
+    },
+    "Greece": {
+        "Not Reported": 158
+    },
+    "Guatemala": {
+        "Not Reported": 8
+    },
+    "Guinea": {
+        "Not Reported": 2
+    },
+    "Haiti": {
+        "Not Reported": 10
+    },
+    "Honduras": {
+        "Not Reported": 6
+    },
+    "Hong Kong": {
+        "Not Reported": 30
+    },
+    "Hungary": {
+        "Not Reported": 745,
+        "Closed": 4
+    },
+    "Iceland": {
+        "Not Reported": 11
+    },
+    "India": {
+        "Operational": 522,
+        "Under Construction": 116,
+        "Proposed": 81,
+        "Non-Operational": 75,
+        "Construction Completed": 20,
+        "Not Reported": 2
+    },
+    "Indonesia": {
+        "Not Reported": 38
+    },
+    "Iran": {
+        "Not Reported": 134
+    },
+    "Iraq": {
+        "Not Reported": 73
+    },
+    "Ireland": {
+        "Not Reported": 166
+    },
+    "Israel": {
+        "Not Reported": 37
+    },
+    "Italy": {
+        "Not Reported": 3913,
+        "Closed": 177
+    },
+    "Jamaica": {
+        "Not Reported": 13
+    },
+    "Japan": {
+        "Not Reported": 378
+    },
+    "Jordan": {
+        "Not Reported": 30
+    },
+    "Kazakhstan": {
+        "Not Reported": 40
+    },
+    "Kenya": {
+        "Not Reported": 24
+    },
+    "Kosovo": {
+        "Not Reported": 6
+    },
+    "Kuwait": {
+        "Not Reported": 7
+    },
+    "Kyrgyzstan": {
+        "Not Reported": 13
+    },
+    "Laos": {
+        "Not Reported": 2
+    },
+    "Latvia": {
+        "Not Reported": 73,
+        "Closed": 16
+    },
+    "Lebanon": {
+        "Not Reported": 3
+    },
+    "Lesotho": {
+        "Not Reported": 15
+    },
+    "Liberia": {
+        "Not Reported": 1
+    },
+    "Libya": {
+        "Not Reported": 10
+    },
+    "Lithuania": {
+        "Not Reported": 74
+    },
+    "Luxembourg": {
+        "Not Reported": 32,
+        "Closed": 3
+    },
+    "Macao": {
+        "Not Reported": 5
+    },
+    "Macedonia": {
+        "Not Reported": 3
+    },
+    "Madagascar": {
+        "Not Reported": 2
+    },
+    "Malaysia": {
+        "Not Reported": 484
+    },
+    "Maldives": {
+        "Not Reported": 4
+    },
+    "Mali": {
+        "Not Reported": 3
+    },
+    "Malta": {
+        "Not Reported": 4
+    },
+    "Marshall Islands": {
+        "Not Reported": 1
+    },
+    "Mauritius": {
+        "Not Reported": 2
+    },
+    "Mexico": {
+        "Not Reported": 2540
+    },
+    "Micronesia": {
+        "Not Reported": 1
+    },
+    "Moldova": {
+        "Not Reported": 47
+    },
+    "Monaco": {
+        "Not Reported": 1
+    },
+    "Mongolia": {
+        "Not Reported": 2
+    },
+    "Montenegro": {
+        "Not Reported": 3
+    },
+    "Morocco": {
+        "Not Reported": 27
+    },
+    "Mozambique": {
+        "Not Reported": 3
+    },
+    "Myanmar": {
+        "Not Reported": 2
+    },
+    "Namibia": {
+        "Not Reported": 18
+    },
+    "Nepal": {
+        "Not Reported": 8
+    },
+    "Netherlands": {
+        "Not Reported": 338,
+        "Closed": 79
+    },
+    "Netherlands (Sint Maarten)": {
+        "Not Reported": 1
+    },
+    "New Caledonia": {
+        "Not Reported": 12
+    },
+    "New Zealand": {
+        "Not Reported": 317
+    },
+    "New Zealand (Cook Islands)": {
+        "Not Reported": 2
+    },
+    "Nicaragua": {
+        "Not Reported": 7
+    },
+    "Niger": {
+        "Not Reported": 3
+    },
+    "Nigeria": {
+        "Not Reported": 3
+    },
+    "North Korea": {
+        "Not Reported": 8
+    },
+    "Northern Mariana Islands": {
+        "Not Reported": 2
+    },
+    "Norway": {
+        "Not Reported": 313,
+        "Closed": 17
+    },
+    "Oman": {
+        "Not Reported": 18
+    },
+    "Pakistan": {
+        "Not Reported": 25
+    },
+    "Palau": {
+        "Not Reported": 1
+    },
+    "Palestina": {
+        "Not Reported": 21
+    },
+    "Panama": {
+        "Not Reported": 8
+    },
+    "Papua New Guinea": {
+        "Not Reported": 2
+    },
+    "Paraguay": {
+        "Not Reported": 9
+    },
+    "Peru": {
+        "Not Reported": 184
+    },
+    "Philippines": {
+        "Not Reported": 51
+    },
+    "Poland": {
+        "Not Reported": 1574,
+        "Closed": 94
+    },
+    "Portugal": {
+        "Not Reported": 474,
+        "Closed": 26
+    },
+    "Qatar": {
+        "Not Reported": 7
+    },
+    "Romania": {
+        "Not Reported": 553
+    },
+    "Russia": {
+        "Not Reported": 1270
+    },
+    "Rwanda": {
+        "Not Reported": 3
+    },
+    "Saint Kitts and Nevis": {
+        "Not Reported": 2
+    },
+    "Saint Lucia": {
+        "Not Reported": 3
+    },
+    "Saint-Martin": {
+        "Not Reported": 2
+    },
+    "Saudi Arabia": {
+        "Not Reported": 58
+    },
+    "Senegal": {
+        "Not Reported": 9
+    },
+    "Serbia": {
+        "Not Reported": 13
+    },
+    "Seychelles": {
+        "Not Reported": 1
+    },
+    "Sierra Leone": {
+        "Not Reported": 1
+    },
+    "Singapore": {
+        "Not Reported": 4
+    },
+    "Slovakia": {
+        "Not Reported": 272,
+        "Closed": 50
+    },
+    "Slovenia": {
+        "Not Reported": 89
+    },
+    "South Africa": {
+        "Not Reported": 964
+    },
+    "South Korea": {
+        "Not Reported": 87
+    },
+    "South Sudan": {
+        "Not Reported": 1
+    },
+    "Spain": {
+        "Not Reported": 2026,
+        "Closed": 92
+    },
+    "Sri Lanka": {
+        "Not Reported": 13
+    },
+    "Sudan": {
+        "Not Reported": 2
+    },
+    "Swaziland": {
+        "Not Reported": 3
+    },
+    "Sweden": {
+        "Not Reported": 433,
+        "Closed": 4
+    },
+    "Switzerland": {
+        "Not Reported": 758
+    },
+    "Syria": {
+        "Not Reported": 13
+    },
+    "Taiwan": {
+        "Not Reported": 83
+    },
+    "Tajikistan": {
+        "Not Reported": 5
+    },
+    "Tanzania": {
+        "Not Reported": 10
+    },
+    "Thailand": {
+        "Not Reported": 44
+    },
+    "Togo": {
+        "Not Reported": 3
+    },
+    "Tonga": {
+        "Not Reported": 2
+    },
+    "Trinidad and Tobago": {
+        "Not Reported": 5
+    },
+    "Tunisia": {
+        "Not Reported": 30
+    },
+    "Turkey": {
+        "Not Reported": 320
+    },
+    "Turkmenistan": {
+        "Not Reported": 3
+    },
+    "Uganda": {
+        "Not Reported": 17
+    },
+    "Ukraine": {
+        "Not Reported": 312
+    },
+    "United Arab Emirates": {
+        "Not Reported": 34
+    },
+    "United Kingdom": {
+        "Not Reported": 1857,
+        "Closed": 30
+    },
+    "United Kingdom (Montserrat)": {
+        "Not Reported": 1
+    },
+    "United States": {
+        "Not Reported": 14626,
+        "Projected": 193
+    },
+    "Uruguay": {
+        "Not Reported": 22
+    },
+    "Uzbekistan": {
+        "Not Reported": 35
+    },
+    "Venezuela": {
+        "Not Reported": 23
+    },
+    "Vietnam": {
+        "Not Reported": 11
+    },
+    "Yemen": {
+        "Not Reported": 2
+    },
+    "Zambia": {
+        "Not Reported": 13
+    },
+    "Zimbabwe": {
+        "Not Reported": 42
+    }
+}

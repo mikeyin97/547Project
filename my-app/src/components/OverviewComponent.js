@@ -67,7 +67,7 @@ class OverviewComponent {
 
     var zoom = d3.zoom()
       .scaleExtent([1, 10])
-      .translateExtent([[0, 0], [width, height]])
+      .translateExtent([[0, 0], [width, height + 105]])
       .on("zoom", function (event) {
         d3.select('#panel1 svg g').attr("transform", event.transform)
       })
@@ -149,19 +149,19 @@ class OverviewComponent {
         })
       } else if (i === 5) { // level
         countries.forEach((country) => {
-          maxH = Math.max(maxH, aggcounts[country].POP_SERVED_mean);
+          try {
+            for (const [key, value] of Object.entries(levelcounts[country])) {
+              maxH = Math.max(maxH, value);
+            }
+          } catch { }
         })
       } else if (i === 6) { // status
         countries.forEach((country) => {
-          for (const [key, value] of Object.entries(levelcounts[country])) {
-            maxH = Math.max(maxH, value);
-          }
-        })
-      } else if (i === 7) { // status
-        countries.forEach((country) => {
-          for (const [key, value] of Object.entries(statuscounts[country])) {
-            maxH = Math.max(maxH, value);
-          }
+          try {
+            for (const [key, value] of Object.entries(statuscounts[country])) {
+              maxH = Math.max(maxH, value);
+            }
+          } catch { }
         })
       }
 
@@ -315,6 +315,68 @@ class OverviewComponent {
           .attr("text-anchor", "left")
           .style("alignment-baseline", "middle")
           .attr("transform", "translate(350,-10)")
+      } else if (i === 6) {
+        var statusSubgroups = ['Not Reported', 'Closed', 'Projected', 'Operational',
+          'Decommissioned', 'Under Construction', 'Non-Operational',
+          'Construction Completed', 'Proposed']
+        var xStatusSubgroup = d3.scaleBand()
+          .domain(statusSubgroups)
+          .range([0, xScale.bandwidth()])
+          .padding([0.05])
+
+        var colStatus = d3.scaleOrdinal()
+          .domain(statusSubgroups)
+          .range(['#587c7c', '#003f5e', '#007c84', '#e8d666', '#9ea615', '#bbe0ce', '#fedcc1', '#f7a08c', '#f1573f'])
+
+        gbar.append("g").selectAll("g")
+          .data(countries)
+          .enter()
+          .append("g")
+          .attr("transform", function (d) {
+            return ("translate(" + (marginleft + xScale(d)) + "," + margintop + ")")
+          })
+          .selectAll("rect")
+          .data(function (d) {
+            var newdata = []
+            statusSubgroups.forEach((group) => {
+              newdata.push([d, group])
+            })
+            return newdata;
+          })
+          .enter()
+          .append("rect")
+          //.on("mouseover", function (event, d) {
+          //  onCountryHover(event, d[0]);
+          //})
+          //.on("mouseout", function (event, d) {
+          //  onCountryExit(event, d[0]);
+          //})
+          .attr("x", function (d) {
+            return xStatusSubgroup(d[1]);
+          })
+          .attr("y", function (d) {
+            try {
+              if (d[1] in statuscounts[d[0]]) {
+                return yScale(statuscounts[d[0]][d[1]]);
+              } else {
+                return 0;
+              }
+            } catch { }
+          })
+          .attr("width", xStatusSubgroup.bandwidth())
+          .attr("height", function (d) {
+            try {
+              if (d[1] in statuscounts[d[0]]) {
+                return height - yScale(statuscounts[d[0]][d[1]]);
+              } else {
+                return 0;
+              }
+            }
+            catch { }
+          })
+          .attr("fill", function (d) {
+            return colStatus(d);
+          })
       }
     });
   }

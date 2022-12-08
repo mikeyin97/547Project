@@ -1,1 +1,646 @@
-{"Afghanistan": {"Primary": 5}, "Albania": {"Secondary": 6}, "Algeria": {"Secondary": 116}, "American Samoa": {"Secondary": 1}, "Angola": {"Secondary": 8}, "Antigua and Barbuda": {"Secondary": 1}, "Argentina": {"Secondary": 143}, "Armenia": {"Secondary": 5}, "Aruba": {"Secondary": 3}, "Australia": {"Secondary": 680, "Advanced": 554}, "Austria": {"Advanced": 627, "Secondary": 7}, "Azerbaijan": {"Secondary": 8}, "Bahamas": {"Advanced": 2, "Secondary": 1}, "Bahrain": {"Advanced": 2}, "Bangladesh": {"Secondary": 16}, "Barbados": {"Advanced": 1}, "Belarus": {"Secondary": 348}, "Belgium": {"Secondary": 211, "Advanced": 198, "Primary": 1}, "Belize": {"Secondary": 2}, "Bhutan": {"Secondary": 2}, "Bolivia": {"Secondary": 26}, "Bosnia and Herzegovina": {"Secondary": 12, "Advanced": 1}, "Botswana": {"Secondary": 5}, "Brazil": {"Secondary": 2649, "Advanced": 136, "Primary": 35}, "British Virgin Islands": {"Advanced": 1}, "Brunei": {"Advanced": 2}, "Bulgaria": {"Advanced": 86, "Secondary": 18, "Primary": 6}, "Burkina Faso": {"Primary": 1}, "Burundi": {"Primary": 2}, "Cabo Verde": {"Secondary": 4}, "Cambodia": {"Secondary": 7}, "Cameroon": {"Secondary": 6}, "Canada": {"Secondary": 1529, "Advanced": 535}, "Chad": {"Primary": 2}, "Chile": {"Advanced": 38, "Secondary": 8}, "China": {"Secondary": 2484, "Primary": 2}, "Colombia": {"Secondary": 63}, "Costa Rica": {"Secondary": 21}, "Croatia": {"Primary": 43, "Secondary": 33, "Advanced": 7}, "Cuba": {"Secondary": 26}, "Cura\u00e7ao": {"Advanced": 1}, "Cyprus": {"Advanced": 14, "Secondary": 3}, "Czech Republic": {"Secondary": 574, "Advanced": 87, "Primary": 2}, "C\u00f4te d'Ivoire": {"Secondary": 10}, "Democratic Republic of the Congo": {"Primary": 3}, "Denmark": {"Advanced": 359, "Secondary": 23, "Primary": 1}, "Dominican Republic": {"Secondary": 12}, "Ecuador": {"Secondary": 26}, "Egypt": {"Secondary": 132}, "El Salvador": {"Secondary": 6}, "Equatorial Guinea": {"Secondary": 1}, "Estonia": {"Advanced": 55, "Secondary": 13}, "Ethiopia": {"Primary": 4}, "Fiji": {"Secondary": 2}, "Finland": {"Advanced": 162, "Secondary": 1}, "Finland (Aland)": {"Advanced": 1}, "France": {"Advanced": 2971, "Secondary": 651}, "France (Guadeloupe)": {"Advanced": 10, "Secondary": 9}, "France (Martinique)": {"Secondary": 35, "Advanced": 10}, "France (Mayotte)": {"Advanced": 3}, "French Guiana": {"Advanced": 21, "Secondary": 16}, "French Polynesia": {"Advanced": 1}, "Gabon": {"Secondary": 1}, "Gambia": {"Primary": 1}, "Georgia": {"Secondary": 5}, "Germany": {"Advanced": 3747, "Secondary": 510}, "Ghana": {"Secondary": 10}, "Greece": {"Advanced": 153, "Secondary": 5}, "Guatemala": {"Secondary": 8}, "Guinea": {"Primary": 2}, "Haiti": {"Primary": 10}, "Honduras": {"Secondary": 6}, "Hong Kong": {"Advanced": 29, "Secondary": 1}, "Hungary": {"Advanced": 644, "Secondary": 96, "Primary": 9}, "Iceland": {"Primary": 5, "Advanced": 3, "Secondary": 3}, "India": {"Secondary": 608, "Primary": 206, "Advanced": 2}, "Indonesia": {"Secondary": 36, "Primary": 2}, "Iran": {"Secondary": 134}, "Iraq": {"Secondary": 73}, "Ireland": {"Advanced": 98, "Secondary": 65, "Primary": 3}, "Israel": {"Advanced": 37}, "Italy": {"Advanced": 2212, "Secondary": 1729, "Primary": 149}, "Jamaica": {"Secondary": 13}, "Japan": {"Advanced": 371, "Secondary": 7}, "Jordan": {"Secondary": 30}, "Kazakhstan": {"Secondary": 40}, "Kenya": {"Secondary": 24}, "Kosovo": {"Secondary": 6}, "Kuwait": {"Advanced": 7}, "Kyrgyzstan": {"Secondary": 13}, "Laos": {"Secondary": 2}, "Latvia": {"Secondary": 48, "Advanced": 41}, "Lebanon": {"Secondary": 3}, "Lesotho": {"Secondary": 15}, "Liberia": {"Primary": 1}, "Libya": {"Secondary": 10}, "Lithuania": {"Advanced": 59, "Secondary": 15}, "Luxembourg": {"Advanced": 19, "Secondary": 16}, "Macao": {"Advanced": 4, "Secondary": 1}, "Macedonia": {"Secondary": 3}, "Madagascar": {"Primary": 2}, "Malaysia": {"Secondary": 484}, "Maldives": {"Secondary": 4}, "Mali": {"Primary": 3}, "Malta": {"Secondary": 4}, "Marshall Islands": {"Secondary": 1}, "Mauritius": {"Secondary": 2}, "Mexico": {"Secondary": 2518, "Primary": 22}, "Micronesia": {"Secondary": 1}, "Moldova": {"Secondary": 47}, "Monaco": {"Secondary": 1}, "Mongolia": {"Secondary": 2}, "Montenegro": {"Secondary": 3}, "Morocco": {"Secondary": 26, "Advanced": 1}, "Mozambique": {"Primary": 3}, "Myanmar": {"Secondary": 2}, "Namibia": {"Secondary": 18}, "Nepal": {"Primary": 8}, "Netherlands": {"Advanced": 413, "Secondary": 4}, "Netherlands (Sint Maarten)": {"Advanced": 1}, "New Caledonia": {"Secondary": 8, "Advanced": 4}, "New Zealand": {"Secondary": 165, "Advanced": 103, "Primary": 49}, "New Zealand (Cook Islands)": {"Advanced": 1, "Secondary": 1}, "Nicaragua": {"Secondary": 7}, "Niger": {"Primary": 3}, "Nigeria": {"Secondary": 3}, "North Korea": {"Primary": 8}, "Northern Mariana Islands": {"Advanced": 2}, "Norway": {"Advanced": 180, "Secondary": 111, "Primary": 39}, "Oman": {"Advanced": 12, "Secondary": 6}, "Pakistan": {"Secondary": 24, "Primary": 1}, "Palau": {"Advanced": 1}, "Palestina": {"Secondary": 21}, "Panama": {"Advanced": 8}, "Papua New Guinea": {"Secondary": 2}, "Paraguay": {"Secondary": 9}, "Peru": {"Secondary": 184}, "Philippines": {"Secondary": 51}, "Poland": {"Secondary": 1083, "Advanced": 542, "Primary": 43}, "Portugal": {"Secondary": 310, "Advanced": 187, "Primary": 3}, "Qatar": {"Advanced": 7}, "Romania": {"Secondary": 448, "Primary": 62, "Advanced": 43}, "Russia": {"Secondary": 1270}, "Rwanda": {"Primary": 3}, "Saint Kitts and Nevis": {"Advanced": 2}, "Saint Lucia": {"Secondary": 3}, "Saint-Martin": {"Advanced": 1, "Secondary": 1}, "Saudi Arabia": {"Advanced": 53, "Secondary": 5}, "Senegal": {"Secondary": 9}, "Serbia": {"Secondary": 13}, "Seychelles": {"Advanced": 1}, "Sierra Leone": {"Primary": 1}, "Singapore": {"Advanced": 3, "Secondary": 1}, "Slovakia": {"Secondary": 178, "Advanced": 140, "Primary": 4}, "Slovenia": {"Secondary": 54, "Advanced": 34, "Primary": 1}, "South Africa": {"Secondary": 964}, "South Korea": {"Advanced": 87}, "South Sudan": {"Primary": 1}, "Spain": {"Secondary": 1111, "Advanced": 976, "Primary": 31}, "Sri Lanka": {"Secondary": 13}, "Sudan": {"Secondary": 2}, "Swaziland": {"Secondary": 3}, "Sweden": {"Advanced": 437}, "Switzerland": {"Advanced": 482, "Secondary": 276}, "Syria": {"Primary": 13}, "Taiwan": {"Advanced": 81, "Secondary": 2}, "Tajikistan": {"Primary": 5}, "Tanzania": {"Primary": 10}, "Thailand": {"Secondary": 44}, "Togo": {"Primary": 3}, "Tonga": {"Secondary": 2}, "Trinidad and Tobago": {"Advanced": 5}, "Tunisia": {"Secondary": 30}, "Turkey": {"Secondary": 319, "Advanced": 1}, "Turkmenistan": {"Secondary": 3}, "Uganda": {"Primary": 17}, "Ukraine": {"Secondary": 312}, "United Arab Emirates": {"Advanced": 33, "Secondary": 1}, "United Kingdom": {"Secondary": 1762, "Advanced": 123, "Primary": 2}, "United Kingdom (Montserrat)": {"Advanced": 1}, "United States": {"Secondary": 9213, "Advanced": 5559, "Primary": 47}, "Uruguay": {"Advanced": 20, "Secondary": 2}, "Uzbekistan": {"Secondary": 35}, "Venezuela": {"Secondary": 23}, "Vietnam": {"Secondary": 11}, "Yemen": {"Primary": 2}, "Zambia": {"Secondary": 13}, "Zimbabwe": {"Secondary": 42}}
+{
+    "Afghanistan": {
+        "Primary": 5
+    },
+    "Albania": {
+        "Secondary": 6
+    },
+    "Algeria": {
+        "Secondary": 116
+    },
+    "American Samoa": {
+        "Secondary": 1
+    },
+    "Angola": {
+        "Secondary": 8
+    },
+    "Antigua and Barbuda": {
+        "Secondary": 1
+    },
+    "Argentina": {
+        "Secondary": 143
+    },
+    "Armenia": {
+        "Secondary": 5
+    },
+    "Aruba": {
+        "Secondary": 3
+    },
+    "Australia": {
+        "Secondary": 680,
+        "Advanced": 554
+    },
+    "Austria": {
+        "Advanced": 627,
+        "Secondary": 7
+    },
+    "Azerbaijan": {
+        "Secondary": 8
+    },
+    "Bahamas": {
+        "Advanced": 2,
+        "Secondary": 1
+    },
+    "Bahrain": {
+        "Advanced": 2
+    },
+    "Bangladesh": {
+        "Secondary": 16
+    },
+    "Barbados": {
+        "Advanced": 1
+    },
+    "Belarus": {
+        "Secondary": 348
+    },
+    "Belgium": {
+        "Secondary": 211,
+        "Advanced": 198,
+        "Primary": 1
+    },
+    "Belize": {
+        "Secondary": 2
+    },
+    "Bhutan": {
+        "Secondary": 2
+    },
+    "Bolivia": {
+        "Secondary": 26
+    },
+    "Bosnia and Herzegovina": {
+        "Secondary": 12,
+        "Advanced": 1
+    },
+    "Botswana": {
+        "Secondary": 5
+    },
+    "Brazil": {
+        "Secondary": 2649,
+        "Advanced": 136,
+        "Primary": 35
+    },
+    "British Virgin Islands": {
+        "Advanced": 1
+    },
+    "Brunei": {
+        "Advanced": 2
+    },
+    "Bulgaria": {
+        "Advanced": 86,
+        "Secondary": 18,
+        "Primary": 6
+    },
+    "Burkina Faso": {
+        "Primary": 1
+    },
+    "Burundi": {
+        "Primary": 2
+    },
+    "Cabo Verde": {
+        "Secondary": 4
+    },
+    "Cambodia": {
+        "Secondary": 7
+    },
+    "Cameroon": {
+        "Secondary": 6
+    },
+    "Canada": {
+        "Secondary": 1529,
+        "Advanced": 535
+    },
+    "Chad": {
+        "Primary": 2
+    },
+    "Chile": {
+        "Advanced": 38,
+        "Secondary": 8
+    },
+    "China": {
+        "Secondary": 2484,
+        "Primary": 2
+    },
+    "Colombia": {
+        "Secondary": 63
+    },
+    "Costa Rica": {
+        "Secondary": 21
+    },
+    "Croatia": {
+        "Primary": 43,
+        "Secondary": 33,
+        "Advanced": 7
+    },
+    "Cuba": {
+        "Secondary": 26
+    },
+    "Cura\u00e7ao": {
+        "Advanced": 1
+    },
+    "Cyprus": {
+        "Advanced": 14,
+        "Secondary": 3
+    },
+    "Czech Republic": {
+        "Secondary": 574,
+        "Advanced": 87,
+        "Primary": 2
+    },
+    "C\u00f4te d'Ivoire": {
+        "Secondary": 10
+    },
+    "Democratic Republic of the Congo": {
+        "Primary": 3
+    },
+    "Denmark": {
+        "Advanced": 359,
+        "Secondary": 23,
+        "Primary": 1
+    },
+    "Dominican Republic": {
+        "Secondary": 12
+    },
+    "Ecuador": {
+        "Secondary": 26
+    },
+    "Egypt": {
+        "Secondary": 132
+    },
+    "El Salvador": {
+        "Secondary": 6
+    },
+    "Equatorial Guinea": {
+        "Secondary": 1
+    },
+    "Estonia": {
+        "Advanced": 55,
+        "Secondary": 13
+    },
+    "Ethiopia": {
+        "Primary": 4
+    },
+    "Fiji": {
+        "Secondary": 2
+    },
+    "Finland": {
+        "Advanced": 162,
+        "Secondary": 1
+    },
+    "Finland (Aland)": {
+        "Advanced": 1
+    },
+    "France": {
+        "Advanced": 2971,
+        "Secondary": 651
+    },
+    "France (Guadeloupe)": {
+        "Advanced": 10,
+        "Secondary": 9
+    },
+    "France (Martinique)": {
+        "Secondary": 35,
+        "Advanced": 10
+    },
+    "France (Mayotte)": {
+        "Advanced": 3
+    },
+    "French Guiana": {
+        "Advanced": 21,
+        "Secondary": 16
+    },
+    "French Polynesia": {
+        "Advanced": 1
+    },
+    "Gabon": {
+        "Secondary": 1
+    },
+    "Gambia": {
+        "Primary": 1
+    },
+    "Georgia": {
+        "Secondary": 5
+    },
+    "Germany": {
+        "Advanced": 3747,
+        "Secondary": 510
+    },
+    "Ghana": {
+        "Secondary": 10
+    },
+    "Greece": {
+        "Advanced": 153,
+        "Secondary": 5
+    },
+    "Guatemala": {
+        "Secondary": 8
+    },
+    "Guinea": {
+        "Primary": 2
+    },
+    "Haiti": {
+        "Primary": 10
+    },
+    "Honduras": {
+        "Secondary": 6
+    },
+    "Hong Kong": {
+        "Advanced": 29,
+        "Secondary": 1
+    },
+    "Hungary": {
+        "Advanced": 644,
+        "Secondary": 96,
+        "Primary": 9
+    },
+    "Iceland": {
+        "Primary": 5,
+        "Advanced": 3,
+        "Secondary": 3
+    },
+    "India": {
+        "Secondary": 608,
+        "Primary": 206,
+        "Advanced": 2
+    },
+    "Indonesia": {
+        "Secondary": 36,
+        "Primary": 2
+    },
+    "Iran": {
+        "Secondary": 134
+    },
+    "Iraq": {
+        "Secondary": 73
+    },
+    "Ireland": {
+        "Advanced": 98,
+        "Secondary": 65,
+        "Primary": 3
+    },
+    "Israel": {
+        "Advanced": 37
+    },
+    "Italy": {
+        "Advanced": 2212,
+        "Secondary": 1729,
+        "Primary": 149
+    },
+    "Jamaica": {
+        "Secondary": 13
+    },
+    "Japan": {
+        "Advanced": 371,
+        "Secondary": 7
+    },
+    "Jordan": {
+        "Secondary": 30
+    },
+    "Kazakhstan": {
+        "Secondary": 40
+    },
+    "Kenya": {
+        "Secondary": 24
+    },
+    "Kosovo": {
+        "Secondary": 6
+    },
+    "Kuwait": {
+        "Advanced": 7
+    },
+    "Kyrgyzstan": {
+        "Secondary": 13
+    },
+    "Laos": {
+        "Secondary": 2
+    },
+    "Latvia": {
+        "Secondary": 48,
+        "Advanced": 41
+    },
+    "Lebanon": {
+        "Secondary": 3
+    },
+    "Lesotho": {
+        "Secondary": 15
+    },
+    "Liberia": {
+        "Primary": 1
+    },
+    "Libya": {
+        "Secondary": 10
+    },
+    "Lithuania": {
+        "Advanced": 59,
+        "Secondary": 15
+    },
+    "Luxembourg": {
+        "Advanced": 19,
+        "Secondary": 16
+    },
+    "Macao": {
+        "Advanced": 4,
+        "Secondary": 1
+    },
+    "Macedonia": {
+        "Secondary": 3
+    },
+    "Madagascar": {
+        "Primary": 2
+    },
+    "Malaysia": {
+        "Secondary": 484
+    },
+    "Maldives": {
+        "Secondary": 4
+    },
+    "Mali": {
+        "Primary": 3
+    },
+    "Malta": {
+        "Secondary": 4
+    },
+    "Marshall Islands": {
+        "Secondary": 1
+    },
+    "Mauritius": {
+        "Secondary": 2
+    },
+    "Mexico": {
+        "Secondary": 2518,
+        "Primary": 22
+    },
+    "Micronesia": {
+        "Secondary": 1
+    },
+    "Moldova": {
+        "Secondary": 47
+    },
+    "Monaco": {
+        "Secondary": 1
+    },
+    "Mongolia": {
+        "Secondary": 2
+    },
+    "Montenegro": {
+        "Secondary": 3
+    },
+    "Morocco": {
+        "Secondary": 26,
+        "Advanced": 1
+    },
+    "Mozambique": {
+        "Primary": 3
+    },
+    "Myanmar": {
+        "Secondary": 2
+    },
+    "Namibia": {
+        "Secondary": 18
+    },
+    "Nepal": {
+        "Primary": 8
+    },
+    "Netherlands": {
+        "Advanced": 413,
+        "Secondary": 4
+    },
+    "Netherlands (Sint Maarten)": {
+        "Advanced": 1
+    },
+    "New Caledonia": {
+        "Secondary": 8,
+        "Advanced": 4
+    },
+    "New Zealand": {
+        "Secondary": 165,
+        "Advanced": 103,
+        "Primary": 49
+    },
+    "New Zealand (Cook Islands)": {
+        "Advanced": 1,
+        "Secondary": 1
+    },
+    "Nicaragua": {
+        "Secondary": 7
+    },
+    "Niger": {
+        "Primary": 3
+    },
+    "Nigeria": {
+        "Secondary": 3
+    },
+    "North Korea": {
+        "Primary": 8
+    },
+    "Northern Mariana Islands": {
+        "Advanced": 2
+    },
+    "Norway": {
+        "Advanced": 180,
+        "Secondary": 111,
+        "Primary": 39
+    },
+    "Oman": {
+        "Advanced": 12,
+        "Secondary": 6
+    },
+    "Pakistan": {
+        "Secondary": 24,
+        "Primary": 1
+    },
+    "Palau": {
+        "Advanced": 1
+    },
+    "Palestina": {
+        "Secondary": 21
+    },
+    "Panama": {
+        "Advanced": 8
+    },
+    "Papua New Guinea": {
+        "Secondary": 2
+    },
+    "Paraguay": {
+        "Secondary": 9
+    },
+    "Peru": {
+        "Secondary": 184
+    },
+    "Philippines": {
+        "Secondary": 51
+    },
+    "Poland": {
+        "Secondary": 1083,
+        "Advanced": 542,
+        "Primary": 43
+    },
+    "Portugal": {
+        "Secondary": 310,
+        "Advanced": 187,
+        "Primary": 3
+    },
+    "Qatar": {
+        "Advanced": 7
+    },
+    "Romania": {
+        "Secondary": 448,
+        "Primary": 62,
+        "Advanced": 43
+    },
+    "Russia": {
+        "Secondary": 1270
+    },
+    "Rwanda": {
+        "Primary": 3
+    },
+    "Saint Kitts and Nevis": {
+        "Advanced": 2
+    },
+    "Saint Lucia": {
+        "Secondary": 3
+    },
+    "Saint-Martin": {
+        "Advanced": 1,
+        "Secondary": 1
+    },
+    "Saudi Arabia": {
+        "Advanced": 53,
+        "Secondary": 5
+    },
+    "Senegal": {
+        "Secondary": 9
+    },
+    "Serbia": {
+        "Secondary": 13
+    },
+    "Seychelles": {
+        "Advanced": 1
+    },
+    "Sierra Leone": {
+        "Primary": 1
+    },
+    "Singapore": {
+        "Advanced": 3,
+        "Secondary": 1
+    },
+    "Slovakia": {
+        "Secondary": 178,
+        "Advanced": 140,
+        "Primary": 4
+    },
+    "Slovenia": {
+        "Secondary": 54,
+        "Advanced": 34,
+        "Primary": 1
+    },
+    "South Africa": {
+        "Secondary": 964
+    },
+    "South Korea": {
+        "Advanced": 87
+    },
+    "South Sudan": {
+        "Primary": 1
+    },
+    "Spain": {
+        "Secondary": 1111,
+        "Advanced": 976,
+        "Primary": 31
+    },
+    "Sri Lanka": {
+        "Secondary": 13
+    },
+    "Sudan": {
+        "Secondary": 2
+    },
+    "Swaziland": {
+        "Secondary": 3
+    },
+    "Sweden": {
+        "Advanced": 437
+    },
+    "Switzerland": {
+        "Advanced": 482,
+        "Secondary": 276
+    },
+    "Syria": {
+        "Primary": 13
+    },
+    "Taiwan": {
+        "Advanced": 81,
+        "Secondary": 2
+    },
+    "Tajikistan": {
+        "Primary": 5
+    },
+    "Tanzania": {
+        "Primary": 10
+    },
+    "Thailand": {
+        "Secondary": 44
+    },
+    "Togo": {
+        "Primary": 3
+    },
+    "Tonga": {
+        "Secondary": 2
+    },
+    "Trinidad and Tobago": {
+        "Advanced": 5
+    },
+    "Tunisia": {
+        "Secondary": 30
+    },
+    "Turkey": {
+        "Secondary": 319,
+        "Advanced": 1
+    },
+    "Turkmenistan": {
+        "Secondary": 3
+    },
+    "Uganda": {
+        "Primary": 17
+    },
+    "Ukraine": {
+        "Secondary": 312
+    },
+    "United Arab Emirates": {
+        "Advanced": 33,
+        "Secondary": 1
+    },
+    "United Kingdom": {
+        "Secondary": 1762,
+        "Advanced": 123,
+        "Primary": 2
+    },
+    "United Kingdom (Montserrat)": {
+        "Advanced": 1
+    },
+    "United States": {
+        "Secondary": 9213,
+        "Advanced": 5559,
+        "Primary": 47
+    },
+    "Uruguay": {
+        "Advanced": 20,
+        "Secondary": 2
+    },
+    "Uzbekistan": {
+        "Secondary": 35
+    },
+    "Venezuela": {
+        "Secondary": 23
+    },
+    "Vietnam": {
+        "Secondary": 11
+    },
+    "Yemen": {
+        "Primary": 2
+    },
+    "Zambia": {
+        "Secondary": 13
+    },
+    "Zimbabwe": {
+        "Secondary": 42
+    }
+}
