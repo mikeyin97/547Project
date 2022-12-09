@@ -196,14 +196,14 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
             .join("path")
             .attr("stroke-width", function (feature) {
                 if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-                    return (1.0)
+                    return (2.0)
                 } else {
                     return (0.3)
                 }
             })
             .attr("stroke", function (feature) {
                 if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-                    return ("#fff900")
+                    return ("#EF2F2F")
                 } else {
                     return ("#262626")
                 }
@@ -215,10 +215,10 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
             const barsvg = barCanvas.select("g");
             const xax = barsvg.select("#xax");
             const yax = barsvg.select("#yax");
-            var width = 400;
-            var height = 300;
-            var margintop = 20;
-            var marginleft = 120;
+            var width = 350;
+            var height = 210;
+            var margintop = 10;
+            var marginleft = 100;
             // bar chart x-axis
 
             var x = d3.scaleBand()
@@ -244,7 +244,8 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
                 .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
                 .selectAll("text")
                 .attr("type", "xaxval")
-                .attr("transform", "translate(-10,0)rotate(-45)")
+                .attr('text-align', "center")
+                .attr("transform", "translate(15,0)rotate(-15)")
                 .style("text-anchor", "end");
 
             var maxH = 0;
@@ -492,7 +493,7 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
                 .attr('y', "0")
                 .attr("id", "bg")
                 .attr('width', '100%')
-                .attr('height', '100%')
+                .attr('height', '65%')
                 .attr('stroke', 'black')
                 .attr('fill', '#d0e7fd')
                 .attr('z-index', '0');
@@ -524,7 +525,7 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
                 });
         })
 
-        const width = 1200;
+        const width = 1100;
         const height = 800;
         const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
         const pathGenerator = d3.geoPath().projection(projection);
@@ -569,9 +570,10 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
             })
             .attr('z-index', '100')
             .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
-            .attr("d", feature => pathGenerator(feature));
+            .attr("d", feature => pathGenerator(feature))
+            .attr("transform", "translate(-100,0)")
 
-        var zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", function (event) {
+        var zoom = d3.zoom().scaleExtent([0.5, 10]).on("zoom", function (event) {
             d3.select('#right svg g').attr("transform", event.transform)
         })
 
@@ -593,38 +595,51 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
         //     <svg ref = {svgRef} style={{height:"1000px", width:"1000px", "backgroundColor" :"#000e26"}}></svg>
         // </div>
         <div id="countryselector" ref={wrapperRef} style={{ height: "100%", width: "100%" }}>
-            <div id="left"><h3 id="countriesStr"></h3>
-                <div id="panel1" className="panel l">
-                    <Tooltip title={<h2>Number of WWTPs at each level of treatment</h2>} arrow placement="right"><Button sx={{ m: 1 }}>Country WWTPs at Each Treatment Level</Button></Tooltip>
-                    <svg ref={barRef} className="graph" style={{ height: "400px", width: "100%" }}></svg>
-                </div>
-                <div id="panel2" className="panel r">
-                    <Tooltip title={<h2>Average dilution factor (DF) within the country. DF is the ratio of contaminant concentration in the effluent water to the receiving water.</h2>} arrow placement="right"><Button sx={{ m: 1 }}>Dilution Factor</Button></Tooltip>
-                    <svg ref={barRef} className="graph" style={{ height: "400px", width: "100%" }}></svg>
-                </div>
-                <div id="panel3" className="panel l">
-                    <Tooltip title={<h2>Average population served by each WWTP within the country</h2>} arrow placement="right"><Button sx={{ m: 1 }}>Population Served</Button></Tooltip>
-                    <svg ref={barRef} className="graph" style={{ height: "400px", width: "100%" }}></svg>
-                </div>
-                <div id="panel4" className="panel r">
-                    <Tooltip title={<h2>Average design capacity for each WWTP within the country. **This value is only reported for countries in Europe and the United States</h2>} arrow placement="right"><Button sx={{ m: 1 }}>Design Capacity</Button></Tooltip>
-                    <svg ref={barRef} className="graph" style={{ height: "400px", width: "100%" }}></svg>
-                </div>
+            <div id="left">
+                {/* <div id="panel1" className="panel l">
+                    <Tooltip className = "tooltip" title={<h4>Number of WWTPs at each level of treatment</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Country WWTPs at Each Treatment Level</Button></Tooltip>
+                    <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                </div> */}
+
+
+                    <div id="panel1" className="panel l">
+                        <Tooltip className = "tooltip"  title={<h4>Average volume of discharge into rivers based on WWTP outfall location (0 for ocean discharge) </h4>} arrow placement="right"><Button sx={{ m: 1 }}>Outfall Discharge</Button></Tooltip>
+                        <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                    </div>
+                    <div id="panel2" className="panel r">
+                        <Tooltip className = "tooltip"  title={<h4>Average volume of total wastewater discharged by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Wastewater Discharge</Button></Tooltip>
+                        <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                    </div>
+                    <div id="panel3" className="panel l">
+                        <Tooltip className = "tooltip"  title={<h4>Average dilution factor (DF) within the country. DF is the ratio of contaminant concentration in the effluent water to the receiving water.</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Dilution Factor</Button></Tooltip>
+                        <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                    </div>
+                    <div id="panel4" className="panel r">
+                        <Tooltip className = "tooltip"  title={<h4>Average volume of total wastewater discharged by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Wastewater Discharge</Button></Tooltip>
+                        <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                    </div>
                 <div id="panel5" className="panel l">
-                    <Tooltip title={<h2>Average volume of discharge into rivers based on WWTP outfall location (0 for ocean discharge) </h2>} arrow placement="right"><Button sx={{ m: 1 }}>Outfall Discharge</Button></Tooltip>
-                    <svg ref={barRef} className="graph" style={{ height: "400px", width: "100%" }}></svg>
+                    <Tooltip className = "tooltip"  title={<h4>Average population served by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Population Served</Button></Tooltip>
+                    <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
                 </div>
                 <div id="panel6" className="panel r">
-                    <Tooltip title={<h2>Average volume of total wastewater discharged by each WWTP within the country</h2>} arrow placement="right"><Button sx={{ m: 1 }}>Wastewater Discharge</Button></Tooltip>
-                    <svg ref={barRef} className="graph" style={{ height: "400px", width: "100%" }}></svg>
+                    <Tooltip className = "tooltip"  title={<h4>Average design capacity for each WWTP within the country. **This value is only reported for countries in Europe and the United States</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Design Capacity</Button></Tooltip>
+                    <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
                 </div>
+
 
 
                 <div id="panel4" className="panel">
-                    <p>yay </p>
+
                 </div>
             </div>
-            <div id="right"><svg ref={svgRef} style={{ height: "100%", width: "100%", viewBox: "0 0 100 100" }}></svg></div>
+            <div id="right">
+                <div id = "countriesStrDiv"><h4 id="countriesStr"></h4></div>
+                <svg ref={svgRef} style={{ height: "90%", width: "100%", viewBox: "0 0 100 100" }}></svg>
+            <div> 
+            
+            </div></div>
+            
         </div>
     )
 }

@@ -13,7 +13,6 @@ return (
 	<>
 	<Nav>
 		<Bars />
-		<NavMenu>
 		<NavLink to='/about' className={(navData) => (navData.isActive ? "active-style" : 'none')}>
 			About
 		</NavLink>
@@ -26,16 +25,12 @@ return (
 		<NavLink to='/distribution' className={(navData) => (navData.isActive ? "active-style" : 'none')}>
 			Global Distribution
 		</NavLink>
-		<NavLink to='/contacts' className={(navData) => (navData.isActive ? "active-style" : 'none')}>
-			Contacts
-		</NavLink>
 		{/* Second Nav */}
 		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
-		</NavMenu>
 		{/* A ghost button */}
-		<NavBtn>
+		{/* <NavBtn>
 		<NavBtnLink to='/signin'>Search</NavBtnLink>
-		</NavBtn>
+		</NavBtn> */}
 	</Nav>
 	</>
 );
