@@ -76,6 +76,7 @@ class OverviewComponent {
 
   initOverview = () => {
     const { props: { aggcounts, levelcounts, statuscounts } } = this;
+    console.log(levelcounts);
     const barCanvases = d3.selectAll(".graph");
 
     barCanvases.each(function (d, i) {
@@ -232,14 +233,14 @@ class OverviewComponent {
             return "#69b3a2"
           });
       } else if (i === 5) {
-        var subgroups = ["Primary", "Secondary", "Advanced"]
-        var xSubgroup = d3.scaleBand()
-          .domain(subgroups)
+        var levelSubgroups = ["Primary", "Secondary", "Advanced"]
+        var xLevelSubgroups = d3.scaleBand()
+          .domain(levelSubgroups)
           .range([0, xScale.bandwidth()])
           .padding([0.05])
 
-        var col = d3.scaleOrdinal()
-          .domain(subgroups)
+        var levelColors = d3.scaleOrdinal()
+          .domain(levelSubgroups)
           .range(['#e41a1c', '#377eb8', '#4daf4a'])
 
         gbar.append("g").selectAll("g")
@@ -252,7 +253,7 @@ class OverviewComponent {
           .selectAll("rect")
           .data(function (d) {
             var newdata = []
-            subgroups.forEach((group) => {
+            levelSubgroups.forEach((group) => {
               newdata.push([d, group])
             })
             return newdata;
@@ -266,7 +267,7 @@ class OverviewComponent {
           //  onCountryExit(event, d[0]);
           //})
           .attr("x", function (d) {
-            return xSubgroup(d[1]);
+            return xLevelSubgroups(d[1]);
           })
           .attr("y", function (d) {
             try {
@@ -277,7 +278,7 @@ class OverviewComponent {
               }
             } catch { }
           })
-          .attr("width", xSubgroup.bandwidth())
+          .attr("width", xLevelSubgroups.bandwidth())
           .attr("height", function (d) {
             try {
               if (d[1] in levelcounts[d[0]]) {
@@ -289,28 +290,28 @@ class OverviewComponent {
             catch { }
           })
           .attr("fill", function (d) {
-            return col(d);
+            return levelColors(d);
           })
 
         // legend and names
         var size = 10
         gbar.selectAll("legend")
-          .data(subgroups)
+          .data(levelSubgroups)
           .enter()
           .append("rect")
           .attr("x", 50)
           .attr("y", function (d, i) { return 50 + i * (size + 5) }) // 50 is where the first dot appears. (size + 5) is the distance between dots
           .attr("width", size)
           .attr("height", size)
-          .style("fill", function (d) { return col(d) })
+          .style("fill", function (d) { return levelColors(d) })
           .attr("transform", "translate(500,-10)")
         gbar.selectAll("legendname")
-          .data(subgroups)
+          .data(levelSubgroups)
           .enter()
           .append("text")
           .attr("x", 100 + size * 1.2)
           .attr("y", function (d, i) { return 50 + i * (size + 5) + (size / 2) })
-          .style("fill", function (d) { return col(d) })
+          .style("fill", function (d) { return levelColors(d) })
           .text(function (d) { return d })
           .attr("text-anchor", "left")
           .style("alignment-baseline", "middle")
@@ -319,7 +320,7 @@ class OverviewComponent {
         var statusSubgroups = ['Not Reported', 'Closed', 'Projected', 'Operational',
           'Decommissioned', 'Under Construction', 'Non-Operational',
           'Construction Completed', 'Proposed']
-        var xStatusSubgroup = d3.scaleBand()
+        var xStatusSubgroups = d3.scaleBand()
           .domain(statusSubgroups)
           .range([0, xScale.bandwidth()])
           .padding([0.05])
@@ -352,7 +353,7 @@ class OverviewComponent {
           //  onCountryExit(event, d[0]);
           //})
           .attr("x", function (d) {
-            return xStatusSubgroup(d[1]);
+            return xStatusSubgroups(d[1]);
           })
           .attr("y", function (d) {
             try {
@@ -363,7 +364,7 @@ class OverviewComponent {
               }
             } catch { }
           })
-          .attr("width", xStatusSubgroup.bandwidth())
+          .attr("width", xStatusSubgroups.bandwidth())
           .attr("height", function (d) {
             try {
               if (d[1] in statuscounts[d[0]]) {
