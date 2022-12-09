@@ -2,10 +2,15 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 import './GeoChart.css';
 
-function GeoChart({ geodata, wwtpdata }) {
+function GeoChart({ geodata, wwtpdata, levelcountstrans }) {
     const svgRef = useRef();
+    const barRef = useRef();
     const wrapperRef = useRef();
     const [selectedCountry, setSelectedCountry] = useState(null);
+
+    console.log(typeof (levelcountstrans))
+    console.log(levelcountstrans)
+
     // const dimensions = useResizeObserver(wrapperRef);
     const onCountryClick = useCallback(([event, feature, zoom]) => {
         const svg = d3.select(svgRef.current).select("g");
@@ -80,9 +85,105 @@ function GeoChart({ geodata, wwtpdata }) {
         svg.call(zoom);
     }, [geodata, wwtpdata, selectedCountry, onCountryClick]);
 
+    useEffect(() => {
+        var levelSubgroups = ["Primary", "Secondary", "Advanced"]
+        const countries = []
+        levelcountstrans.forEach(function (data) {
+            countries.push(data.country)
+        });
+        const barCanvas = d3.select(".graph");
+        const barSVG = barCanvas.append('svg')
+            .attr('height', '100%')
+            .attr('width', '100%');
+        const gbar = barSVG.append("g");
+        gbar.append("g").attr("id", "xax");
+        gbar.append("g").attr("id", "yax");
+        const xax = gbar.select("#xax");
+        const yax = gbar.select("#yax");
+
+        // The barchart panels
+        gbar.append('rect')
+            .attr('x', "0")
+            .attr('y', "0")
+            .attr("id", "bgbar")
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('stroke', 'black')
+            .attr('fill', '#d0e7fd')
+            .attr('z-index', '0');
+
+        // define the scales
+        var width = 1300,
+            height = 200,
+            margintop = 50,
+            marginleft = 70;
+
+        // define x-axis
+        var xScale = d3.scaleBand()
+            .range([0, width])
+            .domain(countries)
+            .padding(0.2)
+
+        // scale x-axis
+        xax.call(d3.axisBottom(xScale))
+            .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
+            .selectAll("text")
+            .attr("transform", "translate(-10,0)rotate(-90)")
+            .style("text-anchor", "end");
+
+        const maxH = 40000; //44457
+        // define y-axis
+        var yScale = d3.scaleLinear()
+            .domain([0, maxH])
+            .range([height, 0]);
+
+        // scale y-axis
+        yax
+            .attr("transform", "translate(" + marginleft + "," + margintop + ")")
+            .call(d3.axisLeft(yScale));
+
+        var levelColors = d3.scaleOrdinal()
+            .domain(levelSubgroups)
+            .range(['#e41a1c', '#377eb8', '#4daf4a'])
+
+        //stack the data? --> stack per subgroup
+        var stackedData = d3.stack()
+            .keys(levelSubgroups)
+            (levelcountstrans)
+        console.log(stackedData)
+
+        gbar.append("g")
+            .selectAll("g")
+            .data(stackedData)
+            .enter().append("g")
+            .attr("transform", function (d) {
+                return ("translate(" + (marginleft + xScale(d)) + "," + margintop + ")")
+            })
+            .attr("fill", function (d) {
+                return levelColors(d.key);
+            })
+            .selectAll("rect")
+            .data(function (d) {
+                console.log(d);
+                return d;
+            }).enter()
+            .append("rect")
+            .attr("x", function (d) {
+                return xScale(d.data.country)
+            })
+            .attr("y", function (d) {
+                console.log(d[0]);
+                console.log(d[1]);
+                return yScale(d[1]);
+            })
+            .attr("height", function (d) { return yScale(d[0]) - yScale(d[1]); })
+            .attr("width", xScale.bandwidth())
+    }, [levelcountstrans]);
+
     return (
         <div id="geochart" ref={wrapperRef} style={{ height: "1000px", width: "100%" }}>
-            <div id="right"><svg ref={svgRef} style={{ height: "100%", width: "100%" }}></svg></div>
+            <div id="left"><svg ref={svgRef} style={{ height: "100%", width: "100%" }}></svg></div>
+            <div id="right"><svg ref={barRef} className="graph" style={{ height: "100%", width: "100%" }}></svg></div>
         </div>
     );
 }

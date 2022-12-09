@@ -1,0 +1,1130 @@
+[
+ {
+   "country": "Afghanistan",
+   "Advanced": 0,
+   "Primary": 5,
+   "Secondary": 0
+ },
+ {
+   "country": "Albania",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 6
+ },
+ {
+   "country": "Algeria",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 116
+ },
+ {
+   "country": "American Samoa",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Angola",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 8
+ },
+ {
+   "country": "Antigua and Barbuda",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Argentina",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 143
+ },
+ {
+   "country": "Armenia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 5
+ },
+ {
+   "country": "Aruba",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 3
+ },
+ {
+   "country": "Australia",
+   "Advanced": 554,
+   "Primary": 0,
+   "Secondary": 680
+ },
+ {
+   "country": "Austria",
+   "Advanced": 627,
+   "Primary": 0,
+   "Secondary": 7
+ },
+ {
+   "country": "Azerbaijan",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 8
+ },
+ {
+   "country": "Bahamas",
+   "Advanced": 2,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Bahrain",
+   "Advanced": 2,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Bangladesh",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 16
+ },
+ {
+   "country": "Barbados",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Belarus",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 348
+ },
+ {
+   "country": "Belgium",
+   "Advanced": 198,
+   "Primary": 1,
+   "Secondary": 211
+ },
+ {
+   "country": "Belize",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 2
+ },
+ {
+   "country": "Bhutan",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 2
+ },
+ {
+   "country": "Bolivia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 26
+ },
+ {
+   "country": "Bosnia and Herzegovina",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 12
+ },
+ {
+   "country": "Botswana",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 5
+ },
+ {
+   "country": "Brazil",
+   "Advanced": 136,
+   "Primary": 35,
+   "Secondary": 2649
+ },
+ {
+   "country": "British Virgin Islands",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Brunei",
+   "Advanced": 2,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Bulgaria",
+   "Advanced": 86,
+   "Primary": 6,
+   "Secondary": 18
+ },
+ {
+   "country": "Burkina Faso",
+   "Advanced": 0,
+   "Primary": 1,
+   "Secondary": 0
+ },
+ {
+   "country": "Burundi",
+   "Advanced": 0,
+   "Primary": 2,
+   "Secondary": 0
+ },
+ {
+   "country": "Cabo Verde",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 4
+ },
+ {
+   "country": "Cambodia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 7
+ },
+ {
+   "country": "Cameroon",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 6
+ },
+ {
+   "country": "Canada",
+   "Advanced": 535,
+   "Primary": 0,
+   "Secondary": 1529
+ },
+ {
+   "country": "Chad",
+   "Advanced": 0,
+   "Primary": 2,
+   "Secondary": 0
+ },
+ {
+   "country": "Chile",
+   "Advanced": 38,
+   "Primary": 0,
+   "Secondary": 8
+ },
+ {
+   "country": "China",
+   "Advanced": 0,
+   "Primary": 2,
+   "Secondary": 2484
+ },
+ {
+   "country": "Colombia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 63
+ },
+ {
+   "country": "Costa Rica",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 21
+ },
+ {
+   "country": "Croatia",
+   "Advanced": 7,
+   "Primary": 43,
+   "Secondary": 33
+ },
+ {
+   "country": "Cuba",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 26
+ },
+ {
+   "country": "Curaçao",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Cyprus",
+   "Advanced": 14,
+   "Primary": 0,
+   "Secondary": 3
+ },
+ {
+   "country": "Czech Republic",
+   "Advanced": 87,
+   "Primary": 2,
+   "Secondary": 574
+ },
+ {
+   "country": "Côte d'Ivoire",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 10
+ },
+ {
+   "country": "Democratic Republic of the Congo",
+   "Advanced": 0,
+   "Primary": 3,
+   "Secondary": 0
+ },
+ {
+   "country": "Denmark",
+   "Advanced": 359,
+   "Primary": 1,
+   "Secondary": 23
+ },
+ {
+   "country": "Dominican Republic",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 12
+ },
+ {
+   "country": "Ecuador",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 26
+ },
+ {
+   "country": "Egypt",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 132
+ },
+ {
+   "country": "El Salvador",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 6
+ },
+ {
+   "country": "Equatorial Guinea",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Estonia",
+   "Advanced": 55,
+   "Primary": 0,
+   "Secondary": 13
+ },
+ {
+   "country": "Ethiopia",
+   "Advanced": 0,
+   "Primary": 4,
+   "Secondary": 0
+ },
+ {
+   "country": "Fiji",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 2
+ },
+ {
+   "country": "Finland",
+   "Advanced": 162,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Finland (Aland)",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "France",
+   "Advanced": 2971,
+   "Primary": 0,
+   "Secondary": 651
+ },
+ {
+   "country": "France (Guadeloupe)",
+   "Advanced": 10,
+   "Primary": 0,
+   "Secondary": 9
+ },
+ {
+   "country": "France (Martinique)",
+   "Advanced": 10,
+   "Primary": 0,
+   "Secondary": 35
+ },
+ {
+   "country": "France (Mayotte)",
+   "Advanced": 3,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "French Guiana",
+   "Advanced": 21,
+   "Primary": 0,
+   "Secondary": 16
+ },
+ {
+   "country": "French Polynesia",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Gabon",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Gambia",
+   "Advanced": 0,
+   "Primary": 1,
+   "Secondary": 0
+ },
+ {
+   "country": "Georgia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 5
+ },
+ {
+   "country": "Germany",
+   "Advanced": 3747,
+   "Primary": 0,
+   "Secondary": 510
+ },
+ {
+   "country": "Ghana",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 10
+ },
+ {
+   "country": "Greece",
+   "Advanced": 153,
+   "Primary": 0,
+   "Secondary": 5
+ },
+ {
+   "country": "Guatemala",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 8
+ },
+ {
+   "country": "Guinea",
+   "Advanced": 0,
+   "Primary": 2,
+   "Secondary": 0
+ },
+ {
+   "country": "Haiti",
+   "Advanced": 0,
+   "Primary": 10,
+   "Secondary": 0
+ },
+ {
+   "country": "Honduras",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 6
+ },
+ {
+   "country": "Hong Kong",
+   "Advanced": 29,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Hungary",
+   "Advanced": 644,
+   "Primary": 9,
+   "Secondary": 96
+ },
+ {
+   "country": "Iceland",
+   "Advanced": 3,
+   "Primary": 5,
+   "Secondary": 3
+ },
+ {
+   "country": "India",
+   "Advanced": 2,
+   "Primary": 206,
+   "Secondary": 608
+ },
+ {
+   "country": "Indonesia",
+   "Advanced": 0,
+   "Primary": 2,
+   "Secondary": 36
+ },
+ {
+   "country": "Iran",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 134
+ },
+ {
+   "country": "Iraq",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 73
+ },
+ {
+   "country": "Ireland",
+   "Advanced": 98,
+   "Primary": 3,
+   "Secondary": 65
+ },
+ {
+   "country": "Israel",
+   "Advanced": 37,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Italy",
+   "Advanced": 2212,
+   "Primary": 149,
+   "Secondary": 1729
+ },
+ {
+   "country": "Jamaica",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 13
+ },
+ {
+   "country": "Japan",
+   "Advanced": 371,
+   "Primary": 0,
+   "Secondary": 7
+ },
+ {
+   "country": "Jordan",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 30
+ },
+ {
+   "country": "Kazakhstan",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 40
+ },
+ {
+   "country": "Kenya",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 24
+ },
+ {
+   "country": "Kosovo",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 6
+ },
+ {
+   "country": "Kuwait",
+   "Advanced": 7,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Kyrgyzstan",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 13
+ },
+ {
+   "country": "Laos",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 2
+ },
+ {
+   "country": "Latvia",
+   "Advanced": 41,
+   "Primary": 0,
+   "Secondary": 48
+ },
+ {
+   "country": "Lebanon",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 3
+ },
+ {
+   "country": "Lesotho",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 15
+ },
+ {
+   "country": "Liberia",
+   "Advanced": 0,
+   "Primary": 1,
+   "Secondary": 0
+ },
+ {
+   "country": "Libya",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 10
+ },
+ {
+   "country": "Lithuania",
+   "Advanced": 59,
+   "Primary": 0,
+   "Secondary": 15
+ },
+ {
+   "country": "Luxembourg",
+   "Advanced": 19,
+   "Primary": 0,
+   "Secondary": 16
+ },
+ {
+   "country": "Macao",
+   "Advanced": 4,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Macedonia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 3
+ },
+ {
+   "country": "Madagascar",
+   "Advanced": 0,
+   "Primary": 2,
+   "Secondary": 0
+ },
+ {
+   "country": "Malaysia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 484
+ },
+ {
+   "country": "Maldives",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 4
+ },
+ {
+   "country": "Mali",
+   "Advanced": 0,
+   "Primary": 3,
+   "Secondary": 0
+ },
+ {
+   "country": "Malta",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 4
+ },
+ {
+   "country": "Marshall Islands",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Mauritius",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 2
+ },
+ {
+   "country": "Mexico",
+   "Advanced": 0,
+   "Primary": 22,
+   "Secondary": 2518
+ },
+ {
+   "country": "Micronesia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Moldova",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 47
+ },
+ {
+   "country": "Monaco",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Mongolia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 2
+ },
+ {
+   "country": "Montenegro",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 3
+ },
+ {
+   "country": "Morocco",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 26
+ },
+ {
+   "country": "Mozambique",
+   "Advanced": 0,
+   "Primary": 3,
+   "Secondary": 0
+ },
+ {
+   "country": "Myanmar",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 2
+ },
+ {
+   "country": "Namibia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 18
+ },
+ {
+   "country": "Nepal",
+   "Advanced": 0,
+   "Primary": 8,
+   "Secondary": 0
+ },
+ {
+   "country": "Netherlands",
+   "Advanced": 413,
+   "Primary": 0,
+   "Secondary": 4
+ },
+ {
+   "country": "Netherlands (Sint Maarten)",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "New Caledonia",
+   "Advanced": 4,
+   "Primary": 0,
+   "Secondary": 8
+ },
+ {
+   "country": "New Zealand",
+   "Advanced": 103,
+   "Primary": 49,
+   "Secondary": 165
+ },
+ {
+   "country": "New Zealand (Cook Islands)",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Nicaragua",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 7
+ },
+ {
+   "country": "Niger",
+   "Advanced": 0,
+   "Primary": 3,
+   "Secondary": 0
+ },
+ {
+   "country": "Nigeria",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 3
+ },
+ {
+   "country": "North Korea",
+   "Advanced": 0,
+   "Primary": 8,
+   "Secondary": 0
+ },
+ {
+   "country": "Northern Mariana Islands",
+   "Advanced": 2,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Norway",
+   "Advanced": 180,
+   "Primary": 39,
+   "Secondary": 111
+ },
+ {
+   "country": "Oman",
+   "Advanced": 12,
+   "Primary": 0,
+   "Secondary": 6
+ },
+ {
+   "country": "Pakistan",
+   "Advanced": 0,
+   "Primary": 1,
+   "Secondary": 24
+ },
+ {
+   "country": "Palau",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Palestina",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 21
+ },
+ {
+   "country": "Panama",
+   "Advanced": 8,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Papua New Guinea",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 2
+ },
+ {
+   "country": "Paraguay",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 9
+ },
+ {
+   "country": "Peru",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 184
+ },
+ {
+   "country": "Philippines",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 51
+ },
+ {
+   "country": "Poland",
+   "Advanced": 542,
+   "Primary": 43,
+   "Secondary": 1083
+ },
+ {
+   "country": "Portugal",
+   "Advanced": 187,
+   "Primary": 3,
+   "Secondary": 310
+ },
+ {
+   "country": "Qatar",
+   "Advanced": 7,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Romania",
+   "Advanced": 43,
+   "Primary": 62,
+   "Secondary": 448
+ },
+ {
+   "country": "Russia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 1270
+ },
+ {
+   "country": "Rwanda",
+   "Advanced": 0,
+   "Primary": 3,
+   "Secondary": 0
+ },
+ {
+   "country": "Saint Kitts and Nevis",
+   "Advanced": 2,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Saint Lucia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 3
+ },
+ {
+   "country": "Saint-Martin",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Saudi Arabia",
+   "Advanced": 53,
+   "Primary": 0,
+   "Secondary": 5
+ },
+ {
+   "country": "Senegal",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 9
+ },
+ {
+   "country": "Serbia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 13
+ },
+ {
+   "country": "Seychelles",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Sierra Leone",
+   "Advanced": 0,
+   "Primary": 1,
+   "Secondary": 0
+ },
+ {
+   "country": "Singapore",
+   "Advanced": 3,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "Slovakia",
+   "Advanced": 140,
+   "Primary": 4,
+   "Secondary": 178
+ },
+ {
+   "country": "Slovenia",
+   "Advanced": 34,
+   "Primary": 1,
+   "Secondary": 54
+ },
+ {
+   "country": "South Africa",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 964
+ },
+ {
+   "country": "South Korea",
+   "Advanced": 87,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "South Sudan",
+   "Advanced": 0,
+   "Primary": 1,
+   "Secondary": 0
+ },
+ {
+   "country": "Spain",
+   "Advanced": 976,
+   "Primary": 31,
+   "Secondary": 1111
+ },
+ {
+   "country": "Sri Lanka",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 13
+ },
+ {
+   "country": "Sudan",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 2
+ },
+ {
+   "country": "Swaziland",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 3
+ },
+ {
+   "country": "Sweden",
+   "Advanced": 437,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Switzerland",
+   "Advanced": 482,
+   "Primary": 0,
+   "Secondary": 276
+ },
+ {
+   "country": "Syria",
+   "Advanced": 0,
+   "Primary": 13,
+   "Secondary": 0
+ },
+ {
+   "country": "Taiwan",
+   "Advanced": 81,
+   "Primary": 0,
+   "Secondary": 2
+ },
+ {
+   "country": "Tajikistan",
+   "Advanced": 0,
+   "Primary": 5,
+   "Secondary": 0
+ },
+ {
+   "country": "Tanzania",
+   "Advanced": 0,
+   "Primary": 10,
+   "Secondary": 0
+ },
+ {
+   "country": "Thailand",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 44
+ },
+ {
+   "country": "Togo",
+   "Advanced": 0,
+   "Primary": 3,
+   "Secondary": 0
+ },
+ {
+   "country": "Tonga",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 2
+ },
+ {
+   "country": "Trinidad and Tobago",
+   "Advanced": 5,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "Tunisia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 30
+ },
+ {
+   "country": "Turkey",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 319
+ },
+ {
+   "country": "Turkmenistan",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 3
+ },
+ {
+   "country": "Uganda",
+   "Advanced": 0,
+   "Primary": 17,
+   "Secondary": 0
+ },
+ {
+   "country": "Ukraine",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 312
+ },
+ {
+   "country": "United Arab Emirates",
+   "Advanced": 33,
+   "Primary": 0,
+   "Secondary": 1
+ },
+ {
+   "country": "United Kingdom",
+   "Advanced": 123,
+   "Primary": 2,
+   "Secondary": 1762
+ },
+ {
+   "country": "United Kingdom (Montserrat)",
+   "Advanced": 1,
+   "Primary": 0,
+   "Secondary": 0
+ },
+ {
+   "country": "United States",
+   "Advanced": 5559,
+   "Primary": 47,
+   "Secondary": 9213
+ },
+ {
+   "country": "Uruguay",
+   "Advanced": 20,
+   "Primary": 0,
+   "Secondary": 2
+ },
+ {
+   "country": "Uzbekistan",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 35
+ },
+ {
+   "country": "Venezuela",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 23
+ },
+ {
+   "country": "Vietnam",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 11
+ },
+ {
+   "country": "Yemen",
+   "Advanced": 0,
+   "Primary": 2,
+   "Secondary": 0
+ },
+ {
+   "country": "Zambia",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 13
+ },
+ {
+   "country": "Zimbabwe",
+   "Advanced": 0,
+   "Primary": 0,
+   "Secondary": 42
+ }
+]
