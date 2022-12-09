@@ -69,7 +69,7 @@ class OverviewComponent {
       .scaleExtent([1, 10])
       .translateExtent([[0, 0], [width, height + 105]])
       .on("zoom", function (event) {
-        d3.select('#panel1 svg g').attr("transform", event.transform)
+        d3.select('#overview-map svg g').attr("transform", event.transform)
       })
     gmap.call(zoom);
   }
@@ -316,7 +316,7 @@ class OverviewComponent {
           .attr("text-anchor", "left")
           .style("alignment-baseline", "middle")
           .attr("transform", "translate(350,-10)")
-      } else if (i === 6) {
+      } /*else if (i === 6) {
         var statusSubgroups = ['Not Reported', 'Closed', 'Projected', 'Operational',
           'Decommissioned', 'Under Construction', 'Non-Operational',
           'Construction Completed', 'Proposed']
@@ -378,7 +378,7 @@ class OverviewComponent {
           .attr("fill", function (d) {
             return colStatus(d);
           })
-      }
+      }*/
     });
   }
 
