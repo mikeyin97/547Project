@@ -29,8 +29,9 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
         var a = document.getElementById("countriesStr").innerHTML.indexOf("(");
         var b = document.getElementById("countriesStr").innerHTML.indexOf("/10");
         var count = parseInt(document.getElementById("countriesStr").innerHTML.slice(a + 1, b))
+        setSelectedCountry(feature);
         if (count <= 9) {
-            setSelectedCountry(feature);
+            
             setSelectedCountriesStrings(selectedCountriesStrings => new Set([...selectedCountriesStrings, feature.properties.brk_name]));
 
             var copy = selectedCountriesCounts;
