@@ -412,16 +412,13 @@ class OverviewComponent {
     var countries = document.getElementsByClassName("country");
 
     if (this.props.countryHovered) {
-      console.log(this.props.countryHovered)
-      var countryBar = null;
-
+      console.log(this.props.countryHovered);
       // hilight bars
-      bars.forEach((bar) => {
+
+      console.log(bars);
+      [...bars].forEach((bar) => {
         var country = d3.select(bar).data()[0];
         if (country === (this.props.countryHovered)) {
-          if (!countryBar) {
-            countryBar = bar;
-          }
           bar.style.filter = "brightness(50%)";
         } else {
           bar.style.filter = "brightness(100%)";
