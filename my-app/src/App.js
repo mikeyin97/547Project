@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import './App.css';
+
 
 import Navbar from './components/NavBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -20,6 +21,12 @@ import level_counts from "./data/level_counts.json"
 import level_counts_trans from "./data/level_counts_trans.json"
 
 function App() {
+  const [selectedCountriesStrings, setSelectedCountriesStrings] = useState(new Set());
+
+  useEffect(() => {
+    console.log(selectedCountriesStrings);
+  }, [selectedCountriesStrings]);
+
   return (
     <Router>
       <div className="App">
@@ -28,7 +35,7 @@ function App() {
         <Route exact path='/' element={<Home/>}/>
         <Route exact path='/about' element={<About/>}/>
         <Route exact path='/overview' element={<Overview geodata = {geodata} wwtpdata = {wwtpdata} aggcounts = {agg_counts} levelcounts = {level_counts} statuscounts = {status_counts}/>}/>
-        <Route exact path='/comparison' element={<CountrySelector geodata = {geodata} wwtpdata = {wwtpdata} statuscounts = {status_counts} levelcounts = {level_counts} aggcounts = {agg_counts}/>}/>
+        <Route exact path='/comparison' element={<CountrySelector selectedCountriesStrings = {selectedCountriesStrings} setSelectedCountriesStrings = {setSelectedCountriesStrings} geodata = {geodata} wwtpdata = {wwtpdata} statuscounts = {status_counts} levelcounts = {level_counts} aggcounts = {agg_counts}/>}/>
         <Route exact path='/distribution' element={<GeoChart geodata = {geodata} wwtpdata = {wwtpdata} levelcountstrans = {level_counts_trans}/>}/>
         <Route exact path='/contacts' element={<Contacts/>}/>
       </Routes>

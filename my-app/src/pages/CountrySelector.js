@@ -5,14 +5,14 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 
 
-function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
+function GeoChart({selectedCountriesStrings, setSelectedCountriesStrings, geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
     const svgRef = useRef();
     const wrapperRef = useRef();
     const barRef = useRef();
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [maxCount, setMaxCount] = useState(false);
 
-    const [selectedCountriesStrings, setSelectedCountriesStrings] = useState(new Set());
+    // const [selectedCountriesStrings, setSelectedCountriesStrings] = useState(new Set());
     const [selectedCountriesCounts, setSelectedCountriesCounts] = useState({});
     const [hoveredCountry, setHoveredCountry] = useState(null);
     const [countryIndex, setCountryIndex] = useState(-1);
@@ -172,10 +172,15 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
         if (setcount >= 11) {
             setMaxCount(true);
         }
+
         var str = "Selected Countries (" + setcount + "/10): "
         countryStringsSet.forEach((country) => {
             str = str + country + ", "
         })
+
+        if (str.slice(-2) === ", "){
+            str = str.substring(0, str.length - 2);
+        }
         return (str);
     }
 
@@ -252,9 +257,9 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
             if (i === 0) { //treatment level
                 selectedCountriesStrings.forEach((country) => {
                     try {
-                        for (const [key, value] of Object.entries(levelcounts[country])) {
-                            maxH = Math.max(maxH, value + 4);
-                        }
+                        
+                        var val = Object.values(levelcounts[country]).reduce((a, b) => a + b, 0);
+                        maxH = Math.max(maxH, val + 4);
                     } catch { }
 
                 })
@@ -268,28 +273,30 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
             } else if (i === 2) { // population served
                 selectedCountriesStrings.forEach((country) => {
                     try {
-                        maxH = Math.max(maxH, aggcounts[country].POP_SERVED_mean + 100);
+                        
+                        maxH = Math.max(maxH, aggcounts[country].RIVER_DIS_mean + 100);
                     } catch { }
 
                 })
             } else if (i === 3) { // design capacity
                 selectedCountriesStrings.forEach((country) => {
                     try {
-                        maxH = Math.max(maxH, aggcounts[country].DESIGN_CAP_mean + 100);
+                        
+                        maxH = Math.max(maxH, aggcounts[country].WASTE_DIS_mean + 100);
                     } catch { }
 
                 })
             } else if (i === 4) { // river discharge
                 selectedCountriesStrings.forEach((country) => {
                     try {
-                        maxH = Math.max(maxH, aggcounts[country].RIVER_DIS_mean + 100);
+                        maxH = Math.max(maxH, aggcounts[country].POP_SERVED_mean + 100);
                     } catch { }
 
                 })
             } else if (i === 5) { // waste discharge
                 selectedCountriesStrings.forEach((country) => {
                     try {
-                        maxH = Math.max(maxH, aggcounts[country].WASTE_DIS_mean + 100);
+                        maxH = Math.max(maxH, aggcounts[country].DESIGN_CAP_mean + 100);
                     } catch { }
 
                 })
@@ -306,7 +313,7 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
             barsvg.selectAll("rect:not(#bg)").remove();
 
 
-            if ((i === 1) || (i === 2) || (i === 3) || (i === 4) || (i === 5)) {
+            if ((i===0) || (i === 1) || (i === 2) || (i === 3) || (i === 4) || (i === 5)) {
                 barsvg.selectAll("bar")
                     .data(selectedCountriesStrings)
                     .enter()
@@ -320,18 +327,19 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
                         try {
                             var val = 0;
                             var aggcount = aggcounts[d];
-                            if (i === 0) { //treatment level
-                                val = 100;
+                            var levelcount = levelcounts[d];
+                            if (i === 0) { //number of wwtps
+                                val = Object.values(levelcount).reduce((a, b) => a + b, 0);
                             } else if (i === 1) { // dilution factor
                                 val = aggcount.DF_mean
                             } else if (i === 2) { // population served
-                                val = aggcount.POP_SERVED_mean
-                            } else if (i === 3) { // design capacity
-                                val = aggcount.DESIGN_CAP_mean
-                            } else if (i === 4) { // outfall discharge
                                 val = aggcount.RIVER_DIS_mean
-                            } else if (i === 5) { // outfall discharge
+                            } else if (i === 3) { // design capacity
                                 val = aggcount.WASTE_DIS_mean
+                            } else if (i === 4) { // outfall discharge
+                                val = aggcount.POP_SERVED_mean
+                            } else if (i === 5) { // outfall discharge
+                                val = aggcount.DESIGN_CAP_mean
                             }
                             return y(val);
                         } catch { }
@@ -354,18 +362,19 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
                         try {
                             var val = 0;
                             var aggcount = aggcounts[d];
+                            var levelcount = levelcounts[d];
                             if (i === 0) { //treatment level
-                                val = 100;
+                                val = Object.values(levelcount).reduce((a, b) => a + b, 0);
                             } else if (i === 1) { // dilution factor
                                 val = aggcount.DF_mean
                             } else if (i === 2) { // population served
-                                val = aggcount.POP_SERVED_mean
-                            } else if (i === 3) { // design capacity
-                                val = aggcount.DESIGN_CAP_mean
-                            } else if (i === 4) { // outfall discharge
                                 val = aggcount.RIVER_DIS_mean
-                            } else if (i === 5) { // outfall discharge
+                            } else if (i === 3) { // design capacity
                                 val = aggcount.WASTE_DIS_mean
+                            } else if (i === 4) { // outfall discharge
+                                val = aggcount.POP_SERVED_mean
+                            } else if (i === 5) { // outfall discharge
+                                val = aggcount.DESIGN_CAP_mean
                             }
                             return height - y(val);
                         } catch { }
@@ -503,24 +512,46 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
                 .attr("text-anchor", "end")
                 .attr("y", 10)
                 .attr("x", 50)
-                .attr("dy", "1.8em")
-                .attr("dx", "-100px")
+                .attr("dy", function(feature){
+                    return "1.5em";
+                }
+                )
+                .attr("dx", function(feature){
+                    if (i === 0) {
+                        return "-140px"
+                    } else if (i === 1) {
+                        return "-150px"
+                    } else if (i === 2) {
+                        return "-60px"
+                    } else if (i === 3) {
+                        return "-60px"
+                    } else if (i === 4) {
+                        
+                        return "-100px"
+                    } else if (i === 5) {
+                        
+                        return "-80px"
+                    }
+                }
+                )
                 .attr("text-align", "center")
                 .attr("transform", "rotate(-90)")
                 .attr("display", "none")
                 .text(function () {
                     if (i === 0) {
-                        return "Count"
+                        return "# of WWTPs"
                     } else if (i === 1) {
                         return "DF"
                     } else if (i === 2) {
-                        return "Population"
-                    } else if (i === 3) {
-                        return "Design Capacity (m^3 / day)"
-                    } else if (i === 4) {
-                        return "Outfall Discharge (m^3 / day)"
-                    } else if (i === 5) {
                         return "Wastewater Discharge (m^3 / day)"
+                        
+                    } else if (i === 3) {
+                        return "Outfall Discharge (m^3 / day)"
+                        
+                    } else if (i === 4) {
+                        return "Population"
+                    } else if (i === 5) {
+                        return "Design Capacity (m^3 / day)"
                     }
                 });
         })
@@ -602,22 +633,23 @@ function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
                 </div> */}
 
 
-                <div id="panel1" className="panel l">
-                    <Tooltip className="tooltip" title={<h4>Average volume of discharge into rivers based on WWTP outfall location (0 for ocean discharge) </h4>} arrow placement="right"><Button sx={{ m: 1 }}>Outfall Discharge</Button></Tooltip>
-                    <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
-                </div>
-                <div id="panel2" className="panel r">
-                    <Tooltip className="tooltip" title={<h4>Average volume of total wastewater discharged by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Wastewater Discharge</Button></Tooltip>
-                    <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
-                </div>
-                <div id="panel3" className="panel l">
-                    <Tooltip className="tooltip" title={<h4>Average dilution factor (DF) within the country. DF is the ratio of contaminant concentration in the effluent water to the receiving water.</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Dilution Factor</Button></Tooltip>
-                    <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
-                </div>
-                <div id="panel4" className="panel r">
-                    <Tooltip className="tooltip" title={<h4>Average volume of total wastewater discharged by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Wastewater Discharge</Button></Tooltip>
-                    <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
-                </div>
+                    <div id="panel1" className="panel l">
+                        <Tooltip className = "tooltip"  title={<h4>Total Number of WWTPs within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Number of WWTPs</Button></Tooltip>
+                        <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                    </div>
+                    <div id="panel2" className="panel r">
+                        <Tooltip className = "tooltip"  title={<h4>Average dilution factor (DF) within the country. DF is the ratio of contaminant concentration in the effluent water to the receiving water.</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Dilution Factor</Button></Tooltip>
+                        <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                    </div>
+                    <div id="panel2" className="panel l">
+                        <Tooltip className = "tooltip"  title={<h4>Average volume of total wastewater discharged by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Wastewater Discharge</Button></Tooltip>
+                        <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                    </div>
+                    
+                    <div id="panel4" className="panel r">
+                        <Tooltip className = "tooltip"  title={<h4>Average volume of total discharge into outfall rivers by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>River Discharge</Button></Tooltip>
+                        <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                    </div>
                 <div id="panel5" className="panel l">
                     <Tooltip className="tooltip" title={<h4>Average population served by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Population Served</Button></Tooltip>
                     <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
