@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 
 
-function GeoChart({selectedCountriesStrings, setSelectedCountriesStrings, geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
+function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountriesStrings, geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
     const svgRef = useRef();
     const wrapperRef = useRef();
     const barRef = useRef();
@@ -17,6 +17,11 @@ function GeoChart({selectedCountriesStrings, setSelectedCountriesStrings, geodat
     const [hoveredCountry, setHoveredCountry] = useState(null);
     const [countryIndex, setCountryIndex] = useState(-1);
     const [clicked, setClicked] = useState(true);
+
+    useEffect(() => {
+        console.log("set page");
+        setPage("Comparison")
+    });
 
     var zoom = null;
     // const dimensions = useResizeObserver(wrapperRef);
@@ -120,7 +125,7 @@ function GeoChart({selectedCountriesStrings, setSelectedCountriesStrings, geodat
             })
         }
 
-    }, [countryIndex]);
+    }, [countryIndex, page]);
 
     function getOffset(el) {
         var rect = el.getBoundingClientRect();
@@ -184,6 +189,158 @@ function GeoChart({selectedCountriesStrings, setSelectedCountriesStrings, geodat
         return (str);
     }
 
+
+
+    useEffect(() => {
+        var xaxvals = document.querySelectorAll("[type=xaxval]");
+        [...xaxvals].forEach((val) => {
+            xaxvals.onmouseover = function () { onCountryHover(null, val.innerHTML) }
+
+        });
+    }, [selectedCountriesStrings])
+
+    useEffect(() => {
+
+        const svgCanvas = d3.select(svgRef.current)
+        svgCanvas.selectAll("*").remove();
+        const svg = svgCanvas.append("g");
+
+        const barCanvases = d3.selectAll(".graph");
+        barCanvases.each(function (d, i) {
+            const barCanvas = d3.select(this);
+            barCanvas.selectAll("*").remove();
+            const barsvg = barCanvas.append("g");
+            const xax = barsvg.append("g").attr("id", "xax");
+            const yax = barsvg.append("g").attr("id", "yax");
+
+            barsvg.append('rect')
+                .attr('x', "0")
+                .attr('y', "0")
+                .attr("id", "bg")
+                .attr('width', '100%')
+                .attr('height', '65%')
+                .attr('stroke', 'black')
+                .attr('fill', '#d0e7fd')
+                .attr('z-index', '0');
+
+            barsvg.append("text")
+                .attr("class", "ylabels")
+                .attr("text-anchor", "end")
+                .attr("y", 10)
+                .attr("x", 50)
+                .attr("dy", function(feature){
+                    return "1.5em";
+                }
+                )
+                .attr("dx", function(feature){
+                    if (i === 0) {
+                        return "-140px"
+                    } else if (i === 1) {
+                        return "-150px"
+                    } else if (i === 2) {
+                        return "-60px"
+                    } else if (i === 3) {
+                        return "-60px"
+                    } else if (i === 4) {
+                        
+                        return "-100px"
+                    } else if (i === 5) {
+                        
+                        return "-80px"
+                    }
+                }
+                )
+                .attr("text-align", "center")
+                .attr("transform", "rotate(-90)")
+                .attr("display", "none")
+                .text(function () {
+                    if (i === 0) {
+                        return "# of WWTPs"
+                    } else if (i === 1) {
+                        return "DF"
+                    } else if (i === 2) {
+                        return "Wastewater Discharge (m^3 / day)"
+                        
+                    } else if (i === 3) {
+                        return "Outfall Discharge (m^3 / day)"
+                        
+                    } else if (i === 4) {
+                        return "Population"
+                    } else if (i === 5) {
+                        return "Design Capacity (m^3 / day)"
+                    }
+                });
+        })
+
+        const width = 1100;
+        const height = 800;
+        const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
+        const pathGenerator = d3.geoPath().projection(projection);
+        const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
+        var radius = d3.scaleSqrt().domain([0, 10146131]).range([0, 15]);
+
+        svg.append('rect')
+            .attr('x', "-500%")
+            .attr('y', "-500%")
+            .attr('width', '1000%')
+            .attr('height', '1000%')
+            .attr('stroke', 'black')
+            .attr('fill', '#69a3b2')
+            .attr("id", "bg2")
+            .attr('z-index', '0');
+
+        svg.selectAll(".country")
+            .data(geodata.features)
+            .join("path")
+
+
+            .on("click", (event, feature) => {
+                onCountryClick(event, feature)
+            })
+            .on("mouseout", (event, feature) => {
+                onCountryExit(event, feature.properties.brk_name)
+            })
+            .on("mouseover", (event, feature) => {
+                onCountryHover(event, feature.properties.brk_name)
+            })
+            .attr("class", "country")
+            .attr("countryName", function (feature) { return feature.properties.brk_name; })
+            .transition()
+            .duration(1000)
+            .attr("stroke-width", function (feature) {
+                if (selectedCountriesStrings.has(feature.properties.brk_name)) {
+                    return (2.0)
+                } else {
+                    return (0.3)
+                }
+            })
+            .attr("stroke", function (feature) {
+                if (selectedCountriesStrings.has(feature.properties.brk_name)) {
+                    return ("#EF2F2F")
+                } else {
+                    return ("#262626")
+                }
+            })
+            .attr('z-index', '100')
+            .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
+            .attr("d", feature => pathGenerator(feature))
+            .attr("transform", "translate(-100,0)")
+
+        var zoom = d3.zoom().scaleExtent([0.5, 10]).on("zoom", function (event) {
+            d3.select('#right svg g').attr("transform", event.transform)
+        })
+
+        svg.call(zoom);
+    }, [geodata, wwtpdata]);
+
+    function onCountryHover(event, feature) {
+        setHoveredCountry(feature);
+    }
+
+    function onCountryExit(event, feature) {
+        setHoveredCountry(null);
+    }
+
     useEffect(() => {
         var ylabels = document.getElementsByClassName("ylabels");
         [...ylabels].forEach(label => {
@@ -195,7 +352,6 @@ function GeoChart({selectedCountriesStrings, setSelectedCountriesStrings, geodat
         const svgCanvas = d3.select(svgRef.current)
         const svg = svgCanvas.select("g");
         const barCanvases = d3.selectAll(".graph");
-
         svg.selectAll(".country")
             .data(geodata.features)
             .join("path")
@@ -474,150 +630,7 @@ function GeoChart({selectedCountriesStrings, setSelectedCountriesStrings, geodat
 
             }
         })
-    }, [selectedCountriesStrings, selectedCountry, maxCount, clicked]);
-
-    useEffect(() => {
-        var xaxvals = document.querySelectorAll("[type=xaxval]");
-        [...xaxvals].forEach((val) => {
-            xaxvals.onmouseover = function () { onCountryHover(null, val.innerHTML) }
-
-        });
-    }, [selectedCountriesStrings])
-
-    useEffect(() => {
-        const svgCanvas = d3.select(svgRef.current)
-        svgCanvas.selectAll("*").remove();
-        const svg = svgCanvas.append("g");
-
-        const barCanvases = d3.selectAll(".graph");
-        barCanvases.each(function (d, i) {
-            const barCanvas = d3.select(this);
-            barCanvas.selectAll("*").remove();
-            const barsvg = barCanvas.append("g");
-            const xax = barsvg.append("g").attr("id", "xax");
-            const yax = barsvg.append("g").attr("id", "yax");
-
-            barsvg.append('rect')
-                .attr('x', "0")
-                .attr('y', "0")
-                .attr("id", "bg")
-                .attr('width', '100%')
-                .attr('height', '65%')
-                .attr('stroke', 'black')
-                .attr('fill', '#d0e7fd')
-                .attr('z-index', '0');
-
-            barsvg.append("text")
-                .attr("class", "ylabels")
-                .attr("text-anchor", "end")
-                .attr("y", 10)
-                .attr("x", 50)
-                .attr("dy", function(feature){
-                    return "1.5em";
-                }
-                )
-                .attr("dx", function(feature){
-                    if (i === 0) {
-                        return "-140px"
-                    } else if (i === 1) {
-                        return "-150px"
-                    } else if (i === 2) {
-                        return "-60px"
-                    } else if (i === 3) {
-                        return "-60px"
-                    } else if (i === 4) {
-                        
-                        return "-100px"
-                    } else if (i === 5) {
-                        
-                        return "-80px"
-                    }
-                }
-                )
-                .attr("text-align", "center")
-                .attr("transform", "rotate(-90)")
-                .attr("display", "none")
-                .text(function () {
-                    if (i === 0) {
-                        return "# of WWTPs"
-                    } else if (i === 1) {
-                        return "DF"
-                    } else if (i === 2) {
-                        return "Wastewater Discharge (m^3 / day)"
-                        
-                    } else if (i === 3) {
-                        return "Outfall Discharge (m^3 / day)"
-                        
-                    } else if (i === 4) {
-                        return "Population"
-                    } else if (i === 5) {
-                        return "Design Capacity (m^3 / day)"
-                    }
-                });
-        })
-
-        const width = 1100;
-        const height = 800;
-        const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
-        const pathGenerator = d3.geoPath().projection(projection);
-        const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
-        var radius = d3.scaleSqrt().domain([0, 10146131]).range([0, 15]);
-
-        svg.append('rect')
-            .attr('x', "-500%")
-            .attr('y', "-500%")
-            .attr('width', '1000%')
-            .attr('height', '1000%')
-            .attr('stroke', 'black')
-            .attr('fill', '#69a3b2')
-            .attr("id", "bg2")
-            .attr('z-index', '0');
-
-        svg.selectAll(".country")
-            .data(geodata.features)
-            .join("path")
-
-
-            .on("click", (event, feature) => {
-                onCountryClick(event, feature)
-            })
-            .on("mouseout", (event, feature) => {
-                onCountryExit(event, feature.properties.brk_name)
-            })
-            .on("mouseover", (event, feature) => {
-                onCountryHover(event, feature.properties.brk_name)
-            })
-            .attr("class", "country")
-            .attr("countryName", function (feature) { return feature.properties.brk_name; })
-            .transition()
-            .duration(1000)
-            .attr("stroke-width", 0.3)
-            .attr("stroke", function (feature) {
-                if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-                    return ("#ffffff")
-                } else {
-                    return ("#262626")
-                }
-            })
-            .attr('z-index', '100')
-            .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
-            .attr("d", feature => pathGenerator(feature))
-            .attr("transform", "translate(-100,0)")
-
-        var zoom = d3.zoom().scaleExtent([0.5, 10]).on("zoom", function (event) {
-            d3.select('#right svg g').attr("transform", event.transform)
-        })
-
-        svg.call(zoom);
-    }, [geodata, wwtpdata]);
-
-    function onCountryHover(event, feature) {
-        setHoveredCountry(feature);
-    }
-
-    function onCountryExit(event, feature) {
-        setHoveredCountry(null);
-    }
+    }, [selectedCountriesStrings, selectedCountry, maxCount, clicked, page]);
 
     return (
         // <div ref = {wrapperRef} style={{height:"1000px", width:"2000px", "backgroundColor" :"#000e26"}}>

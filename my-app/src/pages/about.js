@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
   
-const About = () => {
+function About({page, setPage}) {
+  
+  useEffect(() => {
+    setPage("About")
+  });
+
   return (
     <div
     style={{
