@@ -19,6 +19,7 @@ import status_counts from "./data/status_counts.json";
 import agg_counts from "./data/agg_counts.json";
 import level_counts from "./data/level_counts.json"
 import level_counts_trans from "./data/level_counts_trans.json"
+import agg_counts_sort from "./data/agg_counts_sort.json"
 
 function App() {
   const [selectedCountriesStrings, setSelectedCountriesStrings] = useState(new Set());
@@ -35,7 +36,7 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home/>}/>
         <Route exact path='/about' element={<About page = {page} setPage = {setPage}/>}/>
-        <Route exact path='/overview' element={<Overview page = {page} setPage = {setPage} selectedCountriesStrings = {selectedCountriesStrings} setSelectedCountriesStrings = {setSelectedCountriesStrings} geodata = {geodata} setPage = {setPage} wwtpdata = {wwtpdata} aggcounts = {agg_counts} levelcounts = {level_counts} statuscounts = {status_counts}/>}/>
+        <Route exact path='/overview' element={<Overview page = {page} setPage = {setPage} selectedCountriesStrings = {selectedCountriesStrings} setSelectedCountriesStrings = {setSelectedCountriesStrings} geodata = {geodata} wwtpdata = {wwtpdata} aggcounts = {agg_counts} levelcounts = {level_counts} statuscounts = {status_counts} aggcountssort = {agg_counts_sort}/>}/>
         <Route exact path='/comparison' element={<CountrySelector page = {page} setPage = {setPage} selectedCountriesStrings = {selectedCountriesStrings} setSelectedCountriesStrings = {setSelectedCountriesStrings} geodata = {geodata} wwtpdata = {wwtpdata} statuscounts = {status_counts} levelcounts = {level_counts} aggcounts = {agg_counts}/>}/>
         <Route exact path='/distribution' element={<GeoChart page = {page} setPage = {setPage} selectedCountriesStrings = {selectedCountriesStrings} setSelectedCountriesStrings = {setSelectedCountriesStrings} geodata = {geodata} wwtpdata = {wwtpdata} levelcountstrans = {level_counts_trans}/>}/>
         <Route exact path='/contacts' element={<Contacts/>}/>

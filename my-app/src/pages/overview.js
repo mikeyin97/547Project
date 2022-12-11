@@ -4,7 +4,7 @@ import OverviewComponent from '../components/OverviewComponent';
 
 let vis;
 
-function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountriesStrings, geodata, wwtpdata, aggcounts, levelcounts, statuscounts }) {
+function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountriesStrings, geodata, wwtpdata, aggcounts, levelcounts, statuscounts, aggcountssort }) {
     const wrapperRef = useRef();
     const svgRef = useRef();
     const barRef = useRef();
@@ -12,7 +12,7 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     const [height, setHeight] = useState(600)
     const [hoveredCountry, setHoveredCountry] = useState(null);
 
-    useEffect(initVis, [geodata, wwtpdata, aggcounts, levelcounts, statuscounts, hoveredCountry, setHoveredCountry]);
+    useEffect(initVis, [geodata, wwtpdata, aggcounts, levelcounts, statuscounts, aggcountssort, setHoveredCountry]);
     useEffect(updateHighlight, [hoveredCountry]);
 
     useEffect(() => {
@@ -20,7 +20,7 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     });
 
     function updateHighlight() {
-        vis.highlightCountry();
+        vis.highlightCountry(hoveredCountry);
     }
 
     function initVis() {
@@ -31,7 +31,7 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 aggcounts,
                 levelcounts,
                 statuscounts,
-                countryHovered: hoveredCountry,
+                aggcountssort,
                 setHoveredCountry
             }
             vis = new OverviewComponent(svgRef.current, barRef.current, d3Props);
@@ -65,22 +65,32 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 <div id="overview-map">
                     <div ref={svgRef}> </div>
                 </div>
+                <button id="byKey"> Sort by Key</button>
+                <button id="byValue"> Sort by Value</button>
                 <div id="chart1" className="overview-panel">
                     <p>Treated Wastewater Discharge </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
+                <button id="byKey"> Sort by Key</button>
+                <button id="byValue1"> Sort by Value</button>
                 <div id="chart2" className="overview-panel">
                     <p> River Discharge </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
+                <button id="byKey"> Sort by Key</button>
+                <button id="byValue2"> Sort by Value</button>
                 <div id="chart3" className="overview-panel">
                     <p> Dilution Factor </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
+                <button id="byKey"> Sort by Key</button>
+                <button id="byValue3"> Sort by Value</button>
                 <div id="chart4" className="overview-panel">
                     <p> Design Capacity </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
+                <button id="byKey"> Sort by Key</button>
+                <button id="byValue4"> Sort by Value</button>
                 <div id="chart5" className="overview-panel">
                     <p> Population Served </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
