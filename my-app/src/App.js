@@ -26,7 +26,7 @@ function App() {
   const [page, setPage] = useState("about")
 
   useEffect(() => {
-    console.log(selectedCountriesStrings);
+    // console.log(selectedCountriesStrings);
   }, [selectedCountriesStrings]);
 
   return (
@@ -36,9 +36,9 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home/>}/>
         <Route exact path='/about' element={<About page = {page} setPage = {setPage}/>}/>
-        <Route exact path='/overview' element={<Overview page = {page} geodata = {geodata} setPage = {setPage} wwtpdata = {wwtpdata} aggcounts = {agg_counts} levelcounts = {level_counts} statuscounts = {status_counts} aggcountssort = {agg_counts_sort}/>}/>
+        <Route exact path='/overview' element={<Overview page = {page} setPage = {setPage} selectedCountriesStrings = {selectedCountriesStrings} setSelectedCountriesStrings = {setSelectedCountriesStrings} geodata = {geodata} wwtpdata = {wwtpdata} aggcounts = {agg_counts} levelcounts = {level_counts} statuscounts = {status_counts} aggcountssort = {agg_counts_sort}/>}/>
         <Route exact path='/comparison' element={<CountrySelector page = {page} setPage = {setPage} selectedCountriesStrings = {selectedCountriesStrings} setSelectedCountriesStrings = {setSelectedCountriesStrings} geodata = {geodata} wwtpdata = {wwtpdata} statuscounts = {status_counts} levelcounts = {level_counts} aggcounts = {agg_counts}/>}/>
-        <Route exact path='/distribution' element={<GeoChart page = {page} setPage = {setPage} geodata = {geodata} wwtpdata = {wwtpdata} levelcountstrans = {level_counts_trans}/>}/>
+        <Route exact path='/distribution' element={<GeoChart page = {page} setPage = {setPage} selectedCountriesStrings = {selectedCountriesStrings} setSelectedCountriesStrings = {setSelectedCountriesStrings} geodata = {geodata} wwtpdata = {wwtpdata} levelcountstrans = {level_counts_trans}/>}/>
         <Route exact path='/contacts' element={<Contacts/>}/>
       </Routes>
       </div>

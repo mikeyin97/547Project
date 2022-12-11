@@ -15,7 +15,10 @@ function About({page, setPage}) {
       height: '10vh'
     }}
     >
-      <h1>Hello</h1>
+      <h1>About Wastewater Treatment Plant Visualizer (WWTP)</h1>
+      <p> blah blah</p>
+
+      <h1>Usage Guide</h1>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import OverviewComponent from '../components/OverviewComponent';
 
 let vis;
 
-function Overview({ geodata, wwtpdata, aggcounts, levelcounts, statuscounts, aggcountssort }) {
+function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountriesStrings, geodata, wwtpdata, aggcounts, levelcounts, statuscounts, aggcountssort }) {
     const wrapperRef = useRef();
     const svgRef = useRef();
     const barRef = useRef();
@@ -14,6 +14,10 @@ function Overview({ geodata, wwtpdata, aggcounts, levelcounts, statuscounts, agg
 
     useEffect(initVis, [geodata, wwtpdata, aggcounts, levelcounts, statuscounts, aggcountssort, setHoveredCountry]);
     useEffect(updateHighlight, [hoveredCountry]);
+
+    useEffect(() => {
+        setPage("Overview")
+    });
 
     function updateHighlight() {
         vis.highlightCountry(hoveredCountry);
