@@ -12,6 +12,8 @@ class OverviewComponent {
     this.mapContainer = mapContainer;
     this.barContainer = barContainer;
     this.props = props;
+    d3.select(mapContainer).selectAll("*").remove();
+
     this.mapCanvas = d3.select(mapContainer)
       .append('div')
       // contianer class
@@ -29,7 +31,6 @@ class OverviewComponent {
 
   initMap = () => {
     const { mapCanvas, props: { geodata } } = this;
-    // mapCanvas.selectAll("*").remove();
     const gmap = mapCanvas.append("g");
     //svgCanvas.classed("svg-container", true)
     //.attr("preserveAspectRatio", "xMinYMin meet")
@@ -56,6 +57,15 @@ class OverviewComponent {
     gmap.selectAll(".country")
       .data(geodata.features)
       .join("path")
+      .on("click", (event, feature) => {
+        this.props.setHoveredCountry(feature.properties.brk_name)
+      })
+      .on("mouseout", (event, feature) => {
+        this.props.setHoveredCountry(null)
+      })
+      .on("mouseover", (event, feature) => {
+        this.props.setHoveredCountry(feature.properties.brk_name)
+      })
       .attr("class", "country")
       .transition()
       .duration(1000)
@@ -76,12 +86,12 @@ class OverviewComponent {
 
   initOverview = () => {
     const { props: { aggcounts, levelcounts, statuscounts } } = this;
-    console.log(levelcounts);
+    var { props: { countryHovered, setHoveredCountry } } = this;
     const barCanvases = d3.selectAll(".graph");
 
     barCanvases.each(function (d, i) {
       const barCanvas = d3.select(this);
-      // barCanvas.selectAll("*").remove();
+      barCanvas.selectAll("*").remove();
       const barSVG = barCanvas.append('svg')
         .attr('height', '100%')
         .attr('width', '100%');
@@ -123,8 +133,22 @@ class OverviewComponent {
         .call(d3.axisBottom(xScale))
         .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
         .selectAll("text")
+        .attr("type", "xaxval")
+        .attr('text-align', "center")
         .attr("transform", "translate(-10,0)rotate(-90)")
         .style("text-anchor", "end");
+
+      d3.select("#xax").selectAll(".tick").nodes().forEach((xVal) => {
+        var xValName = d3.select(xVal).data()[0]
+        //console.log(xVal)
+        //console.log(xValName)
+        d3.select(xVal)
+          .on("mouseover", (event) => {
+            setHoveredCountry(xValName);
+          }).on("mouseout", (event) => {
+            setHoveredCountry(null);
+          });
+      });
 
       // calculate max values
       var maxH = 0;
@@ -176,7 +200,7 @@ class OverviewComponent {
         .attr("transform", "translate(" + marginleft + "," + margintop + ")")
         .call(d3.axisLeft(yScale));
 
-      // barsvg.selectAll("rect:not(#bgbar)").remove();
+      barSVG.selectAll("rect:not(#bgbar)").remove();
 
       // draw bars
       if ((i === 0) || (i === 1) || (i === 2) || (i === 3) || (i === 4)) {
@@ -184,6 +208,7 @@ class OverviewComponent {
           .data(countries)
           .enter()
           .append("rect")
+          .attr("type", "barchartbar")
           .attr("transform", "translate(" + marginleft + "," + margintop + ")")
           .attr("x", function (d) {
             return xScale(d);
@@ -201,10 +226,6 @@ class OverviewComponent {
               val = aggcount.DESIGN_CAP_mean
             } else if (i === 4) {
               val = aggcount.POP_SERVED_mean
-            } else if (i === 5) {
-              val = 100
-            } else if (i === 6) {
-              val = 100
             }
             return yScale(val);
           })
@@ -222,15 +243,16 @@ class OverviewComponent {
               val = aggcount.DESIGN_CAP_mean
             } else if (i === 4) {
               val = aggcount.POP_SERVED_mean
-            } else if (i === 5) {
-              val = 100
-            } else if (i === 6) {
-              val = 100
             }
             return height - yScale(val);
           })
           .attr("fill", function (d) {
             return "#69b3a2"
+          }).on("mouseout", (event, feature) => {
+            setHoveredCountry(null);
+          })
+          .on("mouseover", (event, feature) => {
+            setHoveredCountry(feature);
           });
       } else if (i === 5) {
         var levelSubgroups = ["Primary", "Secondary", "Advanced"]
@@ -266,6 +288,7 @@ class OverviewComponent {
           //.on("mouseout", function (event, d) {
           //  onCountryExit(event, d[0]);
           //})
+          .attr("type", "barchartbar")
           .attr("x", function (d) {
             return xLevelSubgroups(d[1]);
           })
@@ -316,7 +339,7 @@ class OverviewComponent {
           .attr("text-anchor", "left")
           .style("alignment-baseline", "middle")
           .attr("transform", "translate(350,-10)")
-      } /*else if (i === 6) {
+      } else if (i === 6) {
         var statusSubgroups = ['Not Reported', 'Closed', 'Projected', 'Operational',
           'Decommissioned', 'Under Construction', 'Non-Operational',
           'Construction Completed', 'Proposed']
@@ -352,6 +375,7 @@ class OverviewComponent {
           //.on("mouseout", function (event, d) {
           //  onCountryExit(event, d[0]);
           //})
+          .attr("type", "barchartbar")
           .attr("x", function (d) {
             return xStatusSubgroups(d[1]);
           })
@@ -378,8 +402,56 @@ class OverviewComponent {
           .attr("fill", function (d) {
             return colStatus(d);
           })
-      }*/
+      }
     });
+  }
+
+  highlightCountry = () => {
+    var bars = document.querySelectorAll("[type=barchartbar]");
+    var xaxvals = document.querySelectorAll("[type=xaxval]");
+    var countries = document.getElementsByClassName("country");
+
+    if (this.props.countryHovered) {
+      console.log(this.props.countryHovered)
+      var countryBar = null;
+
+      // hilight bars
+      bars.forEach((bar) => {
+        var country = d3.select(bar).data()[0];
+        if (country === (this.props.countryHovered)) {
+          if (!countryBar) {
+            countryBar = bar;
+          }
+          bar.style.filter = "brightness(50%)";
+        } else {
+          bar.style.filter = "brightness(100%)";
+        }
+      });
+
+      // hilight the axis name
+      xaxvals.forEach((val) => {
+        var country = d3.select(val).data()[0];
+        if (country === this.props.countryHovered) {
+          val.style.color = "#04290e";
+          val.style.fontWeight = "900";
+        } else {
+          val.style.color = "black";
+          val.style.fontWeight = "20";
+        }
+      });
+
+      // hilight the map
+      [...countries].forEach((c) => {
+        var countryData = d3.select(c).data();
+        var country = countryData[0].properties.brk_name;
+        if (country === this.props.countryHovered) {
+          c.style.filter = "brightness(80%)";
+          // connect(c, countryBar, "red", 10)
+        } else {
+          c.style.filter = "brightness(100%)";
+        }
+      })
+    }
   }
 
   resize = (width, height) => {

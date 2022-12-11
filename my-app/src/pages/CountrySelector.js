@@ -51,7 +51,7 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
         } else {
             setCountryIndex(-1);
         }
-    }, [hoveredCountry, selectedCountry]);
+    }, [hoveredCountry, selectedCountry, selectedCountriesStrings]);
 
     useEffect(() => {
         var bars = document.querySelectorAll("[type=barchartbar]");
@@ -664,11 +664,11 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
                         <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
                     </div>
                 <div id="panel5" className="panel l">
-                    <Tooltip className = "tooltip"  title={<h4>Average population served by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Population Served</Button></Tooltip>
+                    <Tooltip className="tooltip" title={<h4>Average population served by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Population Served</Button></Tooltip>
                     <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
                 </div>
                 <div id="panel6" className="panel r">
-                    <Tooltip className = "tooltip"  title={<h4>Average design capacity for each WWTP within the country. **This value is only reported for countries in Europe and the United States</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Design Capacity</Button></Tooltip>
+                    <Tooltip className="tooltip" title={<h4>Average design capacity for each WWTP within the country. **This value is only reported for countries in Europe and the United States</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Design Capacity</Button></Tooltip>
                     <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
                 </div>
 
@@ -679,12 +679,12 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
                 </div>
             </div>
             <div id="right">
-                <div id = "countriesStrDiv"><h4 id="countriesStr"></h4></div>
+                <div id="countriesStrDiv"><h4 id="countriesStr"></h4></div>
                 <svg ref={svgRef} style={{ height: "90%", width: "100%", viewBox: "0 0 100 100" }}></svg>
-            <div> 
-            
-            </div></div>
-            
+                <div>
+
+                </div></div>
+
         </div>
     )
 }

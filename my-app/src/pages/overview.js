@@ -9,9 +9,15 @@ function Overview({ geodata, wwtpdata, aggcounts, levelcounts, statuscounts }) {
     const svgRef = useRef();
     const barRef = useRef();
     const [width, setWidth] = useState(600);
-    const [height, setHeight] = useState(600);
+    const [height, setHeight] = useState(600)
+    const [hoveredCountry, setHoveredCountry] = useState(null);
 
-    useEffect(initVis, [geodata, wwtpdata, aggcounts, levelcounts, statuscounts])
+    useEffect(initVis, [geodata, wwtpdata, aggcounts, levelcounts, statuscounts, hoveredCountry, setHoveredCountry]);
+    useEffect(updateHighlight, [hoveredCountry]);
+
+    function updateHighlight() {
+        vis.highlightCountry();
+    }
 
     function initVis() {
         if (geodata && wwtpdata && aggcounts) {
@@ -19,8 +25,10 @@ function Overview({ geodata, wwtpdata, aggcounts, levelcounts, statuscounts }) {
                 geodata,
                 wwtpdata,
                 aggcounts,
-                levelcounts, 
-                statuscounts
+                levelcounts,
+                statuscounts,
+                countryHovered: hoveredCountry,
+                setHoveredCountry
             }
             vis = new OverviewComponent(svgRef.current, barRef.current, d3Props);
         }
@@ -73,10 +81,10 @@ function Overview({ geodata, wwtpdata, aggcounts, levelcounts, statuscounts }) {
                     <p> Population Served </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
-                <div id="chart6" className="overview-panel">
+                {/*<div id="chart6" className="overview-panel">
                     <p> Level </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
-                </div>
+                </div>*/}
             </div>
         </div>
     )
