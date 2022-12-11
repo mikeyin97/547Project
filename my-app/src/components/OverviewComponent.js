@@ -9,9 +9,13 @@ class OverviewComponent {
   props;
 
   constructor(mapContainer, barContainer, props) {
+    console.log("nooo");
     this.mapContainer = mapContainer;
     this.barContainer = barContainer;
     this.props = props;
+
+    console.log(typeof (d3.select(mapContainer)));
+    console.log(d3.select(mapContainer))
     d3.select(mapContainer).selectAll("*").remove();
 
     this.mapCanvas = d3.select(mapContainer)
@@ -32,11 +36,6 @@ class OverviewComponent {
   initMap = () => {
     const { mapCanvas, props: { geodata } } = this;
     const gmap = mapCanvas.append("g");
-    //svgCanvas.classed("svg-container", true)
-    //.attr("preserveAspectRatio", "xMinYMin meet")
-    //.attr("viewBox", "0 0 100 100")
-    // Class to make it responsive.
-    //.classed("svg-content-responsive", true)
 
     // map dimension
     const width = 1000;
@@ -85,9 +84,24 @@ class OverviewComponent {
   }
 
   initOverview = () => {
-    const { props: { aggcounts, levelcounts, statuscounts } } = this;
-    var { props: { countryHovered, setHoveredCountry } } = this;
+    const { props: { aggcounts, aggcountssort, levelcounts, statuscounts } } = this;
+    var { props: { setHoveredCountry } } = this;
     const barCanvases = d3.selectAll(".graph");
+    var aggArr = [];
+    Object.values(aggcountssort).forEach(function (data) {
+      aggArr.push(data);
+    });
+    console.log("woo");
+    console.log(aggArr);
+
+    // define the scales
+    var width = 1600,
+      height = 200,
+      margintop = 50,
+      marginleft = 70;
+
+    // all countries
+    const countries = Object.keys(aggcounts)
 
     barCanvases.each(function (d, i) {
       const barCanvas = d3.select(this);
@@ -113,19 +127,12 @@ class OverviewComponent {
         .attr('fill', '#d0e7fd')
         .attr('z-index', '0');
 
-      // define the scales
-      var width = 1600,
-        height = 200,
-        margintop = 50,
-        marginleft = 70;
-
-      // all countries
-      const countries = Object.keys(aggcounts)
-
       // define x-axis
       var xScale = d3.scaleBand()
         .range([0, width])
-        .domain(countries)
+        .domain(aggArr.map(function (d) {
+          return d.country;
+        }))
         .padding(0.2)
 
       // scale x-axis
@@ -153,25 +160,25 @@ class OverviewComponent {
       // calculate max values
       var maxH = 0;
       if (i === 0) { // wastewater discharge
-        countries.forEach((country) => {
-          maxH = Math.max(maxH, aggcounts[country].WASTE_DIS_mean);
-        })
+        maxH = d3.max(aggArr, function (d) {
+          return d.WASTE_DIS_mean;
+        });
       } else if (i === 1) { // river discharge
-        countries.forEach((country) => {
-          maxH = Math.max(maxH, aggcounts[country].RIVER_DIS_mean);
-        })
+        maxH = d3.max(aggArr, function (d) {
+          return d.RIVER_DIS_mean;
+        });
       } else if (i === 2) { // dilution factor
-        countries.forEach((country) => {
-          maxH = Math.max(maxH, aggcounts[country].DF_mean);
-        })
+        maxH = d3.max(aggArr, function (d) {
+          return d.DF_mean;
+        });
       } else if (i === 3) { // design capacity
-        countries.forEach((country) => {
-          maxH = Math.max(maxH, aggcounts[country].DESIGN_CAP_mean);
-        })
+        maxH = d3.max(aggArr, function (d) {
+          return d.DESIGN_CAP_mean;
+        });
       } else if (i === 4) { // population served
-        countries.forEach((country) => {
-          maxH = Math.max(maxH, aggcounts[country].POP_SERVED_mean);
-        })
+        maxH = d3.max(aggArr, function (d) {
+          return d.POP_SERVED_mean;
+        });
       } else if (i === 5) { // level
         countries.forEach((country) => {
           try {
@@ -209,6 +216,7 @@ class OverviewComponent {
           .enter()
           .append("rect")
           .attr("type", "barchartbar")
+          .attr("class", "littlebar")
           .attr("transform", "translate(" + marginleft + "," + margintop + ")")
           .attr("x", function (d) {
             return xScale(d);
@@ -282,12 +290,6 @@ class OverviewComponent {
           })
           .enter()
           .append("rect")
-          //.on("mouseover", function (event, d) {
-          //  onCountryHover(event, d[0]);
-          //})
-          //.on("mouseout", function (event, d) {
-          //  onCountryExit(event, d[0]);
-          //})
           .attr("type", "barchartbar")
           .attr("x", function (d) {
             return xLevelSubgroups(d[1]);
@@ -369,12 +371,6 @@ class OverviewComponent {
           })
           .enter()
           .append("rect")
-          //.on("mouseover", function (event, d) {
-          //  onCountryHover(event, d[0]);
-          //})
-          //.on("mouseout", function (event, d) {
-          //  onCountryExit(event, d[0]);
-          //})
           .attr("type", "barchartbar")
           .attr("x", function (d) {
             return xStatusSubgroups(d[1]);
@@ -403,22 +399,40 @@ class OverviewComponent {
             return colStatus(d);
           })
       }
+
+      if (i === 0) {
+        // sorting
+        d3.select("#byValue").on("click", function () {
+          console.log("sort the bars");
+          aggArr.sort(function (a, b) {
+            return d3.descending(a.WASTE_DIS_mean, b.WASTE_DIS_mean);
+          })
+          xScale.domain(aggArr.map(function (d) {
+            return d.country;
+          }));
+          gbar.selectAll(".littlebar")
+            .transition()
+            .duration(1000)
+            .attr("x", function (d, i) {
+              return xScale(d);
+            })
+        });
+      }
     });
   }
 
-  highlightCountry = () => {
+  highlightCountry = (hoveredCountry) => {
     var bars = document.querySelectorAll("[type=barchartbar]");
     var xaxvals = document.querySelectorAll("[type=xaxval]");
     var countries = document.getElementsByClassName("country");
 
-    if (this.props.countryHovered) {
-      console.log(this.props.countryHovered);
-      // hilight bars
+    if (hoveredCountry) {
+      console.log(hoveredCountry);
 
-      console.log(bars);
+      // hilight bars
       [...bars].forEach((bar) => {
         var country = d3.select(bar).data()[0];
-        if (country === (this.props.countryHovered)) {
+        if (country === hoveredCountry) {
           bar.style.filter = "brightness(50%)";
         } else {
           bar.style.filter = "brightness(100%)";
@@ -428,7 +442,7 @@ class OverviewComponent {
       // hilight the axis name
       xaxvals.forEach((val) => {
         var country = d3.select(val).data()[0];
-        if (country === this.props.countryHovered) {
+        if (country === hoveredCountry) {
           val.style.color = "#04290e";
           val.style.fontWeight = "900";
         } else {
@@ -441,7 +455,7 @@ class OverviewComponent {
       [...countries].forEach((c) => {
         var countryData = d3.select(c).data();
         var country = countryData[0].properties.brk_name;
-        if (country === this.props.countryHovered) {
+        if (country === hoveredCountry) {
           c.style.filter = "brightness(80%)";
           // connect(c, countryBar, "red", 10)
         } else {
