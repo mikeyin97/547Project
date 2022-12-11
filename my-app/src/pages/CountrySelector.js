@@ -5,14 +5,14 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 
 
-function GeoChart({ geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
+function GeoChart({selectedCountriesStrings, setSelectedCountriesStrings, geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
     const svgRef = useRef();
     const wrapperRef = useRef();
     const barRef = useRef();
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [maxCount, setMaxCount] = useState(false);
 
-    const [selectedCountriesStrings, setSelectedCountriesStrings] = useState(new Set());
+    // const [selectedCountriesStrings, setSelectedCountriesStrings] = useState(new Set());
     const [selectedCountriesCounts, setSelectedCountriesCounts] = useState({});
     const [hoveredCountry, setHoveredCountry] = useState(null);
     const [countryIndex, setCountryIndex] = useState(-1);
