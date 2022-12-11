@@ -1,5 +1,6 @@
 #overview {
     display: flex;
+    height: 90% !important;
 }
 
 #overview-main {
@@ -106,4 +107,8 @@ html, body{
     position: absolute;
     top: 10px;
     left: 0;
+}
+
+#xax {
+    pointer-events: all;
 }
