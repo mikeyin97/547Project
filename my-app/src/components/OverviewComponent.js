@@ -29,6 +29,8 @@ class OverviewComponent {
       // Class to make it responsive.
       .classed("svg-content-responsive", true);
     this.barCanvases = d3.select(barContainer);
+
+
     this.initMap();
     this.initOverview();
   }
@@ -101,7 +103,8 @@ class OverviewComponent {
       marginleft = 70;
 
     // all countries
-    const countries = Object.keys(aggcounts)
+    const countries = Object.keys(aggcounts);
+    var sortX = this.sortX;
 
     barCanvases.each(function (d, i) {
       const barCanvas = d3.select(this);
@@ -400,24 +403,59 @@ class OverviewComponent {
           })
       }
 
+      var sorting = null;
       if (i === 0) {
-        // sorting
-        d3.select("#byValue").on("click", function () {
-          console.log("sort the bars");
-          aggArr.sort(function (a, b) {
-            return d3.descending(a.WASTE_DIS_mean, b.WASTE_DIS_mean);
-          })
-          xScale.domain(aggArr.map(function (d) {
-            return d.country;
-          }));
-          gbar.selectAll(".littlebar")
-            .transition()
-            .duration(1000)
-            .attr("x", function (d, i) {
-              return xScale(d);
-            })
-        });
+        sorting = function (a, b) {
+          return d3.descending(a.WASTE_DIS_mean, b.WASTE_DIS_mean);
+        }
+        sortX("#byValue", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
+      } else if (i === 1) {
+        sorting = function (a, b) {
+          return d3.descending(a.RIVER_DIS_mean, b.RIVER_DIS_mean);
+        }
+        sortX("#byValue1", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
+      } else if (i === 2) {
+        sorting = function (a, b) {
+          return d3.descending(a.DF_mean, b.DF_mean);
+        }
+        sortX("#byValue2", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
+      } else if (i === 3) {
+        sorting = function (a, b) {
+          return d3.descending(a.DESIGN_CAP_mean, b.DESIGN_CAP_mean);
+        }
+        sortX("#byValue3", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
+      } else if (i === 4) {
+        sorting = function (a, b) {
+          return d3.descending(a.POP_SERVED_mean, b.POP_SERVED_mean);
+        }
+        sortX("#byValue4", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
       }
+    });
+  }
+
+  sortX = (tagName, aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height) => {
+    d3.select(tagName).on("click", function () {
+      console.log(tagName);
+      aggArr.sort(sorting)
+      console.log(aggArr)
+      xScale.domain(aggArr.map(function (d) {
+        return d.country;
+      }));
+      gbar.selectAll(".littlebar")
+        .transition()
+        .duration(1000)
+        .attr("x", function (d, i) {
+          return xScale(d);
+        })
+      // scale x-axis
+      xax
+        .call(d3.axisBottom(xScale))
+        .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
+        .selectAll("text")
+        .attr("type", "xaxval")
+        .attr('text-align', "center")
+        .attr("transform", "translate(-10,0)rotate(-90)")
+        .style("text-anchor", "end");
     });
   }
 
