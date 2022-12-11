@@ -481,7 +481,7 @@ class OverviewComponent {
       xaxvals.forEach((val) => {
         var country = d3.select(val).data()[0];
         if (country === hoveredCountry) {
-          val.style.color = "#04290e";
+          val.style.color = "#0f6fd6";
           val.style.fontWeight = "900";
         } else {
           val.style.color = "black";
