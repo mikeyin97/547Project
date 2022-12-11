@@ -19,7 +19,6 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
     const [clicked, setClicked] = useState(true);
 
     useEffect(() => {
-        console.log("set page");
         setPage("Comparison")
     });
 
@@ -290,6 +289,7 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
             .attr('z-index', '0');
 
         svg.selectAll(".country")
+            
             .data(geodata.features)
             .join("path")
 
@@ -305,8 +305,6 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
             })
             .attr("class", "country")
             .attr("countryName", function (feature) { return feature.properties.brk_name; })
-            .transition()
-            .duration(1000)
             .attr("stroke-width", function (feature) {
                 if (selectedCountriesStrings.has(feature.properties.brk_name)) {
                     return (2.0)
@@ -322,9 +320,10 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
                 }
             })
             .attr('z-index', '100')
+            .attr("transform", "translate(-100,0)")
             .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
             .attr("d", feature => pathGenerator(feature))
-            .attr("transform", "translate(-100,0)")
+            
 
         var zoom = d3.zoom().scaleExtent([0.5, 10]).on("zoom", function (event) {
             d3.select('#right svg g').attr("transform", event.transform)
