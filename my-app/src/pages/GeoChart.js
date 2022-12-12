@@ -101,7 +101,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 c.style.filter = "brightness(100%)";
             })
         }
-    }, [countryIndex, page]);
+    }, [countryIndex, page, selectedCountriesStrings]);
 
     function getAndUpdateCountries(countriesStrings, countryCounts, country) {
         if (country) {
@@ -125,7 +125,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             str = str + country + ", "
         })
 
-        if (str.slice(-2) === ", "){
+        if (str.slice(-2) === ", ") {
             str = str.substring(0, str.length - 2);
         }
         return (str);
@@ -154,41 +154,41 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
 
         var radius = d3.scaleSqrt().domain([0, 10146131]).range([0, 15]);
-  
+
         svg.selectAll(".country")
-        .data(geodata.features)
-        .join("path")
+            .data(geodata.features)
+            .join("path")
 
 
-        .on("click", (event, feature) => {
-            onCountryClick(event, feature)
-        })
-        .on("mouseout", (event, feature) => {
-            onCountryExit(event, feature.properties.brk_name)
-        })
-        .on("mouseover", (event, feature) => {
-            onCountryHover(event, feature.properties.brk_name)
-        })
-        .attr("class", "country")
-        .attr("countryName", function (feature) { return feature.properties.brk_name; })
-        .attr("stroke-width", function (feature) {
-            if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-                return (2.0)
-            } else {
-                return (0.3)
-            }
-        })
-        .attr("stroke", function (feature) {
-            if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-                return ("#EF2F2F")
-            } else {
-                return ("#262626")
-            }
-        })
-        .attr('z-index', '100')
-        .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
-        .attr("d", feature => pathGenerator(feature))
-        .attr("transform", "translate(100,-60)")
+            .on("click", (event, feature) => {
+                onCountryClick(event, feature)
+            })
+            .on("mouseout", (event, feature) => {
+                onCountryExit(event, feature.properties.brk_name)
+            })
+            .on("mouseover", (event, feature) => {
+                onCountryHover(event, feature.properties.brk_name)
+            })
+            .attr("class", "country")
+            .attr("countryName", function (feature) { return feature.properties.brk_name; })
+            .attr("stroke-width", function (feature) {
+                if (selectedCountriesStrings.has(feature.properties.brk_name)) {
+                    return (2.0)
+                } else {
+                    return (0.3)
+                }
+            })
+            .attr("stroke", function (feature) {
+                if (selectedCountriesStrings.has(feature.properties.brk_name)) {
+                    return ("#EF2F2F")
+                } else {
+                    return ("#262626")
+                }
+            })
+            .attr('z-index', '100')
+            .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
+            .attr("d", feature => pathGenerator(feature))
+            .attr("transform", "translate(100,-60)")
 
         var zoom = d3.zoom().scaleExtent([0.5, 10]).on("zoom", function (event) {
             d3.select('svg g').attr("transform", event.transform)
@@ -196,7 +196,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
 
         svg.call(zoom);
 
-        
+
         // svg.selectAll("circle")
         //     .data(wwtpdata.features)
         //     .enter()
@@ -221,7 +221,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         //     //.attr("r", function(d) { return radius(d.properties.POP_SERVED); })
         //     .attr("class", "locations")
         //     .attr("transform", "translate(100,-60)");
-    }, [geodata, wwtpdata]);
+    }, [geodata, wwtpdata, selectedCountriesStrings, selectedCountry]);
 
     function onCountryHover(event, feature) {
         setHoveredCountry(feature);
@@ -233,14 +233,15 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
 
     function truncate(str, length) {
         if (str.length > length) {
-          return str.slice(0, length);
+            return str.slice(0, length);
         } else return str;
-      }
+    }
 
     useEffect(() => {
         var levelSubgroups = ["Primary", "Secondary", "Advanced"]
         const countries = []
         const countries_short = []
+
         levelcountstrans.forEach(function (data) {
             countries.push(data.country)
             countries_short.push(truncate(data.country, 14))
@@ -302,7 +303,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .domain(levelSubgroups)
             .range(["darkgreen", 'blue', 'black'])
 
-        //stack the data? --> stack per subgroup
+        //stack the data, stack per subgroup
         var stackedData = d3.stack()
             .keys(levelSubgroups)
             (levelcountstrans)
@@ -322,6 +323,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 return d;
             }).enter()
             .append("rect")
+            .attr("class", "littlebar")
             .attr("x", function (d) {
                 return xScale(truncate(d.data.country, 14)) + marginleft;
             })
@@ -331,13 +333,53 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr("height", function (d) { return yScale(d[0]) - yScale(d[1]); })
             .attr("width", xScale.bandwidth())
             .attr('filter', "saturation(100%)")
-            .attr('opacity', "1")
+            .attr('opacity', "1");
+
+        // sorting
+        var sorting = function (a, b) {
+            return d3.descending((a.Advanced + a.Primary + a.Secondary), (b.Advanced + b.Primary + b.Secondary));
+        };
+        var sortingKey = function (a, b) {
+            return d3.ascending(a.country, b.country);
+        };
+        sortX("#byValue", levelcountstrans, sorting, xScale, gbar, xax, marginleft, margintop, height);
+        sortX("#byKey", levelcountstrans, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
+
     }, [levelcountstrans]);
+
+    function sortX(tagName, aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height) {
+        d3.select(tagName).on("click", function () {
+            console.log(tagName);
+            aggArr.sort(sorting)
+            console.log(aggArr)
+            xScale.domain(aggArr.map(function (d) {
+                return d.country;
+            }));
+            gbar.selectAll(".littlebar")
+                .transition()
+                .duration(1000)
+                .attr("x", function (d, i) {
+                    return xScale(truncate(d.data.country, 14)) + marginleft;
+                    //return xScale(d);
+                })
+            // scale x-axis
+            // scale x-axis
+            xax.call(d3.axisBottom(xScale))
+                .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
+                .selectAll("text")
+                .attr("transform", "translate(-10,5)rotate(-90)")
+                .style("text-anchor", "end");
+        });
+    }
 
     return (
         <div id="distribution" ref={wrapperRef} style={{ height: "1000px", width: "100%" }}>
             <div id="top"><svg ref={svgRef} style={{ height: "100%", width: "100%" }}></svg></div>
-            <div id="bottom"><svg ref={barRef} className="graph" style={{ height: "100%", width: "100%" }}></svg></div>
+            <div id="bottom">
+                <button id="byKey"> Sort by Key</button>
+                <button id="byValue"> Sort by Value</button>
+                <svg ref={barRef} className="graph" style={{ height: "100%", width: "100%" }}></svg>
+            </div>
         </div>
     );
 }
