@@ -211,6 +211,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         const svgCanvas = d3.select(svgRef.current)
         svgCanvas.selectAll("*").remove();
         const svg = svgCanvas.append("g");
+
         const width = 1000;
         const height = 800;
 
@@ -264,7 +265,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr('z-index', '100')
             .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
             .attr("d", feature => pathGenerator(feature))
-            .attr("transform", "translate(100,-60)")
+            .attr("transform", "translate(300,-60)")
 
         var zoom = d3.zoom().scaleExtent([0.5, 10]).on("zoom", function (event) {
             d3.select('svg g').attr("transform", event.transform)
@@ -288,7 +289,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                     return "darkgreen"
                 }
             })
-            .style("opacity", "0.5")
+            .style("opacity", "0.2")
             .attr("cx", function (d) {
                 return projection(d.geometry.coordinates)[0];
             })
@@ -298,7 +299,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr("r", 0.3)
             //.attr("r", function(d) { return radius(d.properties.POP_SERVED); })
             .attr("class", "locations")
-            .attr("transform", "translate(100,-60)");
+            .attr("transform", "translate(300,-60)");
     }, [geodata, wwtpdata]);
 
 
@@ -347,7 +348,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         .attr('z-index', '100')
         .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
         .attr("d", feature => pathGenerator(feature))
-        .attr("transform", "translate(100,-60)")
+        .attr("transform", "translate(300,-60)")
 
     }, [selectedCountriesStrings, maxCount, selectedCountry])
 
@@ -374,6 +375,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     }
 
     useEffect(() => {
+        
         var levelSubgroups = ["Primary", "Secondary", "Advanced"]
         const countries = []
         const countries_short = []
@@ -395,6 +397,9 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         
         gbar.append("g").attr("id", "xax");
         gbar.append("g").attr("id", "yax");
+        
+
+
         const xax = gbar.select("#xax");
         const yax = gbar.select("#yax");
 
@@ -409,6 +414,17 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr('fill', '#d0e7fd')
             .attr('z-index', '0');
 
+                    
+        gbar.append("rect").attr("x",2000).attr("y",70).attr("width", 10).attr("height", 10).style("fill", "black")
+        gbar.append("rect").attr("x",2000).attr("y",100).attr("width", 10).attr("height", 10).style("fill", "blue")
+        gbar.append("rect").attr("x",2000).attr("y",130).attr("width", 10).attr("height", 10).style("fill", "darkgreen")
+        gbar.append("text").attr("x", 2020).attr("y", 75).text("Advanced").style("font-size", "15px").attr("alignment-baseline","middle")
+        gbar.append("text").attr("x", 2020).attr("y", 105).text("Secondary").style("font-size", "15px").attr("alignment-baseline","middle")
+        gbar.append("text").attr("x", 2020).attr("y", 135).text("Primary").style("font-size", "15px").attr("alignment-baseline","middle")
+
+
+
+        gbar.append("text").attr("x", "30%").attr("y", "5%").text("Number of WWTPs per Country (stacked by level)").style("font-size", "15px").attr("alignment-baseline","middle")
         // define the scales
         var width = 1750,
             height = 120,
@@ -495,10 +511,13 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .keys(levelSubgroups)
             (levelcountstrans)
         }
+
         
 
         gbar.append("g")
+        
             .selectAll("g")
+            
             .data(stackedData)
             .enter().append("g")
             .attr("transform", function (d) {
@@ -547,7 +566,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             };
             sortX("#byValue", levelcountstrans, sorting, xScale, gbar, xax, marginleft, margintop, height);
             sortX("#byKey", levelcountstrans, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
-    
+
     }, [levelcountstrans, selectedOnly , selectedCountriesStrings, sortby]);
 
 
@@ -710,6 +729,12 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 <button id="byValue" onClick = {()=>clickedSort("value")}> Sort Largest -> Smallest (# of WWTPs) </button>
                 </div>
                 
+            </div>
+            <div id = "dotlegend">
+                <span class="dot" id="advanceddot"></span> Advanced<br></br>
+                <span class="dot" id="secondarydot"></span> Secondary<br></br>
+                <span class="dot" id="primarydot"></span> Primary<br></br>
+
             </div>
             <div id="bottom">
                 

@@ -145,3 +145,37 @@ html, body{
     opacity: 0.7;
     text-align: left;
 }
+
+
+.dot {
+    height: 10px;
+    width: 10px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    margin-top: 5%;
+    margin-right: 10px;
+  }
+
+  #dotlegend{
+      position: absolute;
+      width: 150px;
+      height: 70px;
+      top: 50%;
+      right: 90%;
+      border: 1px solid black;
+      background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  #advanceddot{
+      background-color: black;
+  }
+
+  #secondarydot{
+    background-color: blue;
+}
+
+#primarydot{
+    background-color: darkgreen;
+}
