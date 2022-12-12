@@ -1,0 +1,22 @@
+.aboutitle{
+    text-align: left;
+    margin-left: 5%;
+    width: 90%;
+    margin-top: 2%;
+}
+
+.header{
+    margin-top: 5%;
+}
+
+#title{
+    text-decoration: underline;
+}
+
+p{
+    font-size: 1.5em;
+}
+
+h1{
+    font-size: 2em;
+}

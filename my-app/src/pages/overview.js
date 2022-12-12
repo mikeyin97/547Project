@@ -71,25 +71,25 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                     <p>Treated Wastewater Discharge </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
-                <button id="byKey"> Sort by Key</button>
+                <button id="byKey1"> Sort by Key</button>
                 <button id="byValue1"> Sort by Value</button>
                 <div id="chart2" className="overview-panel">
                     <p> River Discharge </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
-                <button id="byKey"> Sort by Key</button>
+                <button id="byKey2"> Sort by Key</button>
                 <button id="byValue2"> Sort by Value</button>
                 <div id="chart3" className="overview-panel">
                     <p> Dilution Factor </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
-                <button id="byKey"> Sort by Key</button>
+                <button id="byKey3"> Sort by Key</button>
                 <button id="byValue3"> Sort by Value</button>
                 <div id="chart4" className="overview-panel">
                     <p> Design Capacity </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
-                <button id="byKey"> Sort by Key</button>
+                <button id="byKey4"> Sort by Key</button>
                 <button id="byValue4"> Sort by Value</button>
                 <div id="chart5" className="overview-panel">
                     <p> Population Served </p>
