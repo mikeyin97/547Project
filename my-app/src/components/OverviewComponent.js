@@ -91,10 +91,10 @@ class OverviewComponent {
     var { props: { setHoveredCountry } } = this;
 
     // define the scales
-    var width = 1350,
+    var width = 1500,
       height = 100,
-      margintop = 50,
-      marginleft = 70;
+      margintop = 30,
+      marginleft = 72;
 
     const barCanvases = d3.selectAll(".graph");
     var aggArr = [];
@@ -106,6 +106,7 @@ class OverviewComponent {
     const countries = Object.keys(aggcounts);
     var sortX = this.sortX;
     var truncate = this.truncate;
+    var chartTitle = "";
 
     barCanvases.each(function (d, i) {
       const barCanvas = d3.select(this);
@@ -114,10 +115,59 @@ class OverviewComponent {
         .attr('height', '100%')
         .attr('width', '100%');
 
-      const gbar = barSVG.append("g")
-        // no use
-        .attr('width', '100%')
-        .attr('height', '100%');
+      const gbar = barSVG.append("g");
+
+      // calculate max values
+      var maxH = 0;
+      if (i === 0) { // wastewater discharge
+        chartTitle = "WASTEWATER DISCHARGE";
+        maxH = d3.max(aggArr, function (d) {
+          return d.WASTE_DIS_mean;
+        });
+      } else if (i === 1) { // river discharge
+        chartTitle = "RIVER DISCHARGE";
+        maxH = d3.max(aggArr, function (d) {
+          return d.RIVER_DIS_mean;
+        });
+      } else if (i === 2) { // dilution factor
+        chartTitle = "DILUTION FACTOR";
+        maxH = d3.max(aggArr, function (d) {
+          return d.DF_mean;
+        });
+      } else if (i === 3) { // design capacity
+        chartTitle = "DESIGN CAPACITY";
+        maxH = d3.max(aggArr, function (d) {
+          return d.DESIGN_CAP_mean;
+        });
+      } else if (i === 4) { // population served
+        chartTitle = "POPULATION SERVED";
+        maxH = d3.max(aggArr, function (d) {
+          return d.POP_SERVED_mean;
+        });
+      } else if (i === 5) { // level
+        countries.forEach((country) => {
+          try {
+            for (const [key, value] of Object.entries(levelcounts[country])) {
+              maxH = Math.max(maxH, value);
+            }
+          } catch { }
+        })
+      } else if (i === 6) { // status
+        countries.forEach((country) => {
+          try {
+            for (const [key, value] of Object.entries(statuscounts[country])) {
+              maxH = Math.max(maxH, value);
+            }
+          } catch { }
+        })
+      }
+
+      gbar.append("text")
+        .attr("x", 600)
+        .attr("y", 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "14px")
+        .text(chartTitle);
 
       gbar.append("g").attr("id", "xax");
       gbar.append("g").attr("id", "yax");
@@ -165,46 +215,6 @@ class OverviewComponent {
             setHoveredCountry(null);
           });
       });
-
-      // calculate max values
-      var maxH = 0;
-      if (i === 0) { // wastewater discharge
-        maxH = d3.max(aggArr, function (d) {
-          return d.WASTE_DIS_mean;
-        });
-      } else if (i === 1) { // river discharge
-        maxH = d3.max(aggArr, function (d) {
-          return d.RIVER_DIS_mean;
-        });
-      } else if (i === 2) { // dilution factor
-        maxH = d3.max(aggArr, function (d) {
-          return d.DF_mean;
-        });
-      } else if (i === 3) { // design capacity
-        maxH = d3.max(aggArr, function (d) {
-          return d.DESIGN_CAP_mean;
-        });
-      } else if (i === 4) { // population served
-        maxH = d3.max(aggArr, function (d) {
-          return d.POP_SERVED_mean;
-        });
-      } else if (i === 5) { // level
-        countries.forEach((country) => {
-          try {
-            for (const [key, value] of Object.entries(levelcounts[country])) {
-              maxH = Math.max(maxH, value);
-            }
-          } catch { }
-        })
-      } else if (i === 6) { // status
-        countries.forEach((country) => {
-          try {
-            for (const [key, value] of Object.entries(statuscounts[country])) {
-              maxH = Math.max(maxH, value);
-            }
-          } catch { }
-        })
-      }
 
       // define y-axis
       var yScale = d3.scaleLinear()

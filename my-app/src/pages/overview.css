@@ -39,7 +39,7 @@
 }
 
 .overview-panel{
-    height: 250px;
+    height: 220px;
 }
 
 #overview-map {
@@ -113,4 +113,8 @@ html, body{
 
 #xax {
     pointer-events: all;
+}
+
+button {
+    flex-direction: column;
 }
