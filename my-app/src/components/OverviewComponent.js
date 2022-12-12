@@ -404,31 +404,39 @@ class OverviewComponent {
       }
 
       var sorting = null;
+      var sortingKey = function (a, b) {
+        return d3.ascending(a.country, b.country);
+      };
       if (i === 0) {
         sorting = function (a, b) {
           return d3.descending(a.WASTE_DIS_mean, b.WASTE_DIS_mean);
-        }
+        };
         sortX("#byValue", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
+        sortX("#byKey", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
       } else if (i === 1) {
         sorting = function (a, b) {
           return d3.descending(a.RIVER_DIS_mean, b.RIVER_DIS_mean);
         }
         sortX("#byValue1", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
+        sortX("#byKey1", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
       } else if (i === 2) {
         sorting = function (a, b) {
           return d3.descending(a.DF_mean, b.DF_mean);
         }
         sortX("#byValue2", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
+        sortX("#byKey2", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
       } else if (i === 3) {
         sorting = function (a, b) {
           return d3.descending(a.DESIGN_CAP_mean, b.DESIGN_CAP_mean);
         }
         sortX("#byValue3", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
+        sortX("#byKey3", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
       } else if (i === 4) {
         sorting = function (a, b) {
           return d3.descending(a.POP_SERVED_mean, b.POP_SERVED_mean);
         }
         sortX("#byValue4", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
+        sortX("#byKey4", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
       }
     });
   }
