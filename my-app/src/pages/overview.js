@@ -61,36 +61,23 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
 
     return (
         <div id="overview" ref={wrapperRef} style={{ height: "100%", width: "100%" }}>
-            <div id="overview-main" style={{ width: "100%" }}><h3>Country Overview</h3>
-                <div id="overview-map">
-                    <div ref={svgRef}> </div>
-                </div>
-                <button id="byKey"> Sort by Key</button>
-                <button id="byValue"> Sort by Value</button>
+            <div id="overview-main" style={{ width: "70%" }}><h3>Country Overview</h3>
                 <div id="chart1" className="overview-panel">
                     <p>Treated Wastewater Discharge </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
-                <button id="byKey1"> Sort by Key</button>
-                <button id="byValue1"> Sort by Value</button>
                 <div id="chart2" className="overview-panel">
                     <p> River Discharge </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
-                <button id="byKey2"> Sort by Key</button>
-                <button id="byValue2"> Sort by Value</button>
                 <div id="chart3" className="overview-panel">
                     <p> Dilution Factor </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
-                <button id="byKey3"> Sort by Key</button>
-                <button id="byValue3"> Sort by Value</button>
                 <div id="chart4" className="overview-panel">
                     <p> Design Capacity </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>
-                <button id="byKey4"> Sort by Key</button>
-                <button id="byValue4"> Sort by Value</button>
                 <div id="chart5" className="overview-panel">
                     <p> Population Served </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
@@ -99,6 +86,21 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                     <p> Level </p>
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>*/}
+            </div>
+            <div id="overview-side" style={{ width: "30%" }}>
+                <div ref={svgRef} style={{ width: "100%", height: "50%" }}> </div>
+                <div style={{ width: "100%", height: "50%" }}>
+                    <button id="byKey"> Sort by Key</button>
+                    <button id="byValue"> Sort by Value</button>
+                    <button id="byKey1"> Sort by Key</button>
+                    <button id="byValue1"> Sort by Value</button>
+                    <button id="byKey2"> Sort by Key</button>
+                    <button id="byValue2"> Sort by Value</button>
+                    <button id="byKey3"> Sort by Key</button>
+                    <button id="byValue3"> Sort by Value</button>
+                    <button id="byKey4"> Sort by Key</button>
+                    <button id="byValue4"> Sort by Value</button>
+                </div>
             </div>
         </div>
     )

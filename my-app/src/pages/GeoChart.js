@@ -335,7 +335,16 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
 
     function truncate(str, length) {
         if (str.length > length) {
-            return str.slice(0, length);
+            const regex1 = /\(/;
+            const regex2 = /\)/;
+            const i1 = str.search(regex1);
+            const i2 = str.search(regex2);
+            if (i1 !== -1 && i2 !== -1){
+                console.log(str.substring(i1+1, i2));
+                return str.substring(i1+1, i2);
+            } else {
+                return str.slice(0, length);
+            }
         } else return str;
     }
 
