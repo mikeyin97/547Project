@@ -11,6 +11,10 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     const [width, setWidth] = useState(600);
     const [height, setHeight] = useState(600)
     const [hoveredCountry, setHoveredCountry] = useState(null);
+    const [selectedCountriesCounts, setSelectedCountriesCounts] = useState({});
+    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [maxCount, setMaxCount] = useState(false);
+
 
     useEffect(initVis, [geodata, wwtpdata, aggcounts, levelcounts, statuscounts, aggcountssort, setHoveredCountry]);
     useEffect(updateHighlight, [hoveredCountry]);
@@ -32,11 +36,26 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 levelcounts,
                 statuscounts,
                 aggcountssort,
-                setHoveredCountry
+                setHoveredCountry, 
+                selectedCountriesCounts, 
+                setSelectedCountriesCounts, 
+                selectedCountry, 
+                setSelectedCountry,
+                selectedCountriesStrings, 
+                setSelectedCountriesStrings,
             }
             vis = new OverviewComponent(svgRef.current, barRef.current, d3Props);
         }
     }
+
+    useEffect(() => {
+
+        var countriesStr = document.getElementById("countriesStr")
+        countriesStr.innerHTML = (vis.getAndUpdateCountries(selectedCountriesStrings, selectedCountriesCounts, selectedCountry));
+        vis.highlightSelected(selectedCountriesStrings);
+    },  [selectedCountriesStrings, maxCount, selectedCountry])
+   
+
 
     function handleResizeEvent() {
         let resizeTimer;
@@ -82,6 +101,7 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                     <div ref={barRef} className="graph" style={{ height: "90%", width: "100%" }}></div>
                 </div>*/}
             </div>
+            <div id="countriesStrDiv3"><h4 id="countriesStr"></h4></div>
             <div id="overview-side" style={{ width: "33%" }}>
                 <div ref={svgRef} style={{ width: "100%", height: "50%" }}> </div>
                 <div style={{ width: "100%", height: "50%" }}>
