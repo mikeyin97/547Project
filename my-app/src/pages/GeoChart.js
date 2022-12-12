@@ -15,6 +15,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     const [countryIndex, setCountryIndex] = useState(-1);
     const [clicked, setClicked] = useState(true);
     const [selectedOnly, setSelectedOnly] = useState(false);
+    const [sortby, setSortby] = useState("key");
     var zoom = null;
 
     useEffect(() => {
@@ -56,7 +57,9 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             }
             var bars = document.querySelectorAll("[type=barchartbar]");
             var countries = document.getElementsByClassName("country");
+            var xaxvals = document.querySelectorAll("[type=xaxval]");
             if (hoveredCountry){
+                
                 [...bars].forEach((bar) => {
                     if (bar.classList.contains(hoveredCountry.split(' ').join(''))) {
                         bar.style.opacity = "0.4"
@@ -74,7 +77,18 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                     } else {
                         c.style.filter = "brightness(100%)";
                     }
-                })
+                });
+                [...xaxvals].forEach((val) => {
+                    var compare = val.innerHTML.split(' ').join('')
+                    if (compare === (truncate(hoveredCountry, 14).split(' ').join(''))) {
+                        val.style.color = "green";
+                        val.style.fontWeight = "900";
+                    } else {
+                        val.style.color = "black";
+                        val.style.fontWeight = "20";
+                    }
+    
+                });
             } else {
                 [...bars].forEach((bar) => {
                         bar.style.opacity = "1"
@@ -385,7 +399,8 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         xax.call(d3.axisBottom(xScale))
             .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
             .selectAll("text")
-            .attr("transform", "translate(-10,5)rotate(-90)")
+            .attr("type", "xaxval")
+            .attr("transform", "translate(-15,5)rotate(-90)")
             .style("text-anchor", "end");
 
         
@@ -436,9 +451,17 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .range(["darkgreen", 'blue', 'black'])
 
         //stack the data, stack per subgroup
-        var stackedData = d3.stack()
+        var stackedData = null;
+        if (selectedOnly) {
+            stackedData = d3.stack()
+            .keys(levelSubgroups)
+            (newObj)
+        } else {
+            stackedData = d3.stack()
             .keys(levelSubgroups)
             (levelcountstrans)
+        }
+        
 
         gbar.append("g")
             .selectAll("g")
@@ -479,7 +502,17 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr("width", xScale.bandwidth())
             .attr('filter', "saturation(100%)")
             .attr('opacity', "1")
-    }, [levelcountstrans, selectedOnly , selectedCountriesStrings]);
+
+            var sorting = function (a, b) {
+                return d3.descending((a.Advanced + a.Primary + a.Secondary), (b.Advanced + b.Primary + b.Secondary));
+            };
+            var sortingKey = function (a, b) {
+                return d3.ascending(a.country, b.country);
+            };
+            sortX("#byValue", levelcountstrans, sorting, xScale, gbar, xax, marginleft, margintop, height);
+            sortX("#byKey", levelcountstrans, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
+    
+    }, [levelcountstrans, selectedOnly , selectedCountriesStrings, sortby]);
 
 
     useEffect(() => {
@@ -501,7 +534,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             });
         }
         
-    }, [selectedCountriesStrings])
+    }, [selectedCountriesStrings, sortby])
     
     useEffect(() => {
         var bars = document.querySelectorAll("[type=barchartbar]");
@@ -560,38 +593,65 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             })
         }
 
-    }, [countryIndex, page, selectedCountry]);
+    }, [countryIndex, page, selectedCountry, sortby]);
 
+    function clickedSort(val){
+        setSortby(val)
+    }
     function sortX(tagName, aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height) {
         d3.select(tagName).on("click", function () {
-            console.log(tagName);
             aggArr.sort(sorting)
-            console.log(aggArr)
-            xScale.domain(aggArr.map(function (d) {
-                return d.country;
-            }));
+
+            if (selectedOnly){
+                var newObj = []
+                aggArr.forEach((d) => {
+                    if (selectedCountriesStrings.has(d.country)){
+                        newObj.push(d)
+                    }
+                })
+                console.log(newObj);
+                xScale.domain(newObj.map(function (d) {
+                    console.log(d.country);
+                    return (d.country);
+                }));
+            } else{
+                xScale.domain(aggArr.map(function (d) {
+                    return truncate(d.country, 14);
+                }));
+            }
+            
+            
             gbar.selectAll(".littlebar")
                 .transition()
                 .duration(1000)
                 .attr("x", function (d, i) {
-                    return xScale(truncate(d.data.country, 14)) + marginleft;
-                    //return xScale(d);
+                    if (selectedOnly){
+                        return xScale(d) + marginleft;
+                    } else{
+                        return xScale(truncate(d, 14)) + marginleft;
+                    }
                 })
             // scale x-axis
             // scale x-axis
             xax.call(d3.axisBottom(xScale))
                 .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
                 .selectAll("text")
-                .attr("transform", "translate(-10,5)rotate(-90)")
+                .attr("transform", "translate(-15,5)rotate(-90)")
                 .style("text-anchor", "end");
         });
     }
+
+ 
 
     return (
         <div id="distribution" ref={wrapperRef} style={{ height: "1000px", width: "100%" }}>
             <div id="top"><svg ref={svgRef} style={{ height: "100%", width: "100%" }}></svg></div>
             <div id="countriesStrDiv2"><h4 id="countriesStr"></h4></div>
-            <div id="bottom"><svg ref={barRef} className="graph" style={{ height: "100%", width: "100%" }}></svg></div>
+            <div id="bottom">
+                <button id="byKey" onClick = {()=>clickedSort("key")}> Sort Alphabetically</button>
+                <button id="byValue" onClick = {()=>clickedSort("value")}> Sort Largest -> Smallest (# of WWTPs) </button>
+                <svg ref={barRef} className="graph" style={{ height: "100%", width: "100%" }}></svg>
+            </div>
         </div>
     );
 }
