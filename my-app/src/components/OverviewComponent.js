@@ -25,7 +25,7 @@ class OverviewComponent {
       .append("svg")
       // attributes needed for no arbitrary width and height
       .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 1000 400")
+      .attr("viewBox", "0 0 720 550")
       // Class to make it responsive.
       .classed("svg-content-responsive", true);
     this.barCanvases = d3.select(barContainer);
@@ -40,8 +40,8 @@ class OverviewComponent {
     const gmap = mapCanvas.append("g");
 
     // map dimension
-    const width = 1000;
-    const height = 400;
+    const width = 720;
+    const height = 550;
     const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
     const pathGenerator = d3.geoPath().projection(projection);
     const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
@@ -53,7 +53,8 @@ class OverviewComponent {
       .attr('stroke', 'black')
       .attr('fill', '#69a3b2')
       .attr("id", "bgmap")
-      .attr('z-index', '0');
+      .attr('z-index', '0')
+      .attr("transform", "translate(0, 0)");
 
     gmap.selectAll(".country")
       .data(geodata.features)
@@ -78,9 +79,9 @@ class OverviewComponent {
 
     var zoom = d3.zoom()
       .scaleExtent([1, 10])
-      .translateExtent([[0, 0], [width, height + 105]])
+      .translateExtent([[0, 0], [width, height]])
       .on("zoom", function (event) {
-        d3.select('#overview-map svg g').attr("transform", event.transform)
+        d3.select('#overview-side svg g').attr("transform", event.transform)
       })
     gmap.call(zoom);
   }
@@ -88,23 +89,23 @@ class OverviewComponent {
   initOverview = () => {
     const { props: { aggcounts, aggcountssort, levelcounts, statuscounts } } = this;
     var { props: { setHoveredCountry } } = this;
+
+    // define the scales
+    var width = 1350,
+      height = 100,
+      margintop = 50,
+      marginleft = 70;
+
     const barCanvases = d3.selectAll(".graph");
     var aggArr = [];
     Object.values(aggcountssort).forEach(function (data) {
       aggArr.push(data);
     });
-    console.log("woo");
-    console.log(aggArr);
-
-    // define the scales
-    var width = 1600,
-      height = 200,
-      margintop = 50,
-      marginleft = 70;
 
     // all countries
     const countries = Object.keys(aggcounts);
     var sortX = this.sortX;
+    var truncate = this.truncate;
 
     barCanvases.each(function (d, i) {
       const barCanvas = d3.select(this);
@@ -112,7 +113,11 @@ class OverviewComponent {
       const barSVG = barCanvas.append('svg')
         .attr('height', '100%')
         .attr('width', '100%');
-      const gbar = barSVG.append("g");
+
+      const gbar = barSVG.append("g")
+        // no use
+        .attr('width', '100%')
+        .attr('height', '100%');
 
       gbar.append("g").attr("id", "xax");
       gbar.append("g").attr("id", "yax");
@@ -134,9 +139,10 @@ class OverviewComponent {
       var xScale = d3.scaleBand()
         .range([0, width])
         .domain(aggArr.map(function (d) {
+          return truncate(d.country, 14);
           return d.country;
         }))
-        .padding(0.2)
+        .padding(0.2);
 
       // scale x-axis
       xax
@@ -222,6 +228,7 @@ class OverviewComponent {
           .attr("class", "littlebar")
           .attr("transform", "translate(" + marginleft + "," + margintop + ")")
           .attr("x", function (d) {
+            return xScale(truncate(d, 14));
             return xScale(d);
           })
           .attr("y", function (d) {
@@ -411,48 +418,65 @@ class OverviewComponent {
         sorting = function (a, b) {
           return d3.descending(a.WASTE_DIS_mean, b.WASTE_DIS_mean);
         };
-        sortX("#byValue", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
-        sortX("#byKey", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
+        sortX("#byValue", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate);
+        sortX("#byKey", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height, truncate);
       } else if (i === 1) {
         sorting = function (a, b) {
           return d3.descending(a.RIVER_DIS_mean, b.RIVER_DIS_mean);
         }
-        sortX("#byValue1", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
-        sortX("#byKey1", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
+        sortX("#byValue1", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate);
+        sortX("#byKey1", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height, truncate);
       } else if (i === 2) {
         sorting = function (a, b) {
           return d3.descending(a.DF_mean, b.DF_mean);
         }
-        sortX("#byValue2", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
-        sortX("#byKey2", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
+        sortX("#byValue2", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate);
+        sortX("#byKey2", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height, truncate);
       } else if (i === 3) {
         sorting = function (a, b) {
           return d3.descending(a.DESIGN_CAP_mean, b.DESIGN_CAP_mean);
         }
-        sortX("#byValue3", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
-        sortX("#byKey3", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
+        sortX("#byValue3", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate);
+        sortX("#byKey3", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height, truncate);
       } else if (i === 4) {
         sorting = function (a, b) {
           return d3.descending(a.POP_SERVED_mean, b.POP_SERVED_mean);
         }
-        sortX("#byValue4", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height);
-        sortX("#byKey4", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
+        sortX("#byValue4", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate);
+        sortX("#byKey4", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height, truncate);
       }
     });
   }
 
-  sortX = (tagName, aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height) => {
+  truncate = (str, length) => {
+    if (str.length > length) {
+      const regex1 = /\(/;
+      const regex2 = /\)/;
+      const i1 = str.search(regex1);
+      const i2 = str.search(regex2);
+      if (i1 !== -1 && i2 !== -1) {
+        console.log(str.substring(i1 + 1, i2));
+        return str.substring(i1 + 1, i2);
+      } else {
+        return str.slice(0, length);
+      }
+    } else return str;
+  }
+
+  sortX = (tagName, aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate) => {
     d3.select(tagName).on("click", function () {
       console.log(tagName);
       aggArr.sort(sorting)
       console.log(aggArr)
       xScale.domain(aggArr.map(function (d) {
+        return truncate(d.country, 14);
         return d.country;
       }));
       gbar.selectAll(".littlebar")
         .transition()
         .duration(1000)
         .attr("x", function (d, i) {
+          return xScale(truncate(d, 14));
           return xScale(d);
         })
       // scale x-axis

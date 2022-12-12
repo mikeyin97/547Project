@@ -1,12 +1,12 @@
 #overview {
     display: flex;
-    height: 90% !important;
+    height: 95% !important;
 }
 
 #overview-main {
     float: left;
     flex-direction: column;
-    overflow: scroll;
+    overflow-y: scroll;
     outline: 1px solid black;
     /*padding-bottom: 5%;*/
 }
@@ -35,10 +35,11 @@
     float: right;
     position: relative;
     overflow: auto;
+    pointer-events: auto;
 }
 
 .overview-panel{
-    height: 500px;
+    height: 250px;
 }
 
 #overview-map {
@@ -79,6 +80,7 @@ html, body{
     display: inline-block;
     position: relative;
     width: 100%;
+    height: 50%;
     padding-bottom: 30%;
     /* aspect ratio */
     vertical-align: top;
