@@ -520,19 +520,20 @@ class OverviewComponent {
       const extent = [[0, 0], [width, height]];
 
       var zoomed = (event) => {
-        xScale.range([marginleft, width].map(d => event.transform.applyX(d)));
-        gbar.selectAll("bar rect").attr("x", d => xScale(d)).attr("width", xScale.bandwidth());
+        xScale.range([0, width].map(d => event.transform.applyX(d)));
+        //gbar.selectAll("bar rect").attr("x", d => xScale(d)).attr("width", xScale.bandwidth());
         gbar.selectAll(".littlebar")
           .transition()
           .duration(1000)
           .attr("x", function (d, i) {
             return xScale(truncate(d, 14));
-          });
+          })
+          .attr("width", xScale.bandwidth());
         xax.call(xAxis);
       }
 
       var barZoom = d3.zoom()
-        .scaleExtent([0, 5])
+        .scaleExtent([1, 20])
         .translateExtent(extent)
         .extent(extent)
         .on("zoom", zoomed);
