@@ -142,21 +142,19 @@ class OverviewComponent {
   }
 
   initOverview = () => {
-    var countriesStr = document.getElementById("countriesStr")
-
     const { props: { aggcounts, aggcountssort, levelcounts, statuscounts } } = this;
     var { props: { setHoveredCountry } } = this;
 
-    // all countries
     const countries = Object.keys(aggcounts);
     var sortX = this.sortX;
     var truncate = this.truncate;
+    var chartTitle = "";
 
     // cross page linking
     var onCountryClick2 = this.onCountryClick2;
     var getAndUpdateCountries = this.getAndUpdateCountries;
-
-    var chartTitle = "";
+    var countriesStr = document.getElementById("countriesStr")
+    countriesStr.innerHTML = (getAndUpdateCountries(this.props.selectedCountriesStrings, this.props.selectedCountriesCounts, this.props.selectedCountry));
 
     const barCanvases = d3.selectAll(".graph");
     // convert to an array
@@ -172,8 +170,6 @@ class OverviewComponent {
       marginleft = 72;
 
     // draw each bar chart
-    countriesStr.innerHTML = (getAndUpdateCountries(this.props.selectedCountriesStrings, this.props.selectedCountriesCounts, this.props.selectedCountry));
-
     barCanvases.each(function (d, i) {
       const barCanvas = d3.select(this);
       barCanvas.selectAll("*").remove();
@@ -193,7 +189,7 @@ class OverviewComponent {
         .attr('fill', '#d0e7fd')
         .attr('z-index', '0');
 
-      // draw axis
+      // the components for axis
       gbar.append("g").attr("id", "xax");
       gbar.append("g").attr("id", "yax");
       const xax = gbar.select("#xax");
@@ -244,17 +240,24 @@ class OverviewComponent {
         })
       }
 
-      // define x-axis
+      // define x-axis scale
       var xScale = d3.scaleBand()
         .range([0, width])
         .domain(aggArr.map(function (d) {
           return truncate(d.country, 14);
         }))
         .padding(0.2);
+      // define y-axis scale
+      var yScale = d3.scaleLinear()
+        .domain([0, maxH])
+        .range([height, 0]);
 
-      // scale x-axis
+      var xAxis = d3.axisBottom(xScale);
+      var yAxis = d3.axisLeft(yScale);
+
+      // draw x-axis
       xax
-        .call(d3.axisBottom(xScale))
+        .call(xAxis)
         .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
         .selectAll("text")
         .attr("type", "xaxval")
@@ -273,17 +276,12 @@ class OverviewComponent {
           });
       });
 
-      // define y-axis
-      var yScale = d3.scaleLinear()
-        .domain([0, maxH])
-        .range([height, 0]);
-
-      // scale y-axis
+      // draw y-axis
       yax
         .attr("transform", "translate(" + marginleft + "," + margintop + ")")
-        .call(d3.axisLeft(yScale));
+        .call(yAxis);
 
-      barSVG.selectAll("rect:not(#bgbar)").remove();
+      // barSVG.selectAll("rect:not(#bgbar)").remove();
 
       // draw bars
       if ((i === 0) || (i === 1) || (i === 2) || (i === 3) || (i === 4)) {
@@ -490,32 +488,32 @@ class OverviewComponent {
         sorting = function (a, b) {
           return d3.descending(a.WASTE_DIS_mean, b.WASTE_DIS_mean);
         };
-        sortX("#byValue", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate);
-        sortX("#byKey", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height, truncate);
+        sortX("#byValue", aggArr, sorting, xScale, gbar, xax, xAxis, truncate);
+        sortX("#byKey", aggArr, sortingKey, xScale, gbar, xax, xAxis, truncate);
       } else if (i === 1) {
         sorting = function (a, b) {
           return d3.descending(a.RIVER_DIS_mean, b.RIVER_DIS_mean);
         }
-        sortX("#byValue1", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate);
-        sortX("#byKey1", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height, truncate);
+        sortX("#byValue1", aggArr, sorting, xScale, gbar, xax, xAxis, truncate);
+        sortX("#byKey1", aggArr, sortingKey, xScale, gbar, xax, xAxis, truncate);
       } else if (i === 2) {
         sorting = function (a, b) {
           return d3.descending(a.DF_mean, b.DF_mean);
         }
-        sortX("#byValue2", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate);
-        sortX("#byKey2", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height, truncate);
+        sortX("#byValue2", aggArr, sorting, xScale, gbar, xax, xAxis, truncate);
+        sortX("#byKey2", aggArr, sortingKey, xScale, gbar, xax, xAxis, truncate);
       } else if (i === 3) {
         sorting = function (a, b) {
           return d3.descending(a.DESIGN_CAP_mean, b.DESIGN_CAP_mean);
         }
-        sortX("#byValue3", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate);
-        sortX("#byKey3", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height, truncate);
+        sortX("#byValue3", aggArr, sorting, xScale, gbar, xax, xAxis, truncate);
+        sortX("#byKey3", aggArr, sortingKey, xScale, gbar, xax, xAxis, truncate);
       } else if (i === 4) {
         sorting = function (a, b) {
           return d3.descending(a.POP_SERVED_mean, b.POP_SERVED_mean);
         }
-        sortX("#byValue4", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate);
-        sortX("#byKey4", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height, truncate);
+        sortX("#byValue4", aggArr, sorting, xScale, gbar, xax, xAxis, truncate);
+        sortX("#byKey4", aggArr, sortingKey, xScale, gbar, xax, xAxis, truncate);
       }
 
       // the bar char title
@@ -547,7 +545,7 @@ class OverviewComponent {
     } else return str;
   }
 
-  sortX = (tagName, aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate) => {
+  sortX = (tagName, aggArr, sorting, xScale, gbar, xax, xAxis, truncate) => {
     d3.select(tagName).on("click", function () {
       console.log(tagName);
       aggArr.sort(sorting)
@@ -561,15 +559,8 @@ class OverviewComponent {
         .attr("x", function (d, i) {
           return xScale(truncate(d, 14));
         })
-      // scale x-axis
-      xax
-        .call(d3.axisBottom(xScale))
-        .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
-        .selectAll("text")
-        .attr("type", "xaxval")
-        .attr('text-align', "center")
-        .attr("transform", "translate(-10,0)rotate(-90)")
-        .style("text-anchor", "end");
+      // re-draw
+      xax.call(xAxis.scale(xScale));
     });
   }
 
