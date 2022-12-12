@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import { FaConnectdevelop } from 'react-icons/fa';
 
 class OverviewComponent {
 
@@ -35,6 +36,108 @@ class OverviewComponent {
     this.initOverview();
   }
 
+  
+  highlightSelected = (selectedCountriesStrings) => {
+    
+    var bars = document.querySelectorAll("[type=barchartbar]");
+      [...bars].forEach((bar) => {
+          var selected = false
+          selectedCountriesStrings.forEach((country) => {
+              console.log(country);
+              if (bar.classList.contains(country.split(' ').join(''))) {
+                  console.log(bar);
+                  selected = true
+                  bar.style.outline = "2px solid red";
+              } 
+          })
+          if (!selected){
+              bar.style.outline = "none";
+          }
+          
+      
+      });
+      const { mapCanvas, props: { geodata } } = this; 
+      const width = 720;
+      const height = 550;
+      const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
+      const pathGenerator = d3.geoPath().projection(projection);
+      const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
+      
+      const svg = mapCanvas.select("g");
+      svg.selectAll(".country")
+      .data(geodata.features)
+      .join("path")
+      .on("click", (event, feature) => {
+          this.onCountryClick(event, feature)
+      })
+      .on("mouseout", (event, feature) => {
+        this.props.setHoveredCountry(null)
+      })
+      .on("mouseover", (event, feature) => {
+        this.props.setHoveredCountry(feature.properties.brk_name)
+      })
+      .attr("class", "country")
+
+      .attr("countryName", function (feature) { return feature.properties.brk_name; })
+      .attr("stroke-width", function (feature) {
+          if (selectedCountriesStrings.has(feature.properties.brk_name)) {
+              return (2.0)
+          } else {
+              return (0.3)
+          }
+      })
+      .attr("stroke", function (feature) {
+          if (selectedCountriesStrings.has(feature.properties.brk_name)) {
+              return ("#EF2F2F")
+          } else {
+              return ("#262626")
+          }
+      })
+      .attr('z-index', '100')
+      .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
+      .attr("d", feature => pathGenerator(feature))
+  }
+
+  onCountryClick2 = (event, feature) => {
+    var a = document.getElementById("countriesStr").innerHTML.indexOf("(");
+    var b = document.getElementById("countriesStr").innerHTML.indexOf("/10");
+    var count = parseInt(document.getElementById("countriesStr").innerHTML.slice(a + 1, b))
+    // setSelectedCountry(feature);
+    if (count <= 9) {
+        
+        this.props.setSelectedCountriesStrings(oldstrings => new Set([...oldstrings, feature]));
+
+        var copy = this.props.selectedCountriesCounts;
+        if (!(feature in copy)) {
+            copy[feature] = true;
+        }
+        // setSelectedCountriesCounts(copy);
+      }
+  }
+
+  onCountryClick = (event, feature)  =>   {
+    var a = document.getElementById("countriesStr").innerHTML.indexOf("(");
+    var b = document.getElementById("countriesStr").innerHTML.indexOf("/10");
+    var count = parseInt(document.getElementById("countriesStr").innerHTML.slice(a + 1, b))
+    this.props.setSelectedCountry(feature);
+    if (count <= 9) {
+        this.props.setSelectedCountriesStrings(oldstrings => new Set([...oldstrings, feature.properties.brk_name]));
+
+        var copy = this.props.selectedCountriesCounts;
+        if (!(feature.properties.brk_name in copy)) {
+            copy[feature.properties.brk_name] = true;
+        }
+        this.props.setSelectedCountriesCounts(copy);
+    }
+    this.props.setHoveredCountry(feature.properties.brk_name);
+}
+
+  componentDidUpdate = () => {
+    var countriesStr = document.getElementById("countriesStr")
+    countriesStr.innerHTML = (this.getAndUpdateCountries(this.props.selectedCountriesStrings, this.props.selectedCountriesCounts, this.props.selectedCountry));
+  }
+
+
   initMap = () => {
     const { mapCanvas, props: { geodata } } = this;
     const gmap = mapCanvas.append("g");
@@ -61,6 +164,7 @@ class OverviewComponent {
       .join("path")
       .on("click", (event, feature) => {
         this.props.setHoveredCountry(feature.properties.brk_name)
+        this.onCountryClick(event, feature)
       })
       .on("mouseout", (event, feature) => {
         this.props.setHoveredCountry(null)
@@ -87,6 +191,8 @@ class OverviewComponent {
   }
 
   initOverview = () => {
+    var countriesStr = document.getElementById("countriesStr")
+    
     const { props: { aggcounts, aggcountssort, levelcounts, statuscounts } } = this;
     var { props: { setHoveredCountry } } = this;
 
@@ -106,7 +212,12 @@ class OverviewComponent {
     const countries = Object.keys(aggcounts);
     var sortX = this.sortX;
     var truncate = this.truncate;
+    var onCountryClick = this.onCountryClick;
+    var onCountryClick2 = this.onCountryClick2;
+    var getAndUpdateCountries = this.getAndUpdateCountries;
+    
     var chartTitle = "";
+    countriesStr.innerHTML = (getAndUpdateCountries(this.props.selectedCountriesStrings, this.props.selectedCountriesCounts, this.props.selectedCountry));
 
     barCanvases.each(function (d, i) {
       const barCanvas = d3.select(this);
@@ -235,7 +346,9 @@ class OverviewComponent {
           .enter()
           .append("rect")
           .attr("type", "barchartbar")
-          .attr("class", "littlebar")
+          .attr("class", function (d) { 
+            return d.split(' ').join('') + " littlebar"; 
+          })
           .attr("transform", "translate(" + marginleft + "," + margintop + ")")
           .attr("x", function (d) {
             return xScale(truncate(d, 14));
@@ -281,7 +394,10 @@ class OverviewComponent {
           })
           .on("mouseover", (event, feature) => {
             setHoveredCountry(feature);
-          });
+          }).on("click", function(event, d) { 
+            console.log(d);
+            onCountryClick2(event, d);
+        });
       } else if (i === 5) {
         var levelSubgroups = ["Primary", "Secondary", "Advanced"]
         var xLevelSubgroups = d3.scaleBand()
@@ -458,6 +574,11 @@ class OverviewComponent {
     });
   }
 
+
+  
+
+
+
   truncate = (str, length) => {
     if (str.length > length) {
       const regex1 = /\(/;
@@ -465,7 +586,6 @@ class OverviewComponent {
       const i1 = str.search(regex1);
       const i2 = str.search(regex2);
       if (i1 !== -1 && i2 !== -1) {
-        console.log(str.substring(i1 + 1, i2));
         return str.substring(i1 + 1, i2);
       } else {
         return str.slice(0, length);
@@ -501,14 +621,40 @@ class OverviewComponent {
     });
   }
 
+  getAndUpdateCountries = (countriesStrings, countryCounts, country) => {
+    if (country) {
+        if (countryCounts[country.properties.brk_name] === true) {
+            countryCounts[country.properties.brk_name] = false
+        } else if (countryCounts[country.properties.brk_name] === false) {
+            countriesStrings.delete(country.properties.brk_name)
+            delete countryCounts[country.properties.brk_name];
+        }
+    }
+
+
+      var countryStringsSet = new Set(countriesStrings);
+      var setcount = countryStringsSet.size;
+      if (setcount >= 11) {
+          this.props.setMaxCount(true);
+      }
+
+      var str = "Selected Countries (" + setcount + "/10): "
+      countryStringsSet.forEach((country) => {
+          str = str + country + ", "
+      })
+
+      if (str.slice(-2) === ", ") {
+          str = str.substring(0, str.length - 2);
+      }
+      return (str);
+  }
+
   highlightCountry = (hoveredCountry) => {
     var bars = document.querySelectorAll("[type=barchartbar]");
     var xaxvals = document.querySelectorAll("[type=xaxval]");
     var countries = document.getElementsByClassName("country");
 
     if (hoveredCountry) {
-      console.log(hoveredCountry);
-
       // hilight bars
       [...bars].forEach((bar) => {
         var country = d3.select(bar).data()[0];

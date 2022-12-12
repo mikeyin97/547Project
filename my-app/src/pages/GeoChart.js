@@ -731,9 +731,9 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 
             </div>
             <div id = "dotlegend">
-                <span class="dot" id="advanceddot"></span> Advanced<br></br>
-                <span class="dot" id="secondarydot"></span> Secondary<br></br>
-                <span class="dot" id="primarydot"></span> Primary<br></br>
+                <span className="dot" id="advanceddot"></span> Advanced<br></br>
+                <span className="dot" id="secondarydot"></span> Secondary<br></br>
+                <span className="dot" id="primarydot"></span> Primary<br></br>
 
             </div>
             <div id="bottom">
