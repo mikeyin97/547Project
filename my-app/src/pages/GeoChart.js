@@ -236,30 +236,30 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         svg.call(zoom);
 
         
-        // svg.selectAll("circle")
-        //     .data(wwtpdata.features)
-        //     .enter()
-        //     .append("circle")
-        //     .attr("fill", function (d, i) {
-        //         if (d.properties.LEVEL === "Advanced") {
-        //             return "black"
-        //         } else if (d.properties.LEVEL === "Secondary") {
-        //             return "blue"
-        //         } else {
-        //             return "darkgreen"
-        //         }
-        //     })
-        //     .style("opacity", "0.5")
-        //     .attr("cx", function (d) {
-        //         return projection(d.geometry.coordinates)[0];
-        //     })
-        //     .attr("cy", function (d) {
-        //         return projection(d.geometry.coordinates)[1];
-        //     })
-        //     .attr("r", 0.3)
-        //     //.attr("r", function(d) { return radius(d.properties.POP_SERVED); })
-        //     .attr("class", "locations")
-        //     .attr("transform", "translate(100,-60)");
+        svg.selectAll("circle")
+            .data(wwtpdata.features)
+            .enter()
+            .append("circle")
+            .attr("fill", function (d, i) {
+                if (d.properties.LEVEL === "Advanced") {
+                    return "black"
+                } else if (d.properties.LEVEL === "Secondary") {
+                    return "blue"
+                } else {
+                    return "darkgreen"
+                }
+            })
+            .style("opacity", "0.5")
+            .attr("cx", function (d) {
+                return projection(d.geometry.coordinates)[0];
+            })
+            .attr("cy", function (d) {
+                return projection(d.geometry.coordinates)[1];
+            })
+            .attr("r", 0.3)
+            //.attr("r", function(d) { return radius(d.properties.POP_SERVED); })
+            .attr("class", "locations")
+            .attr("transform", "translate(100,-60)");
     }, [geodata, wwtpdata]);
 
 
