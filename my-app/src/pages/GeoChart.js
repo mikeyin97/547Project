@@ -14,7 +14,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     const [hoveredCountry, setHoveredCountry] = useState(null);
     const [countryIndex, setCountryIndex] = useState(-1);
     const [clicked, setClicked] = useState(true);
-    const [selectedOnly, setSelectedOnly] = useState(false);
+    const [selectedOnly, setSelectedOnly] = useState(false); 
     const [sortby, setSortby] = useState("key");
     var zoom = null;
 
@@ -39,6 +39,23 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         }
         setHoveredCountry(feature.properties.brk_name);
 
+    }
+
+    function onCountryClick2(event, feature) {
+        var a = document.getElementById("countriesStr").innerHTML.indexOf("(");
+        var b = document.getElementById("countriesStr").innerHTML.indexOf("/10");
+        var count = parseInt(document.getElementById("countriesStr").innerHTML.slice(a + 1, b))
+        // setSelectedCountry(feature);
+        if (count <= 9) {
+            
+            setSelectedCountriesStrings(selectedCountriesStrings => new Set([...selectedCountriesStrings, feature.data.country]));
+
+            var copy = selectedCountriesCounts;
+            if (!(feature.data.country in copy)) {
+                copy[feature.data.country] = true;
+            }
+            // setSelectedCountriesCounts(copy);
+        }
     }
 
 
@@ -107,29 +124,35 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             var countryBar = null;
 
             [...bars].forEach((bar) => {
-                if (bar.classList.contains(country.split(' ').join(''))) {
-                    if (!countryBar) {
-                        countryBar = bar;
+                try{
+                    if (bar.classList.contains(country.split(' ').join(''))) {
+                        if (!countryBar) {
+                            countryBar = bar;
+                        }
+    
+                        bar.style.opacity = "0.4"
+                    } else {
+                        bar.style.opacity = "1"
                     }
-
-                    bar.style.opacity = "0.4"
-                } else {
-                    bar.style.opacity = "1"
-                }
-
+    
+                } catch{}
+                
             });
 
             var clonexaxvals = [...xaxvals]
             clonexaxvals.forEach((val) => {
                 var compare = val.innerHTML.split(' ').join('')
-                if (compare === (country.split(' ').join(''))) {
-                    val.style.color = "#04290e";
-                    val.style.fontWeight = "900";
-                } else {
-                    val.style.color = "black";
-                    val.style.fontWeight = "20";
-                }
-
+                try{
+                    if (compare === (country.split(' ').join(''))) {
+                        val.style.color = "#04290e";
+                        val.style.fontWeight = "900";
+                    } else {
+                        val.style.color = "black";
+                        val.style.fontWeight = "20";
+                    }
+     
+                } catch{}
+                
             });
             [...countries].forEach((c) => {
                 var compare = c.getAttribute("countryName").split(' ').join('')
@@ -249,6 +272,8 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
 
         svg.call(zoom);
 
+        document.getElementById("byKey").disabled = true;
+
 
         // svg.selectAll("circle")
         //     .data(wwtpdata.features)
@@ -274,7 +299,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         //     //.attr("r", function(d) { return radius(d.properties.POP_SERVED); })
         //     .attr("class", "locations")
         //     .attr("transform", "translate(100,-60)");
-    }, [geodata, wwtpdata, selectedCountriesStrings, selectedCountry]);
+    }, [geodata, wwtpdata]);
 
 
     useEffect(() =>{
@@ -303,6 +328,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             onCountryHover(event, feature.properties.brk_name)
         })
         .attr("class", "country")
+
         .attr("countryName", function (feature) { return feature.properties.brk_name; })
         .attr("stroke-width", function (feature) {
             if (selectedCountriesStrings.has(feature.properties.brk_name)) {
@@ -340,7 +366,6 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             const i1 = str.search(regex1);
             const i2 = str.search(regex2);
             if (i1 !== -1 && i2 !== -1){
-                console.log(str.substring(i1+1, i2));
                 return str.substring(i1+1, i2);
             } else {
                 return str.slice(0, length);
@@ -487,7 +512,6 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 return d;
             }).enter()
             .append("rect")
-            .attr("class", "littlebar")
             .attr("x", function (d) {
                 if (selectedOnly){
                     return xScale(d.data.country) + marginleft;
@@ -499,13 +523,16 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr("y", function (d) {
                 return yScale(d[1]) + margintop;
             })
-            .attr("class", function (d) { return d.data.country.split(' ').join(''); })
+            .attr("class", function (d) { return d.data.country.split(' ').join('') + " littlebar"; })
             .attr("type", "barchartbar")
             .on("mouseover", function (event, d) {
                 onCountryHover(event, d.data.country);
             })
             .on("mouseout", function (event, d) {
                 onCountryExit(event, d.data.country);
+            })
+            .on("click", function(event, d) { 
+                onCountryClick2(event, d);
             })
             .attr("height", function (d) { return yScale(d[0]) - yScale(d[1]); })
             .attr("width", xScale.bandwidth())
@@ -605,7 +632,18 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     }, [countryIndex, page, selectedCountry, sortby]);
 
     function clickedSort(val){
-        setSortby(val)
+        if (val != sortby){
+            setSortby(val)
+        }
+        if (val == "key") {
+            document.getElementById("byKey").disabled = true;
+            document.getElementById("byValue").disabled = false;
+        }
+        if (val == "value") {
+            document.getElementById("byValue").disabled = true;
+            document.getElementById("byKey").disabled = false;
+        }
+        
     }
     function sortX(tagName, aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height) {
         d3.select(tagName).on("click", function () {
@@ -618,9 +656,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                         newObj.push(d)
                     }
                 })
-                console.log(newObj);
                 xScale.domain(newObj.map(function (d) {
-                    console.log(d.country);
                     return (d.country);
                 }));
             } else{
@@ -631,8 +667,6 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             
             
             gbar.selectAll(".littlebar")
-                .transition()
-                .duration(1000)
                 .attr("x", function (d, i) {
                     if (selectedOnly){
                         return xScale(d) + marginleft;
@@ -650,15 +684,35 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         });
     }
 
- 
+    function handleChangeChk(){
+        var sortOptions = document.getElementById("sortingOptions")
+        if (document.getElementById("selectedOnly").checked){
+            setSelectedOnly(true);
+            sortOptions.style.display = "none";
+        } else {
+            setSelectedOnly(false);
+            sortOptions.style.display = "block";
+        }
+    }   
 
     return (
         <div id="distribution" ref={wrapperRef} style={{ height: "1000px", width: "100%" }}>
             <div id="top"><svg ref={svgRef} style={{ height: "100%", width: "100%" }}></svg></div>
             <div id="countriesStrDiv2"><h4 id="countriesStr"></h4></div>
-            <div id="bottom">
+            <div id="menupanel"> 
+                <h4 id = "bcopts">Bar Chart Options</h4>
+                <form>
+                <input type="checkbox" onChange={()=>handleChangeChk()} id="selectedOnly" name="selectedOnly" value="selected"></input><label htmlFor="selectedOnly"> Show selected countries only?</label><br></br>
+                </form>
+                
+                <div id = "sortingOptions">
                 <button id="byKey" onClick = {()=>clickedSort("key")}> Sort Alphabetically</button>
                 <button id="byValue" onClick = {()=>clickedSort("value")}> Sort Largest -> Smallest (# of WWTPs) </button>
+                </div>
+                
+            </div>
+            <div id="bottom">
+                
                 <svg ref={barRef} className="graph" style={{ height: "100%", width: "100%" }}></svg>
             </div>
         </div>

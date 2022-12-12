@@ -107,13 +107,27 @@ html, body{
     display:flex;
 }
 
+#bcopts{
+    margin: 5px;
+}
+
 #countriesStrDiv2{
     position:absolute;
     width: 400px;
     height: 100px;
-    top: 10%;
+    top: 30%;
     left: 70%;
     background-color: rgba(255,255,255,0.5);
+    border: 1px solid black;
+}
+
+#menupanel{
+    position:absolute;
+    width: 400px;
+    height: 10%;
+    top: 60%;
+    left: 70%;
+    background-color: rgba(255, 255, 255, 0.711);
     border: 1px solid black;
 }
 
