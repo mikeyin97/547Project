@@ -163,7 +163,7 @@ class OverviewComponent {
       aggArr.push(data);
     });
 
-    // define the scales foe each bar chart
+    // define the scales for each bar chart
     var width = 1500,
       height = 100,
       margintop = 30,
@@ -516,6 +516,29 @@ class OverviewComponent {
         sortX("#byKey4", aggArr, sortingKey, xScale, gbar, xax, xAxis, truncate);
       }
 
+      // zoom the bar charts
+      const extent = [[0, 0], [width, height]];
+
+      var zoomed = (event) => {
+        xScale.range([marginleft, width].map(d => event.transform.applyX(d)));
+        gbar.selectAll("bar rect").attr("x", d => xScale(d)).attr("width", xScale.bandwidth());
+        gbar.selectAll(".littlebar")
+          .transition()
+          .duration(1000)
+          .attr("x", function (d, i) {
+            return xScale(truncate(d, 14));
+          });
+        xax.call(xAxis);
+      }
+
+      var barZoom = d3.zoom()
+        .scaleExtent([0, 5])
+        .translateExtent(extent)
+        .extent(extent)
+        .on("zoom", zoomed);
+
+      gbar.call(barZoom);
+
       // the bar char title
       gbar.append("text")
         .attr("x", 600)
@@ -525,10 +548,6 @@ class OverviewComponent {
         .text(chartTitle);
 
     });
-  }
-
-  zoomAxis = (component) => {
-
   }
 
   truncate = (str, length) => {
@@ -547,9 +566,7 @@ class OverviewComponent {
 
   sortX = (tagName, aggArr, sorting, xScale, gbar, xax, xAxis, truncate) => {
     d3.select(tagName).on("click", function () {
-      console.log(tagName);
       aggArr.sort(sorting)
-      console.log(aggArr)
       xScale.domain(aggArr.map(function (d) {
         return truncate(d.country, 14);
       }));
@@ -558,7 +575,7 @@ class OverviewComponent {
         .duration(1000)
         .attr("x", function (d, i) {
           return xScale(truncate(d, 14));
-        })
+        });
       // re-draw
       xax.call(xAxis.scale(xScale));
     });
