@@ -90,32 +90,50 @@ class OverviewComponent {
     const { props: { aggcounts, aggcountssort, levelcounts, statuscounts } } = this;
     var { props: { setHoveredCountry } } = this;
 
-    // define the scales
-    var width = 1500,
-      height = 100,
-      margintop = 30,
-      marginleft = 72;
-
-    const barCanvases = d3.selectAll(".graph");
-    var aggArr = [];
-    Object.values(aggcountssort).forEach(function (data) {
-      aggArr.push(data);
-    });
-
     // all countries
     const countries = Object.keys(aggcounts);
     var sortX = this.sortX;
     var truncate = this.truncate;
     var chartTitle = "";
 
+    const barCanvases = d3.selectAll(".graph");
+    // convert to an array
+    var aggArr = [];
+    Object.values(aggcountssort).forEach(function (data) {
+      aggArr.push(data);
+    });
+
+    // define the scales foe each bar chart
+    var width = 1500,
+      height = 100,
+      margintop = 30,
+      marginleft = 72;
+
+    // draw each bar chart
     barCanvases.each(function (d, i) {
       const barCanvas = d3.select(this);
       barCanvas.selectAll("*").remove();
       const barSVG = barCanvas.append('svg')
         .attr('height', '100%')
         .attr('width', '100%');
-
       const gbar = barSVG.append("g");
+
+      // the barchart panel
+      gbar.append('rect')
+        .attr('x', "0")
+        .attr('y', "0")
+        .attr("id", "bgbar")
+        .attr('width', '100%')
+        .attr('height', '100%')
+        .attr('stroke', 'black')
+        .attr('fill', '#d0e7fd')
+        .attr('z-index', '0');
+
+      // draw axis
+      gbar.append("g").attr("id", "xax");
+      gbar.append("g").attr("id", "yax");
+      const xax = gbar.select("#xax");
+      const yax = gbar.select("#yax");
 
       // calculate max values
       var maxH = 0;
@@ -162,35 +180,11 @@ class OverviewComponent {
         })
       }
 
-      gbar.append("text")
-        .attr("x", 600)
-        .attr("y", 20)
-        .attr("text-anchor", "middle")
-        .style("font-size", "14px")
-        .text(chartTitle);
-
-      gbar.append("g").attr("id", "xax");
-      gbar.append("g").attr("id", "yax");
-      const xax = gbar.select("#xax");
-      const yax = gbar.select("#yax");
-
-      // The barchart panels
-      gbar.append('rect')
-        .attr('x', "0")
-        .attr('y', "0")
-        .attr("id", "bgbar")
-        .attr('width', '100%')
-        .attr('height', '100%')
-        .attr('stroke', 'black')
-        .attr('fill', '#d0e7fd')
-        .attr('z-index', '0');
-
       // define x-axis
       var xScale = d3.scaleBand()
         .range([0, width])
         .domain(aggArr.map(function (d) {
           return truncate(d.country, 14);
-          return d.country;
         }))
         .padding(0.2);
 
@@ -204,10 +198,9 @@ class OverviewComponent {
         .attr("transform", "translate(-10,0)rotate(-90)")
         .style("text-anchor", "end");
 
+      // TODO: mouse events of axis
       d3.select("#xax").selectAll(".tick").nodes().forEach((xVal) => {
         var xValName = d3.select(xVal).data()[0]
-        //console.log(xVal)
-        //console.log(xValName)
         d3.select(xVal)
           .on("mouseover", (event) => {
             setHoveredCountry(xValName);
@@ -239,7 +232,6 @@ class OverviewComponent {
           .attr("transform", "translate(" + marginleft + "," + margintop + ")")
           .attr("x", function (d) {
             return xScale(truncate(d, 14));
-            return xScale(d);
           })
           .attr("y", function (d) {
             var val = 0;
@@ -420,6 +412,7 @@ class OverviewComponent {
           })
       }
 
+      // add sorting
       var sorting = null;
       var sortingKey = function (a, b) {
         return d3.ascending(a.country, b.country);
@@ -455,7 +448,20 @@ class OverviewComponent {
         sortX("#byValue4", aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height, truncate);
         sortX("#byKey4", aggArr, sortingKey, xScale, gbar, xax, marginleft, margintop, height, truncate);
       }
+
+      // the bar char title
+      gbar.append("text")
+        .attr("x", 600)
+        .attr("y", 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "14px")
+        .text(chartTitle);
+
     });
+  }
+
+  zoomAxis = (component) => {
+
   }
 
   truncate = (str, length) => {
@@ -480,14 +486,12 @@ class OverviewComponent {
       console.log(aggArr)
       xScale.domain(aggArr.map(function (d) {
         return truncate(d.country, 14);
-        return d.country;
       }));
       gbar.selectAll(".littlebar")
         .transition()
         .duration(1000)
         .attr("x", function (d, i) {
           return xScale(truncate(d, 14));
-          return xScale(d);
         })
       // scale x-axis
       xax
