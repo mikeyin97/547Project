@@ -31,68 +31,12 @@ class OverviewComponent {
       .classed("svg-content-responsive", true);
 
     this.barCanvases = d3.select(barContainer);
-    this.initMap();
+
+
+    this.initMap(props);
     this.initOverview();
   }
 
-  highlightSelected = (selectedCountriesStrings) => {
-
-    var bars = document.querySelectorAll("[type=barchartbar]");
-    [...bars].forEach((bar) => {
-      var selected = false
-      selectedCountriesStrings.forEach((country) => {
-        console.log(country);
-        if (bar.classList.contains(country.split(' ').join(''))) {
-          console.log(bar);
-          selected = true
-          bar.style.outline = "2px solid red";
-        }
-      })
-      if (!selected) {
-        bar.style.outline = "none";
-      }
-    });
-    const { mapCanvas, props: { geodata } } = this;
-    const width = 720;
-    const height = 550;
-    const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
-    const pathGenerator = d3.geoPath().projection(projection);
-    const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
-
-    const svg = mapCanvas.select("g");
-    svg.selectAll(".country")
-      .data(geodata.features)
-      .join("path")
-      .on("click", (event, feature) => {
-        this.onCountryClick(event, feature)
-      })
-      .on("mouseout", (event, feature) => {
-        this.props.setHoveredCountry(null)
-      })
-      .on("mouseover", (event, feature) => {
-        this.props.setHoveredCountry(feature.properties.brk_name)
-      })
-      .attr("class", "country")
-
-      .attr("countryName", function (feature) { return feature.properties.brk_name; })
-      .attr("stroke-width", function (feature) {
-        if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-          return (2.0)
-        } else {
-          return (0.3)
-        }
-      })
-      .attr("stroke", function (feature) {
-        if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-          return ("#EF2F2F")
-        } else {
-          return ("#262626")
-        }
-      })
-      .attr('z-index', '100')
-      .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
-      .attr("d", feature => pathGenerator(feature))
-  }
 
   onCountryClick2 = (event, feature) => {
     var a = document.getElementById("countriesStr").innerHTML.indexOf("(");
@@ -133,10 +77,11 @@ class OverviewComponent {
     countriesStr.innerHTML = (this.getAndUpdateCountries(this.props.selectedCountriesStrings, this.props.selectedCountriesCounts, this.props.selectedCountry));
   }
 
-  initMap = () => {
+  initMap = (props) => {
     const { mapCanvas, props: { geodata } } = this;
     const gmap = mapCanvas.append("g");
 
+    
     // map dimension
     const width = 720;
     const height = 550;
@@ -170,11 +115,23 @@ class OverviewComponent {
       .attr("class", "country")
       .transition()
       .duration(1000)
-      .attr("stroke-width", 0.3)
+      .attr("stroke-width", function (feature) {
+        if (props.selectedCountriesStrings.has(feature.properties.brk_name)) {
+            return (2.0)
+        } else {
+            return (0.3)
+        }
+    })
+    .attr("stroke", function (feature) {
+        if (props.selectedCountriesStrings.has(feature.properties.brk_name)) {
+            return ("#EF2F2F")
+        } else {
+            return ("#262626")
+        }
+    })
       .attr('z-index', '100')
       .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
       .attr("d", feature => pathGenerator(feature))
-      .attr("stroke", feature => "#262626");
 
     var zoom = d3.zoom()
       .scaleExtent([1, 10])
@@ -183,6 +140,7 @@ class OverviewComponent {
         d3.select('#overview-side svg g').attr("transform", event.transform)
       })
     gmap.call(zoom);
+    this.highlightSelected(this.props.selectedCountriesStrings);
   }
 
   initOverview = () => {
@@ -687,6 +645,69 @@ class OverviewComponent {
       })
     }
   }
+
+    
+  highlightSelected = (selectedCountriesStrings) => {
+    
+    var bars = document.querySelectorAll("[type=barchartbar]");
+      [...bars].forEach((bar) => {
+          var selected = false
+          selectedCountriesStrings.forEach((country) => {
+              console.log(country);
+              if (bar.classList.contains(country.split(' ').join(''))) {
+                  console.log(bar);
+                  selected = true
+                  bar.style.outline = "2px solid red";
+              } 
+          })
+          if (!selected){
+              bar.style.outline = "none";
+          }
+          
+      
+      });
+      const { mapCanvas, props: { geodata } } = this; 
+      const width = 720;
+      const height = 550;
+      const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
+      const pathGenerator = d3.geoPath().projection(projection);
+      const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
+      
+      const svg = mapCanvas.select("g");
+      svg.selectAll(".country")
+      .data(geodata.features)
+      .join("path")
+      .on("click", (event, feature) => {
+          this.onCountryClick(event, feature)
+      })
+      .on("mouseout", (event, feature) => {
+        this.props.setHoveredCountry(null)
+      })
+      .on("mouseover", (event, feature) => {
+        this.props.setHoveredCountry(feature.properties.brk_name)
+      })
+      .attr("class", "country")
+
+      .attr("countryName", function (feature) { return feature.properties.brk_name; })
+      .attr("stroke-width", function (feature) {
+          if (selectedCountriesStrings.has(feature.properties.brk_name)) {
+              return (2.0)
+          } else {
+              return (0.3)
+          }
+      })
+      .attr("stroke", function (feature) {
+          if (selectedCountriesStrings.has(feature.properties.brk_name)) {
+              return ("#EF2F2F")
+          } else {
+              return ("#262626")
+          }
+      })
+      .attr('z-index', '100')
+      .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
+      .attr("d", feature => pathGenerator(feature))
+  }
+
 
   resize = (width, height) => {
     const { mapCanvas } = this;
