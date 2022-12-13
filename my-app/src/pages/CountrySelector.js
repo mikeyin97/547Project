@@ -234,16 +234,16 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
                 )
                 .attr("dx", function(feature){
                     if (i === 0) {
-                        return "-140px"
-                    } else if (i === 1) {
                         return "-150px"
+                    } else if (i === 1) {
+                        return "-180px"
                     } else if (i === 2) {
-                        return "-60px"
+                        return "-70px"
                     } else if (i === 3) {
-                        return "-60px"
+                        return "-80px"
                     } else if (i === 4) {
                         
-                        return "-100px"
+                        return "-160px"
                     } else if (i === 5) {
                         
                         return "-80px"
@@ -272,8 +272,8 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
                 });
         })
 
-        const width = 1100;
-        const height = 800;
+        const width = 1300;
+        const height = 1100;
         const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
         const pathGenerator = d3.geoPath().projection(projection);
         const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
@@ -376,9 +376,9 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
             const barsvg = barCanvas.select("g");
             const xax = barsvg.select("#xax");
             const yax = barsvg.select("#yax");
-            var width = 350;
-            var height = 210;
-            var margintop = 10;
+            var width = 400;
+            var height = 270;
+            var margintop = 20;
             var marginleft = 100;
             // bar chart x-axis
 
@@ -680,7 +680,7 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
             </div>
             <div id="right">
                 <div id="countriesStrDiv"><h4 id="countriesStr"></h4></div>
-                <svg ref={svgRef} style={{ height: "90%", width: "100%", viewBox: "0 0 100 100" }}></svg>
+                <svg ref={svgRef} style={{ height: "100%", width: "100%", viewBox: "0 0 100 100" }}></svg>
                 <div>
 
                 </div></div>

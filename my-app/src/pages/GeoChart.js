@@ -212,8 +212,8 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         svgCanvas.selectAll("*").remove();
         const svg = svgCanvas.append("g");
 
-        const width = 1000;
-        const height = 800;
+        const width = 1200;
+        const height = 1000;
 
         svg.append('rect')
             .attr('x', "-500%")
@@ -309,8 +309,8 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         const svgCanvas = d3.select(svgRef.current)
         const svg = svgCanvas.select("g");
         const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
-        const width = 1000;
-        const height = 800;
+        const width = 1200;
+        const height = 1000;
         const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
         const pathGenerator = d3.geoPath().projection(projection);
         
@@ -415,18 +415,18 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr('z-index', '0');
 
                     
-        gbar.append("rect").attr("x",2000).attr("y",70).attr("width", 10).attr("height", 10).style("fill", "black")
-        gbar.append("rect").attr("x",2000).attr("y",100).attr("width", 10).attr("height", 10).style("fill", "blue")
-        gbar.append("rect").attr("x",2000).attr("y",130).attr("width", 10).attr("height", 10).style("fill", "darkgreen")
-        gbar.append("text").attr("x", 2020).attr("y", 75).text("Advanced").style("font-size", "15px").attr("alignment-baseline","middle")
-        gbar.append("text").attr("x", 2020).attr("y", 105).text("Secondary").style("font-size", "15px").attr("alignment-baseline","middle")
-        gbar.append("text").attr("x", 2020).attr("y", 135).text("Primary").style("font-size", "15px").attr("alignment-baseline","middle")
+        gbar.append("rect").attr("x",2200).attr("y",70).attr("width", 10).attr("height", 10).style("fill", "black")
+        gbar.append("rect").attr("x",2200).attr("y",100).attr("width", 10).attr("height", 10).style("fill", "blue")
+        gbar.append("rect").attr("x",2200).attr("y",130).attr("width", 10).attr("height", 10).style("fill", "darkgreen")
+        gbar.append("text").attr("x", 2220).attr("y", 75).text("Advanced").style("font-size", "15px").attr("alignment-baseline","middle")
+        gbar.append("text").attr("x", 2220).attr("y", 105).text("Secondary").style("font-size", "15px").attr("alignment-baseline","middle")
+        gbar.append("text").attr("x", 2220).attr("y", 135).text("Primary").style("font-size", "15px").attr("alignment-baseline","middle")
 
 
 
-        gbar.append("text").attr("x", "30%").attr("y", "5%").text("Number of WWTPs per Country (stacked by level)").style("font-size", "15px").attr("alignment-baseline","middle")
+        gbar.append("text").attr("x", "40%").attr("y", "5%").text("Number of WWTPs per Country (stacked by level)").style("font-size", "15px").attr("alignment-baseline","middle")
         // define the scales
-        var width = 1750,
+        var width = 2100,
             height = 120,
             margintop = 25,
             marginleft = 70;
@@ -715,7 +715,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     }   
 
     return (
-        <div id="distribution" ref={wrapperRef} style={{ height: "1000px", width: "100%" }}>
+        <div id="distribution" ref={wrapperRef} style={{ height: "100%", width: "100%" }}>
             <div id="top"><svg ref={svgRef} style={{ height: "100%", width: "100%" }}></svg></div>
             <div id="countriesStrDiv2"><h4 id="countriesStr"></h4></div>
             <div id="menupanel"> 
