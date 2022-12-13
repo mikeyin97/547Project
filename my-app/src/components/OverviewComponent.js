@@ -79,7 +79,6 @@ class OverviewComponent {
     const { mapCanvas, props: { geodata }, props } = this;
     const gmap = mapCanvas.append("g");
 
-
     // map dimension
     const width = 720;
     const height = 550;
@@ -138,6 +137,14 @@ class OverviewComponent {
         d3.select('#overview-side svg g').attr("transform", event.transform)
       })
     gmap.call(zoom);
+
+    d3.select("#reset").on("click", function () {
+      console.log("reset");
+      gmap.transition()
+        .duration(750)
+        .call(zoom.transform, d3.zoomIdentity);
+    });
+
     this.highlightSelected(this.props.selectedCountriesStrings);
   }
 
@@ -163,6 +170,9 @@ class OverviewComponent {
       aggArr.push(data);
     });
 
+    console.log("My arr!!");
+    console.log(aggArr);
+    console.log(aggcounts);
     // define the scales for each bar chart
     var width = 1500,
       height = 100,
@@ -176,7 +186,9 @@ class OverviewComponent {
       const barSVG = barCanvas.append('svg')
         .attr('height', '100%')
         .attr('width', '100%');
-      const gbar = barSVG.append("g");
+      const gbar = barSVG.append("g")
+        .attr('width', width)
+        .attr('height', height);
 
       // the barchart panel
       gbar.append('rect')
@@ -202,6 +214,7 @@ class OverviewComponent {
         maxH = d3.max(aggArr, function (d) {
           return d.WASTE_DIS_mean;
         });
+        //yVal = aggcount.WASTE_DIS_mean;
       } else if (i === 1) { // river discharge
         chartTitle = "RIVER DISCHARGE";
         maxH = d3.max(aggArr, function (d) {
@@ -257,8 +270,9 @@ class OverviewComponent {
 
       // draw x-axis
       xax
-        .call(xAxis)
         .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
+        .call(xAxis)
+        // labels
         .selectAll("text")
         .attr("type", "xaxval")
         .attr('text-align', "center")
@@ -329,6 +343,22 @@ class OverviewComponent {
               val = aggcount.POP_SERVED_mean
             }
             return height - yScale(val);
+          })
+          .attr("yValue", function (d) {
+            var val = 0;
+            var aggcount = aggcounts[d];
+            if (i === 0) {
+              val = aggcount.WASTE_DIS_mean
+            } else if (i === 1) {
+              val = aggcount.RIVER_DIS_mean
+            } else if (i === 2) {
+              val = aggcount.DF_mean
+            } else if (i === 3) {
+              val = aggcount.DESIGN_CAP_mean
+            } else if (i === 4) {
+              val = aggcount.POP_SERVED_mean
+            }
+            return val;
           })
           .attr("fill", function (d) {
             return "#69b3a2"
@@ -520,17 +550,70 @@ class OverviewComponent {
       const extent = [[0, 0], [width, height]];
 
       var zoomed = (event) => {
-        xScale.range([0, width].map(d => event.transform.applyX(d)));
-        //gbar.selectAll("bar rect").attr("x", d => xScale(d)).attr("width", xScale.bandwidth());
+        // zoom the x-axis
+        const xrange = [0, width].map(d => event.transform.applyX(d));
+        xScale.range(xrange);
+        // zoom the y-axis
+        var newMaxH = 0;
+        gbar.selectAll(".littlebar")
+          .filter(function () {
+            return d3.select(this).attr("x") >= 0 && d3.select(this).attr("x") <= 1500; // filter by single value
+          })
+          .nodes().forEach((b) => {
+            var val = d3.select(b).attr("yValue");
+            const yVal = +val;
+            //console.log(typeof (yVal));
+            //console.log(yVal);
+            newMaxH = Math.max(newMaxH, yVal);
+          });
+        yScale.domain([0, newMaxH])
+          .range([height, 0]);
+        // re-draw
         gbar.selectAll(".littlebar")
           .transition()
-          .duration(1000)
+          .duration(1)
           .attr("x", function (d, i) {
             return xScale(truncate(d, 14));
           })
-          .attr("width", xScale.bandwidth());
-        xax.call(xAxis);
-      }
+          .attr("width", xScale.bandwidth())
+          .attr("y", function (d) {
+            var val = 0;
+            var aggcount = aggcounts[d];
+            if (i === 0) {
+              val = aggcount.WASTE_DIS_mean
+            } else if (i === 1) {
+              val = aggcount.RIVER_DIS_mean
+            } else if (i === 2) {
+              val = aggcount.DF_mean
+            } else if (i === 3) {
+              val = aggcount.DESIGN_CAP_mean
+            } else if (i === 4) {
+              val = aggcount.POP_SERVED_mean
+            }
+            return yScale(val);
+          }).attr("height", function (d) {
+            if (xScale(truncate(d, 14)) < 0 || xScale(truncate(d, 14)) > 1500) {
+              return 0;
+            }
+            var val = 0;
+            var aggcount = aggcounts[d];
+            if (i === 0) {
+              val = aggcount.WASTE_DIS_mean
+            } else if (i === 1) {
+              val = aggcount.RIVER_DIS_mean
+            } else if (i === 2) {
+              val = aggcount.DF_mean
+            } else if (i === 3) {
+              val = aggcount.DESIGN_CAP_mean
+            } else if (i === 4) {
+              val = aggcount.POP_SERVED_mean
+            }
+            return height - yScale(val);
+          });
+
+        xax.call(xAxis.scale(xScale));
+        yax.call(yAxis.scale(yScale));
+      };
 
       var barZoom = d3.zoom()
         .scaleExtent([1, 20])
@@ -538,7 +621,14 @@ class OverviewComponent {
         .extent(extent)
         .on("zoom", zoomed);
 
-      gbar.call(barZoom);
+      gbar.call(barZoom); //.on("mousedown.zoom", null);
+
+      d3.select("#reset1").on("click", function () {
+        console.log("reset");
+        gbar.transition()
+          .duration(750)
+          .call(barZoom.transform, d3.zoomIdentity);
+      });
 
       // the bar char title
       gbar.append("text")
@@ -573,7 +663,7 @@ class OverviewComponent {
       }));
       gbar.selectAll(".littlebar")
         .transition()
-        .duration(1000)
+        .duration(50)
         .attr("x", function (d, i) {
           return xScale(truncate(d, 14));
         });

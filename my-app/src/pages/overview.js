@@ -115,6 +115,8 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                     <button id="byValue3"> Sort by Design Capacity </button>
                     <button id="byKey4"> Sort by Country Name </button>
                     <button id="byValue4"> Sort by Population Served </button>
+                    <button id="reset"> Reset the Map</button>
+                    {/*<button id="reset1"> Reset the Chart1</button>*/}
                 </div>
             </div>
         </div>
