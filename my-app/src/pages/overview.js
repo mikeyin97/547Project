@@ -10,15 +10,13 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     const wrapperRef = useRef();
     const svgRef = useRef();
     const barRef = useRef();
-    const [width, setWidth] = useState(600);
-    const [height, setHeight] = useState(600)
     const [hoveredCountry, setHoveredCountry] = useState(null);
     const [selectedCountriesCounts, setSelectedCountriesCounts] = useState({});
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [maxCount, setMaxCount] = useState(false);
     const [sortby, setSortby] = useState("key");
 
-    useEffect(initVis, [geodata, wwtpdata, aggcounts, levelcounts, statuscounts, aggcountssort, setHoveredCountry]);
+    useEffect(initVis, [geodata, wwtpdata, aggcounts, levelcounts, statuscounts, aggcountssort, setHoveredCountry, selectedCountriesCounts, selectedCountriesStrings, selectedCountry, setSelectedCountriesStrings]);
     useEffect(updateHighlight, [hoveredCountry]);
 
     useEffect(() => {
@@ -51,33 +49,10 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     }
 
     useEffect(() => {
-
         var countriesStr = document.getElementById("countriesStr")
         countriesStr.innerHTML = (vis.getAndUpdateCountries(selectedCountriesStrings, selectedCountriesCounts, selectedCountry));
         vis.highlightSelected(selectedCountriesStrings);
-    }, [selectedCountriesStrings, maxCount, selectedCountry])
-
-
-
-    function handleResizeEvent() {
-        let resizeTimer;
-        const handleResize = () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(function () {
-                setWidth(window.innerWidth);
-                setHeight(window.innerHeight);
-            }, 300);
-        };
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }
-
-    function updateVisOnResize() {
-        vis && vis.resize(width, height);
-    }
+    }, [selectedCountriesStrings, maxCount, selectedCountry, selectedCountriesCounts])
 
     function clickedSort(val, tagName) {
         if (val !== sortby) {

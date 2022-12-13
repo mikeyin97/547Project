@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-import { FaConnectdevelop } from 'react-icons/fa';
 
 class OverviewComponent {
 
@@ -10,13 +9,10 @@ class OverviewComponent {
   props;
 
   constructor(mapContainer, barContainer, props) {
-    console.log("nooo");
     this.mapContainer = mapContainer;
     this.barContainer = barContainer;
     this.props = props;
 
-    console.log(typeof (d3.select(mapContainer)));
-    console.log(d3.select(mapContainer))
     d3.select(mapContainer).selectAll("*").remove();
 
     this.mapCanvas = d3.select(mapContainer)
@@ -42,9 +38,7 @@ class OverviewComponent {
     var count = parseInt(document.getElementById("countriesStr").innerHTML.slice(a + 1, b))
     // setSelectedCountry(feature);
     if (count <= 9) {
-
       this.props.setSelectedCountriesStrings(oldstrings => new Set([...oldstrings, feature]));
-
       var copy = this.props.selectedCountriesCounts;
       if (!(feature in copy)) {
         copy[feature] = true;
@@ -60,7 +54,6 @@ class OverviewComponent {
     this.props.setSelectedCountry(feature);
     if (count <= 9) {
       this.props.setSelectedCountriesStrings(oldstrings => new Set([...oldstrings, feature.properties.brk_name]));
-
       var copy = this.props.selectedCountriesCounts;
       if (!(feature.properties.brk_name in copy)) {
         copy[feature.properties.brk_name] = true;
@@ -144,7 +137,6 @@ class OverviewComponent {
         .duration(750)
         .call(zoom.transform, d3.zoomIdentity);
     });
-
     this.highlightSelected(this.props.selectedCountriesStrings);
   }
 
@@ -155,7 +147,6 @@ class OverviewComponent {
     const countries = Object.keys(aggcounts);
     var sortX = this.sortX;
     var truncate = this.truncate;
-    var chartTitle = "";
 
     // cross page linking
     var onCountryClick2 = this.onCountryClick2;
@@ -210,28 +201,22 @@ class OverviewComponent {
       // calculate max values
       var maxH = 0;
       if (i === 0) { // wastewater discharge
-        chartTitle = "WASTEWATER DISCHARGE";
         maxH = d3.max(aggArr, function (d) {
           return d.WASTE_DIS_mean;
         });
-        //yVal = aggcount.WASTE_DIS_mean;
       } else if (i === 1) { // river discharge
-        chartTitle = "RIVER DISCHARGE";
         maxH = d3.max(aggArr, function (d) {
           return d.RIVER_DIS_mean;
         });
       } else if (i === 2) { // dilution factor
-        chartTitle = "DILUTION FACTOR";
         maxH = d3.max(aggArr, function (d) {
           return d.DF_mean;
         });
       } else if (i === 3) { // design capacity
-        chartTitle = "DESIGN CAPACITY";
         maxH = d3.max(aggArr, function (d) {
           return d.DESIGN_CAP_mean;
         });
       } else if (i === 4) { // population served
-        chartTitle = "POPULATION SERVED";
         maxH = d3.max(aggArr, function (d) {
           return d.POP_SERVED_mean;
         });
@@ -260,6 +245,7 @@ class OverviewComponent {
           return truncate(d.country, 14);
         }))
         .padding(0.2);
+
       // define y-axis scale
       var yScale = d3.scaleLinear()
         .domain([0, maxH])
@@ -269,8 +255,7 @@ class OverviewComponent {
       var yAxis = d3.axisLeft(yScale);
 
       // draw x-axis
-      xax
-        .attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
+      xax.attr("transform", "translate(" + marginleft + "," + (margintop + height) + ")")
         .call(xAxis)
         // labels
         .selectAll("text")
@@ -291,11 +276,8 @@ class OverviewComponent {
       });
 
       // draw y-axis
-      yax
-        .attr("transform", "translate(" + marginleft + "," + margintop + ")")
+      yax.attr("transform", "translate(" + marginleft + "," + margintop + ")")
         .call(yAxis);
-
-      // barSVG.selectAll("rect:not(#bgbar)").remove();
 
       // draw bars
       if ((i === 0) || (i === 1) || (i === 2) || (i === 3) || (i === 4)) {
@@ -619,16 +601,6 @@ class OverviewComponent {
         .on("zoom", zoomed);
 
       gbar.call(barZoom); //.on("mousedown.zoom", null);
-
-      // the bar char title
-      /*
-      gbar.append("text")
-        .attr("x", 600)
-        .attr("y", 20)
-        .attr("text-anchor", "middle")
-        .style("font-size", "14px")
-        .text(chartTitle);*/
-
     });
   }
 
@@ -672,7 +644,6 @@ class OverviewComponent {
         delete countryCounts[country.properties.brk_name];
       }
     }
-
 
     var countryStringsSet = new Set(countriesStrings);
     var setcount = countryStringsSet.size;
@@ -725,7 +696,6 @@ class OverviewComponent {
         var country = countryData[0].properties.brk_name;
         if (country === hoveredCountry) {
           c.style.filter = "brightness(80%)";
-          // connect(c, countryBar, "red", 10)
         } else {
           c.style.filter = "brightness(100%)";
         }
@@ -788,7 +758,7 @@ class OverviewComponent {
       })
       .attr('z-index', '100')
       .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
-      .attr("d", feature => pathGenerator(feature))
+      .attr("d", feature => pathGenerator(feature));
   }
 
   resize = (width, height) => {
