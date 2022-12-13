@@ -1,5 +1,5 @@
-#left{
-    float:left;
+#left {
+    float: left;
     width: 50%;
     flex-direction: column;
     overflow: hidden;
@@ -8,69 +8,70 @@
 
 }
 
-#right{
+#right {
     position: relative;
-    float:right;
+    float: right;
     width: 50%;
     height: 100%;
     overflow: hidden;
     outline: 1px solid black;
 }
 
-#countriesStrDiv{
+#countriesStrDiv {
     height: 5%;
     background-color: #6fa8dc;
     outline: 1px solid black;
-  }
-  
-#countriesStr{
+}
+
+#countriesStr {
     position: relative;
     top: 2px !important;
     margin: 0px !important;
     padding: 0px !important;
-}  
+}
 
-.l{
+.l {
     float: left;
     width: 50%;
 
 }
-.r{
+
+.r {
     float: right;
     width: 50%;
 
 }
 
-rect:hover{
+rect:hover {
     box-shadow: 0 0 20px yellow;
 }
 
-rect{
-    background-color:#ccc;
+rect {
+    background-color: #ccc;
     box-shadow: 0 0 20px yellow;
 }
 
-#top{
+#top {
     width: 100%;
-    height: 75%;
+    height: 70%;
     clear: both;
     position: relative;
 }
 
-#bottom{
+#bottom {
     width: 100%;
-    height: 25%;
+    height: 30%;
     clear: both;
 }
 
-#barcanvas{
+#barcanvas {
     position: absolute;
     top: 75%;
-    bottom:0 !important;
+    bottom: 0 !important;
 }
 
-.panel{
-    height:33%;
+.panel {
+    height: 33%;
 }
 
 #bg2 {
@@ -84,68 +85,77 @@ rect{
 }
 
 
-g{
+g {
     z-index: 10;
     width: 100%;
     height: 100%;
 }
 
-html, body{
+html,
+body {
     overflow-y: hidden;
-    height:100%;
+    height: 100%;
 }
 
 
-#root{
+#root {
     height: 100%
 }
 
-.App{
+.App {
     height: 100%
 }
 
 
-#geochart{
-    display:flex;
+#geochart {
+    display: flex;
 }
 
-#bcopts{
+#bcopts {
     margin: 5px;
 
 }
 
-#countriesStrDiv2{
-    position:absolute;
-    width: 400px;
-    height: 100px;
-    top: 10%;
-    left: 80%;
-    background-color: rgba(255,255,255,0.5);
-    border: 1px solid black;
-}
-
-#countriesStrDiv3{
-    position:absolute;
+#countriesStrDiv3 {
+    position: absolute;
     width: 400px;
     height: 100px;
     top: 60%;
     left: 70%;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.711);
     border: 1px solid black;
 }
 
-#sortingOptions{
+#sortingOptions {
     margin-top: 10px;
 }
 
-#menupanel{
-    position:absolute;
-    width: 400px;
+#countriesStrDiv2 {
+    position: absolute;
+    width: 450px;
     height: 10%;
-    bottom: 22.5%;
-    left: 80%;
+    top: 20%;
+    left: 72%;
     background-color: rgba(255, 255, 255, 0.711);
     border: 1px solid black;
+}
+
+#menupanel {
+    position: absolute;
+    width: 450px;
+    height: 10%;
+    top: 30%;
+    left: 72%;
+    background-color: rgba(255, 255, 255, 0.711);
+    border: 1px solid black;
+}
+
+#dotlegend {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: 56%;
+    left: 72%;
 }
 
 .ylabels {
@@ -158,7 +168,7 @@ html, body{
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     font-size: 16px;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.004) !important;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004) !important;
     opacity: 0.7;
     text-align: left;
 }
@@ -171,28 +181,18 @@ html, body{
     border-radius: 50%;
     display: inline-block;
     position: relative;
-    margin-top: 5%;
-    margin-right: 10px;
-  }
+    margin-top: 2%;
+    margin-left: 5px;
+}
 
-  #dotlegend{
-      position: absolute;
-      width: 150px;
-      height: 70px;
-      top: 50%;
-      right: 90%;
-      border: 1px solid black;
-      background-color: rgba(255, 255, 255, 0.4);
-  }
+#advanceddot {
+    background-color: black;
+}
 
-  #advanceddot{
-      background-color: black;
-  }
-
-  #secondarydot{
+#secondarydot {
     background-color: blue;
 }
 
-#primarydot{
+#primarydot {
     background-color: darkgreen;
 }

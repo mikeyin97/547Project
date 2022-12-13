@@ -176,7 +176,7 @@ class OverviewComponent {
     // define the scales for each bar chart
     var width = 1500,
       height = 100,
-      margintop = 30,
+      margintop = 10,
       marginleft = 72;
 
     // draw each bar chart
@@ -562,8 +562,6 @@ class OverviewComponent {
           .nodes().forEach((b) => {
             var val = d3.select(b).attr("yValue");
             const yVal = +val;
-            //console.log(typeof (yVal));
-            //console.log(yVal);
             newMaxH = Math.max(newMaxH, yVal);
           });
         yScale.domain([0, newMaxH])
@@ -610,7 +608,6 @@ class OverviewComponent {
             }
             return height - yScale(val);
           });
-
         xax.call(xAxis.scale(xScale));
         yax.call(yAxis.scale(yScale));
       };
@@ -623,20 +620,14 @@ class OverviewComponent {
 
       gbar.call(barZoom); //.on("mousedown.zoom", null);
 
-      d3.select("#reset1").on("click", function () {
-        console.log("reset");
-        gbar.transition()
-          .duration(750)
-          .call(barZoom.transform, d3.zoomIdentity);
-      });
-
       // the bar char title
+      /*
       gbar.append("text")
         .attr("x", 600)
         .attr("y", 20)
         .attr("text-anchor", "middle")
         .style("font-size", "14px")
-        .text(chartTitle);
+        .text(chartTitle);*/
 
     });
   }

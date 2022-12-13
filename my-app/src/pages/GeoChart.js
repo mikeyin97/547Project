@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 import './GeoChart.css';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
 
 function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountriesStrings, geodata, wwtpdata, levelcountstrans }) {
     const svgRef = useRef();
@@ -14,7 +16,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     const [hoveredCountry, setHoveredCountry] = useState(null);
     const [countryIndex, setCountryIndex] = useState(-1);
     const [clicked, setClicked] = useState(true);
-    const [selectedOnly, setSelectedOnly] = useState(false); 
+    const [selectedOnly, setSelectedOnly] = useState(false);
     const [sortby, setSortby] = useState("key");
     var zoom = null;
 
@@ -28,7 +30,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         var count = parseInt(document.getElementById("countriesStr").innerHTML.slice(a + 1, b))
         setSelectedCountry(feature);
         if (count <= 9) {
-            
+
             setSelectedCountriesStrings(selectedCountriesStrings => new Set([...selectedCountriesStrings, feature.properties.brk_name]));
 
             var copy = selectedCountriesCounts;
@@ -47,7 +49,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         var count = parseInt(document.getElementById("countriesStr").innerHTML.slice(a + 1, b))
         // setSelectedCountry(feature);
         if (count <= 9) {
-            
+
             setSelectedCountriesStrings(selectedCountriesStrings => new Set([...selectedCountriesStrings, feature.data.country]));
 
             var copy = selectedCountriesCounts;
@@ -60,7 +62,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
 
 
     useEffect(() => {
-        if (selectedOnly){
+        if (selectedOnly) {
             if (selectedCountriesStrings.has(hoveredCountry)) {
                 setCountryIndex([...selectedCountriesStrings].indexOf(hoveredCountry));
             } else {
@@ -75,15 +77,15 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             var bars = document.querySelectorAll("[type=barchartbar]");
             var countries = document.getElementsByClassName("country");
             var xaxvals = document.querySelectorAll("[type=xaxval]");
-            if (hoveredCountry){
-                
+            if (hoveredCountry) {
+
                 [...bars].forEach((bar) => {
                     if (bar.classList.contains(hoveredCountry.split(' ').join(''))) {
                         bar.style.opacity = "0.4"
                     } else {
                         bar.style.opacity = "1"
                     }
-    
+
                 });
 
                 [...countries].forEach((c) => {
@@ -104,15 +106,15 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                         val.style.color = "black";
                         val.style.fontWeight = "20";
                     }
-    
+
                 });
             } else {
                 [...bars].forEach((bar) => {
-                        bar.style.opacity = "1"
+                    bar.style.opacity = "1"
                 });
             }
         }
-        
+
     }, [hoveredCountry, selectedCountry, selectedCountriesStrings]);
 
     useEffect(() => {
@@ -124,25 +126,25 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             var countryBar = null;
 
             [...bars].forEach((bar) => {
-                try{
+                try {
                     if (bar.classList.contains(country.split(' ').join(''))) {
                         if (!countryBar) {
                             countryBar = bar;
                         }
-    
+
                         bar.style.opacity = "0.4"
                     } else {
                         bar.style.opacity = "1"
                     }
-    
-                } catch{}
-                
+
+                } catch { }
+
             });
 
             var clonexaxvals = [...xaxvals]
             clonexaxvals.forEach((val) => {
                 var compare = val.innerHTML.split(' ').join('')
-                try{
+                try {
                     if (compare === (country.split(' ').join(''))) {
                         val.style.color = "#04290e";
                         val.style.fontWeight = "900";
@@ -150,9 +152,9 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                         val.style.color = "black";
                         val.style.fontWeight = "20";
                     }
-     
-                } catch{}
-                
+
+                } catch { }
+
             });
             [...countries].forEach((c) => {
                 var compare = c.getAttribute("countryName").split(' ').join('')
@@ -207,7 +209,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     }
 
     useEffect(() => {
-       
+
         const svgCanvas = d3.select(svgRef.current)
         svgCanvas.selectAll("*").remove();
         const svg = svgCanvas.append("g");
@@ -303,7 +305,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     }, [geodata, wwtpdata]);
 
 
-    useEffect(() =>{
+    useEffect(() => {
         var countriesStr = document.getElementById("countriesStr")
         countriesStr.innerHTML = (getAndUpdateCountries(selectedCountriesStrings, selectedCountriesCounts, selectedCountry));
         const svgCanvas = d3.select(svgRef.current)
@@ -313,42 +315,42 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         const height = 1000;
         const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
         const pathGenerator = d3.geoPath().projection(projection);
-        
+
         svg.selectAll(".country")
-        .data(geodata.features)
-        .join("path")
+            .data(geodata.features)
+            .join("path")
 
 
-        .on("click", (event, feature) => {
-            onCountryClick(event, feature)
-        })
-        .on("mouseout", (event, feature) => {
-            onCountryExit(event, feature.properties.brk_name)
-        })
-        .on("mouseover", (event, feature) => {
-            onCountryHover(event, feature.properties.brk_name)
-        })
-        .attr("class", "country")
+            .on("click", (event, feature) => {
+                onCountryClick(event, feature)
+            })
+            .on("mouseout", (event, feature) => {
+                onCountryExit(event, feature.properties.brk_name)
+            })
+            .on("mouseover", (event, feature) => {
+                onCountryHover(event, feature.properties.brk_name)
+            })
+            .attr("class", "country")
 
-        .attr("countryName", function (feature) { return feature.properties.brk_name; })
-        .attr("stroke-width", function (feature) {
-            if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-                return (2.0)
-            } else {
-                return (0.3)
-            }
-        })
-        .attr("stroke", function (feature) {
-            if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-                return ("#EF2F2F")
-            } else {
-                return ("#262626")
-            }
-        })
-        .attr('z-index', '100')
-        .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
-        .attr("d", feature => pathGenerator(feature))
-        .attr("transform", "translate(300,-60)")
+            .attr("countryName", function (feature) { return feature.properties.brk_name; })
+            .attr("stroke-width", function (feature) {
+                if (selectedCountriesStrings.has(feature.properties.brk_name)) {
+                    return (2.0)
+                } else {
+                    return (0.3)
+                }
+            })
+            .attr("stroke", function (feature) {
+                if (selectedCountriesStrings.has(feature.properties.brk_name)) {
+                    return ("#EF2F2F")
+                } else {
+                    return ("#262626")
+                }
+            })
+            .attr('z-index', '100')
+            .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
+            .attr("d", feature => pathGenerator(feature))
+            .attr("transform", "translate(300,-60)")
 
     }, [selectedCountriesStrings, maxCount, selectedCountry])
 
@@ -366,8 +368,8 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             const regex2 = /\)/;
             const i1 = str.search(regex1);
             const i2 = str.search(regex2);
-            if (i1 !== -1 && i2 !== -1){
-                return str.substring(i1+1, i2);
+            if (i1 !== -1 && i2 !== -1) {
+                return str.substring(i1 + 1, i2);
             } else {
                 return str.slice(0, length);
             }
@@ -375,7 +377,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
     }
 
     useEffect(() => {
-        
+
         var levelSubgroups = ["Primary", "Secondary", "Advanced"]
         const countries = []
         const countries_short = []
@@ -391,13 +393,13 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr('id', 'barcanvas')
             .attr('height', '100%')
             .attr('width', '100%');
-        
-        
+
+
         const gbar = barSVG.append("g").attr("y", "100");
-        
+
         gbar.append("g").attr("id", "xax");
         gbar.append("g").attr("id", "yax");
-        
+
 
 
         const xax = gbar.select("#xax");
@@ -414,36 +416,35 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr('fill', '#d0e7fd')
             .attr('z-index', '0');
 
-                    
-        gbar.append("rect").attr("x",2200).attr("y",70).attr("width", 10).attr("height", 10).style("fill", "black")
-        gbar.append("rect").attr("x",2200).attr("y",100).attr("width", 10).attr("height", 10).style("fill", "blue")
-        gbar.append("rect").attr("x",2200).attr("y",130).attr("width", 10).attr("height", 10).style("fill", "darkgreen")
-        gbar.append("text").attr("x", 2220).attr("y", 75).text("Advanced").style("font-size", "15px").attr("alignment-baseline","middle")
-        gbar.append("text").attr("x", 2220).attr("y", 105).text("Secondary").style("font-size", "15px").attr("alignment-baseline","middle")
-        gbar.append("text").attr("x", 2220).attr("y", 135).text("Primary").style("font-size", "15px").attr("alignment-baseline","middle")
+
+        //gbar.append("rect").attr("x", 2200).attr("y", 70).attr("width", 10).attr("height", 10).style("fill", "black")
+        //gbar.append("rect").attr("x", 2200).attr("y", 100).attr("width", 10).attr("height", 10).style("fill", "blue")
+        //gbar.append("rect").attr("x", 2200).attr("y", 130).attr("width", 10).attr("height", 10).style("fill", "darkgreen")
+        //gbar.append("text").attr("x", 2220).attr("y", 75).text("Advanced").style("font-size", "15px").attr("alignment-baseline", "middle")
+        //gbar.append("text").attr("x", 2220).attr("y", 105).text("Secondary").style("font-size", "15px").attr("alignment-baseline", "middle")
+        //gbar.append("text").attr("x", 2220).attr("y", 135).text("Primary").style("font-size", "15px").attr("alignment-baseline", "middle")
 
 
 
-        gbar.append("text").attr("x", "40%").attr("y", "5%").text("Number of WWTPs per Country (stacked by level)").style("font-size", "15px").attr("alignment-baseline","middle")
         // define the scales
-        var width = 2100,
+        var width = 2200,
             height = 120,
             margintop = 25,
-            marginleft = 70;
+            marginleft = 85;
 
         // define x-axis
-        if (selectedOnly){
+        if (selectedOnly) {
             var xScale = d3.scaleBand()
-            .range([0, width])
-            .domain(selectedCountriesStrings)
-            .padding(0.2)
-        } else{
+                .range([0, width])
+                .domain(selectedCountriesStrings)
+                .padding(0.2)
+        } else {
             var xScale = d3.scaleBand()
-            .range([0, width])
-            .domain(countries_short)
-            .padding(0.2)
+                .range([0, width])
+                .domain(countries_short)
+                .padding(0.2)
         }
-        
+
 
         // scale x-axis
         xax.call(d3.axisBottom(xScale))
@@ -453,9 +454,9 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr("transform", "translate(-15,5)rotate(-90)")
             .style("text-anchor", "end");
 
-        
+
         // define y-axis
-       
+
         var levelColors = d3.scaleOrdinal()
             .domain(levelSubgroups)
             .range(["darkgreen", 'blue', 'black'])
@@ -463,33 +464,33 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         //stack the data? --> stack per subgroup
         var maxH = 0;
         var stackedData = null;
-        if (selectedOnly){
+        if (selectedOnly) {
             var newObj = []
             levelcountstrans.forEach((data) => {
 
-                if (selectedCountriesStrings.has(data.country)){
+                if (selectedCountriesStrings.has(data.country)) {
                     newObj.push(data)
                     maxH = Math.max(maxH, data.Advanced + data.Primary + data.Secondary)
                 }
             }
             )
             stackedData = d3.stack()
-            .keys(levelSubgroups)
-            (newObj)
-        } else{
+                .keys(levelSubgroups)
+                (newObj)
+        } else {
             stackedData = d3.stack()
-            .keys(levelSubgroups)
-            (levelcountstrans)
+                .keys(levelSubgroups)
+                (levelcountstrans)
         }
-        
-        if (selectedOnly){}
-        else{
+
+        if (selectedOnly) { }
+        else {
             maxH = 18000;
         }
 
         var yScale = d3.scaleLinear()
-        .domain([0, maxH])
-        .range([height, 0]);
+            .domain([0, maxH])
+            .range([height, 0]);
 
         // scale y-axis
         yax
@@ -504,20 +505,20 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         var stackedData = null;
         if (selectedOnly) {
             stackedData = d3.stack()
-            .keys(levelSubgroups)
-            (newObj)
+                .keys(levelSubgroups)
+                (newObj)
         } else {
             stackedData = d3.stack()
-            .keys(levelSubgroups)
-            (levelcountstrans)
+                .keys(levelSubgroups)
+                (levelcountstrans)
         }
 
-        
+
 
         gbar.append("g")
-        
+
             .selectAll("g")
-            
+
             .data(stackedData)
             .enter().append("g")
             .attr("transform", function (d) {
@@ -532,12 +533,12 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             }).enter()
             .append("rect")
             .attr("x", function (d) {
-                if (selectedOnly){
+                if (selectedOnly) {
                     return xScale(d.data.country) + marginleft;
-                } else{
+                } else {
                     return xScale(truncate(d.data.country, 14)) + marginleft;
                 }
-                
+
             })
             .attr("y", function (d) {
                 return yScale(d[1]) + margintop;
@@ -550,7 +551,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .on("mouseout", function (event, d) {
                 onCountryExit(event, d.data.country);
             })
-            .on("click", function(event, d) { 
+            .on("click", function (event, d) {
                 onCountryClick2(event, d);
             })
             .attr("height", function (d) { return yScale(d[0]) - yScale(d[1]); })
@@ -558,20 +559,20 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr('filter', "saturation(100%)")
             .attr('opacity', "1")
 
-            var sorting = function (a, b) {
-                return d3.descending((a.Advanced + a.Primary + a.Secondary), (b.Advanced + b.Primary + b.Secondary));
-            };
-            var sortingKey = function (a, b) {
-                return d3.ascending(a.country, b.country);
-            };
-            sortX("#byValue", levelcountstrans, sorting, xScale, gbar, xax, marginleft, margintop, height);
-            sortX("#byKey", levelcountstrans, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
+        var sorting = function (a, b) {
+            return d3.descending((a.Advanced + a.Primary + a.Secondary), (b.Advanced + b.Primary + b.Secondary));
+        };
+        var sortingKey = function (a, b) {
+            return d3.ascending(a.country, b.country);
+        };
+        sortX("#byValue", levelcountstrans, sorting, xScale, gbar, xax, marginleft, margintop, height);
+        sortX("#byKey", levelcountstrans, sortingKey, xScale, gbar, xax, marginleft, margintop, height);
 
-    }, [levelcountstrans, selectedOnly , selectedCountriesStrings, sortby]);
+    }, [levelcountstrans, selectedOnly, selectedCountriesStrings, sortby]);
 
 
     useEffect(() => {
-        if (!selectedOnly){
+        if (!selectedOnly) {
             var bars = document.querySelectorAll("[type=barchartbar]");
             [...bars].forEach((bar) => {
                 var selected = false
@@ -579,18 +580,18 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                     if (bar.classList.contains(country.split(' ').join(''))) {
                         selected = true
                         bar.style.outline = "2px solid red";
-                    } 
+                    }
                 })
-                if (!selected){
+                if (!selected) {
                     bar.style.outline = "none";
                 }
-                
-            
+
+
             });
         }
-        
+
     }, [selectedCountriesStrings, sortby, selectedOnly])
-    
+
     useEffect(() => {
         var bars = document.querySelectorAll("[type=barchartbar]");
         var countries = document.getElementsByClassName("country");
@@ -601,7 +602,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             var country = [...selectedCountriesStrings][countryIndex];
             var countryBar = null;
 
-            if (country){
+            if (country) {
                 [...countries].forEach((c) => {
                     var compare = c.getAttribute("countryName").split(' ').join('')
                     if (compare === (country.split(' ').join(''))) {
@@ -610,7 +611,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                     } else {
                         c.style.filter = "brightness(100%)";
                     }
-    
+
                 })
             }
 
@@ -627,7 +628,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
 
             // });
 
-            
+
 
 
 
@@ -650,8 +651,8 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
 
     }, [countryIndex, page, selectedCountry, sortby, selectedOnly]);
 
-    function clickedSort(val){
-        if (val != sortby){
+    function clickedSort(val) {
+        if (val != sortby) {
             setSortby(val)
         }
         if (val == "key") {
@@ -662,34 +663,34 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             document.getElementById("byValue").disabled = true;
             document.getElementById("byKey").disabled = false;
         }
-        
+
     }
     function sortX(tagName, aggArr, sorting, xScale, gbar, xax, marginleft, margintop, height) {
         d3.select(tagName).on("click", function () {
             aggArr.sort(sorting)
 
-            if (selectedOnly){
+            if (selectedOnly) {
                 var newObj = []
                 aggArr.forEach((d) => {
-                    if (selectedCountriesStrings.has(d.country)){
+                    if (selectedCountriesStrings.has(d.country)) {
                         newObj.push(d)
                     }
                 })
                 xScale.domain(newObj.map(function (d) {
                     return (d.country);
                 }));
-            } else{
+            } else {
                 xScale.domain(aggArr.map(function (d) {
                     return truncate(d.country, 14);
                 }));
             }
-            
-            
+
+
             gbar.selectAll(".littlebar")
                 .attr("x", function (d, i) {
-                    if (selectedOnly){
+                    if (selectedOnly) {
                         return xScale(d) + marginleft;
-                    } else{
+                    } else {
                         return xScale(truncate(d, 14)) + marginleft;
                     }
                 })
@@ -703,42 +704,40 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         });
     }
 
-    function handleChangeChk(){
+    function handleChangeChk() {
         var sortOptions = document.getElementById("sortingOptions")
-        if (document.getElementById("selectedOnly").checked){
+        if (document.getElementById("selectedOnly").checked) {
             setSelectedOnly(true);
             sortOptions.style.display = "none";
         } else {
             setSelectedOnly(false);
             sortOptions.style.display = "block";
         }
-    }   
+    }
 
     return (
         <div id="distribution" ref={wrapperRef} style={{ height: "100%", width: "100%" }}>
             <div id="top"><svg ref={svgRef} style={{ height: "100%", width: "100%" }}></svg></div>
             <div id="countriesStrDiv2"><h4 id="countriesStr"></h4></div>
-            <div id="menupanel"> 
-                <h4 id = "bcopts">Bar Chart Options</h4>
+            <div id="menupanel">
+                <h4 id="bcopts">Bar Chart Options</h4>
                 <form>
-                <input type="checkbox" onChange={()=>handleChangeChk()} id="selectedOnly" name="selectedOnly" value="selected"></input><label htmlFor="selectedOnly"> Show selected countries only?</label><br></br>
+                    <input type="checkbox" onChange={() => handleChangeChk()} id="selectedOnly" name="selectedOnly" value="selected"></input><label htmlFor="selectedOnly"> Show selected countries only</label><br></br>
                 </form>
-                
-                <div id = "sortingOptions">
-                <button id="byKey" onClick = {()=>clickedSort("key")}> Sort Alphabetically</button>
-                <button id="byValue" onClick = {()=>clickedSort("value")}> Sort Largest -> Smallest (# of WWTPs) </button>
+                <div id="sortingOptions">
+                    <button id="byKey" onClick={() => clickedSort("key")}> Sort Alphabetically</button>
+                    <button id="byValue" onClick={() => clickedSort("value")}> Sort Largest -> Smallest (# of WWTPs) </button>
                 </div>
-                
             </div>
-            <div id = "dotlegend">
-                <span className="dot" id="advanceddot"></span> Advanced<br></br>
-                <span className="dot" id="secondarydot"></span> Secondary<br></br>
-                <span className="dot" id="primarydot"></span> Primary<br></br>
-
+            <div id="dotlegend">
+                <h5> Legend</h5>
+                <h6> <span className="dot" id="advanceddot"></span> Advanced </h6>
+                <h6><span className="dot" id="secondarydot"></span> Secondary</h6>
+                <h6><span className="dot" id="primarydot"></span> Primary </h6>
             </div>
             <div id="bottom">
-                
-                <svg ref={barRef} className="graph" style={{ height: "100%", width: "100%" }}></svg>
+                <Tooltip className="tooltip" title={<h4>Level of treatment of the WWTP: Primary, Secondary, Advanced</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Wastewater Treatment Level</Button></Tooltip>
+                <svg ref={barRef} className="graph" style={{ height: "88%", width: "100%" }}></svg>
             </div>
         </div>
     );

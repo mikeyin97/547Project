@@ -34,11 +34,11 @@
 #overview-side {
     float: right;
     position: relative;
-    overflow: auto;
+    overflow: hidden;
     pointer-events: auto;
 }
 
-.overview-panel{
+.overview-panel {
     height: 220px;
 }
 
@@ -80,7 +80,7 @@ html, body{
     display: inline-block;
     position: relative;
     width: 100%;
-    height: 50%;
+    height: 60%;
     padding-bottom: 30%;
     /* aspect ratio */
     vertical-align: top;
@@ -117,4 +117,74 @@ html, body{
 
 button {
     flex-direction: column;
+}
+
+#overview-menupanel {
+    position: absolute;
+    width: 790px;
+    height: 7%;
+    top: 65%;
+    left: 0%;
+    background-color: rgba(255, 255, 255, 0.711);
+    border: 1px solid black;
+}
+
+#overview-menupanel1 {
+    position: absolute;
+    width: 790px;
+    height: 7%;
+    top: 72%;
+    left: 0%;
+    background-color: rgba(255, 255, 255, 0.711);
+    border: 1px solid black;
+}
+
+#overview-menupanel2 {
+    position: absolute;
+    width: 790px;
+    height: 7%;
+    top: 79%;
+    left: 0%;
+    background-color: rgba(255, 255, 255, 0.711);
+    border: 1px solid black;
+}
+
+#overview-menupanel3 {
+    position: absolute;
+    width: 790px;
+    height: 7%;
+    top: 86%;
+    left: 0%;
+    background-color: rgba(255, 255, 255, 0.711);
+    border: 1px solid black;
+}
+
+#overview-menupanel4 {
+    position: absolute;
+    width: 790px;
+    height: 7%;
+    top: 93%;
+    left: 0%;
+    background-color: rgba(255, 255, 255, 0.711);
+    border: 1px solid black;
+}
+
+#overview-countriesStrDiv {
+    position: absolute;
+    width: 790px;
+    height: 10%;
+    top: 55%;
+    left: 0%;
+    background-color: rgba(255, 255, 255, 0.711);
+    border: 1px solid black;
+}
+
+.anybutton {
+    top: 51%;
+    left: 45%;
+    width: 110px;
+    height: 25px;
+    position: absolute;
+    z-index: 2;
+    background: orange;
 }
