@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 
 
-function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountriesStrings, geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
+function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountriesStrings, geodata, wwtpdata, statuscounts, levelcounts, aggcounts }) {
     const svgRef = useRef();
     const wrapperRef = useRef();
     const barRef = useRef();
@@ -31,7 +31,7 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
         var count = parseInt(document.getElementById("countriesStr").innerHTML.slice(a + 1, b))
         setSelectedCountry(feature);
         if (count <= 9) {
-            
+
             setSelectedCountriesStrings(selectedCountriesStrings => new Set([...selectedCountriesStrings, feature.properties.brk_name]));
 
             var copy = selectedCountriesCounts;
@@ -183,7 +183,7 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
             str = str + country + ", "
         })
 
-        if (str.slice(-2) === ", "){
+        if (str.slice(-2) === ", ") {
             str = str.substring(0, str.length - 2);
         }
         return (str);
@@ -228,11 +228,11 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
                 .attr("text-anchor", "end")
                 .attr("y", 10)
                 .attr("x", 50)
-                .attr("dy", function(feature){
+                .attr("dy", function (feature) {
                     return "1.5em";
                 }
                 )
-                .attr("dx", function(feature){
+                .attr("dx", function (feature) {
                     if (i === 0) {
                         return "-150px"
                     } else if (i === 1) {
@@ -242,10 +242,10 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
                     } else if (i === 3) {
                         return "-80px"
                     } else if (i === 4) {
-                        
+
                         return "-160px"
                     } else if (i === 5) {
-                        
+
                         return "-80px"
                     }
                 }
@@ -260,10 +260,10 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
                         return "DF"
                     } else if (i === 2) {
                         return "Wastewater Discharge (m^3 / day)"
-                        
+
                     } else if (i === 3) {
                         return "Outfall Discharge (m^3 / day)"
-                        
+
                     } else if (i === 4) {
                         return "Population"
                     } else if (i === 5) {
@@ -290,11 +290,8 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
             .attr('z-index', '0');
 
         svg.selectAll(".country")
-            
             .data(geodata.features)
             .join("path")
-
-
             .on("click", (event, feature) => {
                 onCountryClick(event, feature)
             })
@@ -321,16 +318,25 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
                 }
             })
             .attr('z-index', '100')
-            .attr("transform", "translate(-100,0)")
+            .attr("transform", "translate(-50,0)")
             .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
             .attr("d", feature => pathGenerator(feature))
-            
 
-        var zoom = d3.zoom().scaleExtent([0.5, 10]).on("zoom", function (event) {
-            d3.select('#right svg g').attr("transform", event.transform)
-        })
 
+        var zoom = d3.zoom()
+            .scaleExtent([0.7, 10])
+            .translateExtent([[0, 0], [width, height]])
+            .on("zoom", function (event) {
+                d3.select('#right svg g').attr("transform", event.transform)
+            });
         svg.call(zoom);
+        d3.select("#reset").on("click", function () {
+            console.log("reset");
+            svg.transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity);
+        });
+
     }, [geodata, wwtpdata]);
 
     function onCountryHover(event, feature) {
@@ -413,7 +419,7 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
             if (i === 0) { //treatment level
                 selectedCountriesStrings.forEach((country) => {
                     try {
-                        
+
                         var val = Object.values(levelcounts[country]).reduce((a, b) => a + b, 0);
                         maxH = Math.max(maxH, val + 4);
                     } catch { }
@@ -429,7 +435,7 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
             } else if (i === 2) { // population served
                 selectedCountriesStrings.forEach((country) => {
                     try {
-                        
+
                         maxH = Math.max(maxH, aggcounts[country].RIVER_DIS_mean + 100);
                     } catch { }
 
@@ -437,7 +443,7 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
             } else if (i === 3) { // design capacity
                 selectedCountriesStrings.forEach((country) => {
                     try {
-                        
+
                         maxH = Math.max(maxH, aggcounts[country].WASTE_DIS_mean + 100);
                     } catch { }
 
@@ -469,7 +475,7 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
             barsvg.selectAll("rect:not(#bg)").remove();
 
 
-            if ((i===0) || (i === 1) || (i === 2) || (i === 3) || (i === 4) || (i === 5)) {
+            if ((i === 0) || (i === 1) || (i === 2) || (i === 3) || (i === 4) || (i === 5)) {
                 barsvg.selectAll("bar")
                     .data(selectedCountriesStrings)
                     .enter()
@@ -644,25 +650,22 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
                     <Tooltip className = "tooltip" title={<h4>Number of WWTPs at each level of treatment</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Country WWTPs at Each Treatment Level</Button></Tooltip>
                     <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
                 </div> */}
-
-
-                    <div id="panel1" className="panel l">
-                        <Tooltip className = "tooltip"  title={<h4>Total Number of WWTPs within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Number of WWTPs</Button></Tooltip>
-                        <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
-                    </div>
-                    <div id="panel2" className="panel r">
-                        <Tooltip className = "tooltip"  title={<h4>Average dilution factor (DF) within the country. DF is the ratio of contaminant concentration in the effluent water to the receiving water.</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Dilution Factor</Button></Tooltip>
-                        <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
-                    </div>
-                    <div id="panel2" className="panel l">
-                        <Tooltip className = "tooltip"  title={<h4>Average volume of total wastewater discharged by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Wastewater Discharge</Button></Tooltip>
-                        <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
-                    </div>
-                    
-                    <div id="panel4" className="panel r">
-                        <Tooltip className = "tooltip"  title={<h4>Average volume of total discharge into outfall rivers by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>River Discharge</Button></Tooltip>
-                        <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
-                    </div>
+                <div id="panel1" className="panel l">
+                    <Tooltip className="tooltip" title={<h4>Total Number of WWTPs within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Number of WWTPs</Button></Tooltip>
+                    <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                </div>
+                <div id="panel2" className="panel r">
+                    <Tooltip className="tooltip" title={<h4>Average dilution factor (DF) within the country. DF is the ratio of contaminant concentration in the effluent water to the receiving water.</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Dilution Factor</Button></Tooltip>
+                    <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                </div>
+                <div id="panel2" className="panel l">
+                    <Tooltip className="tooltip" title={<h4>Average volume of total wastewater discharged by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Wastewater Discharge</Button></Tooltip>
+                    <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                </div>
+                <div id="panel4" className="panel r">
+                    <Tooltip className="tooltip" title={<h4>Average volume of total discharge into outfall rivers by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>River Discharge</Button></Tooltip>
+                    <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
+                </div>
                 <div id="panel5" className="panel l">
                     <Tooltip className="tooltip" title={<h4>Average population served by each WWTP within the country</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Population Served</Button></Tooltip>
                     <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
@@ -671,20 +674,14 @@ function GeoChart({page, setPage, selectedCountriesStrings, setSelectedCountries
                     <Tooltip className="tooltip" title={<h4>Average design capacity for each WWTP within the country. **This value is only reported for countries in Europe and the United States</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Design Capacity</Button></Tooltip>
                     <svg ref={barRef} className="graph" style={{ height: "135%", width: "100%" }}></svg>
                 </div>
-
-
-
                 <div id="panel4" className="panel">
-
                 </div>
             </div>
             <div id="right">
+                <button id="reset" class="comparison-reset-button"> Reset the Map</button>
                 <div id="countriesStrDiv"><h4 id="countriesStr"></h4></div>
                 <svg ref={svgRef} style={{ height: "100%", width: "100%", viewBox: "0 0 100 100" }}></svg>
-                <div>
-
-                </div></div>
-
+            </div>
         </div>
     )
 }

@@ -202,23 +202,23 @@ class OverviewComponent {
       var maxH = 0;
       if (i === 0) { // wastewater discharge
         maxH = d3.max(aggArr, function (d) {
-          return d.WASTE_DIS_mean;
+          return d.DF_mean;
         });
       } else if (i === 1) { // river discharge
         maxH = d3.max(aggArr, function (d) {
-          return d.RIVER_DIS_mean;
+          return d.WASTE_DIS_mean;
         });
       } else if (i === 2) { // dilution factor
         maxH = d3.max(aggArr, function (d) {
-          return d.DF_mean;
+          return d.RIVER_DIS_mean;
         });
       } else if (i === 3) { // design capacity
         maxH = d3.max(aggArr, function (d) {
-          return d.DESIGN_CAP_mean;
+          return d.POP_SERVED_mean;
         });
       } else if (i === 4) { // population served
         maxH = d3.max(aggArr, function (d) {
-          return d.POP_SERVED_mean;
+          return d.DESIGN_CAP_mean;
         });
       } else if (i === 5) { // level
         countries.forEach((country) => {
@@ -297,15 +297,15 @@ class OverviewComponent {
             var val = 0;
             var aggcount = aggcounts[d];
             if (i === 0) {
-              val = aggcount.WASTE_DIS_mean
+              val = aggcount.DF_mean;
             } else if (i === 1) {
-              val = aggcount.RIVER_DIS_mean
+              val = aggcount.WASTE_DIS_mean;
             } else if (i === 2) {
-              val = aggcount.DF_mean
+              val = aggcount.RIVER_DIS_mean;
             } else if (i === 3) {
-              val = aggcount.DESIGN_CAP_mean
+              val = aggcount.POP_SERVED_mean;
             } else if (i === 4) {
-              val = aggcount.POP_SERVED_mean
+              val = aggcount.DESIGN_CAP_mean;
             }
             return yScale(val);
           })
@@ -314,15 +314,15 @@ class OverviewComponent {
             var val = 0;
             var aggcount = aggcounts[d];
             if (i === 0) {
-              val = aggcount.WASTE_DIS_mean
+              val = aggcount.DF_mean;
             } else if (i === 1) {
-              val = aggcount.RIVER_DIS_mean
+              val = aggcount.WASTE_DIS_mean;
             } else if (i === 2) {
-              val = aggcount.DF_mean
+              val = aggcount.RIVER_DIS_mean;
             } else if (i === 3) {
-              val = aggcount.DESIGN_CAP_mean
+              val = aggcount.POP_SERVED_mean;
             } else if (i === 4) {
-              val = aggcount.POP_SERVED_mean
+              val = aggcount.DESIGN_CAP_mean;
             }
             return height - yScale(val);
           })
@@ -330,15 +330,15 @@ class OverviewComponent {
             var val = 0;
             var aggcount = aggcounts[d];
             if (i === 0) {
-              val = aggcount.WASTE_DIS_mean
+              val = aggcount.DF_mean;
             } else if (i === 1) {
-              val = aggcount.RIVER_DIS_mean
+              val = aggcount.WASTE_DIS_mean;
             } else if (i === 2) {
-              val = aggcount.DF_mean
+              val = aggcount.RIVER_DIS_mean;
             } else if (i === 3) {
-              val = aggcount.DESIGN_CAP_mean
+              val = aggcount.POP_SERVED_mean;
             } else if (i === 4) {
-              val = aggcount.POP_SERVED_mean
+              val = aggcount.DESIGN_CAP_mean;
             }
             return val;
           })
@@ -498,32 +498,32 @@ class OverviewComponent {
       };
       if (i === 0) {
         sorting = function (a, b) {
-          return d3.descending(a.WASTE_DIS_mean, b.WASTE_DIS_mean);
+          return d3.descending(a.DF_mean, b.DF_mean);
         };
         sortX("#byValue", aggArr, sorting, xScale, gbar, xax, xAxis, truncate);
         sortX("#byKey", aggArr, sortingKey, xScale, gbar, xax, xAxis, truncate);
       } else if (i === 1) {
         sorting = function (a, b) {
-          return d3.descending(a.RIVER_DIS_mean, b.RIVER_DIS_mean);
-        }
+          return d3.descending(a.WASTE_DIS_mean, b.WASTE_DIS_mean);
+        };
         sortX("#byValue1", aggArr, sorting, xScale, gbar, xax, xAxis, truncate);
         sortX("#byKey1", aggArr, sortingKey, xScale, gbar, xax, xAxis, truncate);
       } else if (i === 2) {
         sorting = function (a, b) {
-          return d3.descending(a.DF_mean, b.DF_mean);
-        }
+          return d3.descending(a.RIVER_DIS_mean, b.RIVER_DIS_mean);
+        };
         sortX("#byValue2", aggArr, sorting, xScale, gbar, xax, xAxis, truncate);
         sortX("#byKey2", aggArr, sortingKey, xScale, gbar, xax, xAxis, truncate);
       } else if (i === 3) {
         sorting = function (a, b) {
-          return d3.descending(a.DESIGN_CAP_mean, b.DESIGN_CAP_mean);
+          return d3.descending(a.POP_SERVED_mean, b.POP_SERVED_mean);
         }
         sortX("#byValue3", aggArr, sorting, xScale, gbar, xax, xAxis, truncate);
         sortX("#byKey3", aggArr, sortingKey, xScale, gbar, xax, xAxis, truncate);
       } else if (i === 4) {
         sorting = function (a, b) {
-          return d3.descending(a.POP_SERVED_mean, b.POP_SERVED_mean);
-        }
+          return d3.descending(a.DESIGN_CAP_mean, b.DESIGN_CAP_mean);
+        };
         sortX("#byValue4", aggArr, sorting, xScale, gbar, xax, xAxis, truncate);
         sortX("#byKey4", aggArr, sortingKey, xScale, gbar, xax, xAxis, truncate);
       }
@@ -560,15 +560,15 @@ class OverviewComponent {
             var val = 0;
             var aggcount = aggcounts[d];
             if (i === 0) {
-              val = aggcount.WASTE_DIS_mean
+              val = aggcount.DF_mean;
             } else if (i === 1) {
-              val = aggcount.RIVER_DIS_mean
+              val = aggcount.WASTE_DIS_mean;
             } else if (i === 2) {
-              val = aggcount.DF_mean
+              val = aggcount.RIVER_DIS_mean;
             } else if (i === 3) {
-              val = aggcount.DESIGN_CAP_mean
+              val = aggcount.POP_SERVED_mean;
             } else if (i === 4) {
-              val = aggcount.POP_SERVED_mean
+              val = aggcount.DESIGN_CAP_mean;
             }
             return yScale(val);
           }).attr("height", function (d) {
@@ -578,15 +578,15 @@ class OverviewComponent {
             var val = 0;
             var aggcount = aggcounts[d];
             if (i === 0) {
-              val = aggcount.WASTE_DIS_mean
+              val = aggcount.DF_mean;
             } else if (i === 1) {
-              val = aggcount.RIVER_DIS_mean
+              val = aggcount.WASTE_DIS_mean;
             } else if (i === 2) {
-              val = aggcount.DF_mean
+              val = aggcount.RIVER_DIS_mean;
             } else if (i === 3) {
-              val = aggcount.DESIGN_CAP_mean
+              val = aggcount.POP_SERVED_mean;
             } else if (i === 4) {
-              val = aggcount.POP_SERVED_mean
+              val = aggcount.DESIGN_CAP_mean;
             }
             return height - yScale(val);
           });
@@ -759,14 +759,6 @@ class OverviewComponent {
       .attr('z-index', '100')
       .attr("fill", feature => colorScale(Math.floor(Math.random() * 11)))
       .attr("d", feature => pathGenerator(feature));
-  }
-
-  resize = (width, height) => {
-    const { mapCanvas } = this;
-    mapCanvas.selectAll("*").remove();
-    const barCanvases = d3.selectAll(".graph");
-    barCanvases.each(function (d, i) {
-    });
   }
 }
 

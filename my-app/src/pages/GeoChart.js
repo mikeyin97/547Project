@@ -269,11 +269,17 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr("d", feature => pathGenerator(feature))
             .attr("transform", "translate(300,-60)")
 
-        var zoom = d3.zoom().scaleExtent([0.5, 10]).on("zoom", function (event) {
+        var zoom = d3.zoom().scaleExtent([0.8, 10]).on("zoom", function (event) {
             d3.select('svg g').attr("transform", event.transform)
         })
 
         svg.call(zoom);
+        d3.select("#reset").on("click", function () {
+            console.log("reset");
+            svg.transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity);
+        });
 
         document.getElementById("byKey").disabled = true;
 
@@ -389,11 +395,9 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         const barCanvas = d3.select(".graph")
         barCanvas.selectAll("*").remove();
         const barSVG = barCanvas.append('svg')
-
             .attr('id', 'barcanvas')
             .attr('height', '100%')
             .attr('width', '100%');
-
 
         const gbar = barSVG.append("g").attr("y", "100");
 
@@ -717,16 +721,16 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
 
     return (
         <div id="distribution" ref={wrapperRef} style={{ height: "100%", width: "100%" }}>
-            <div id="top"><svg ref={svgRef} style={{ height: "100%", width: "100%" }}></svg></div>
+            <div id="top"><svg ref={svgRef} style={{ height: "93%", width: "100%" }}></svg></div>
             <div id="countriesStrDiv2"><h4 id="countriesStr"></h4></div>
             <div id="menupanel">
-                <h4 id="bcopts">Bar Chart Options</h4>
+                <h4 id="bcopts">Treatment Level Chart Options</h4>
                 <form>
                     <input type="checkbox" onChange={() => handleChangeChk()} id="selectedOnly" name="selectedOnly" value="selected"></input><label htmlFor="selectedOnly"> Show selected countries only</label><br></br>
                 </form>
                 <div id="sortingOptions">
                     <button id="byKey" onClick={() => clickedSort("key")}> Sort Alphabetically</button>
-                    <button id="byValue" onClick={() => clickedSort("value")}> Sort Largest -> Smallest (# of WWTPs) </button>
+                    <button id="byValue" onClick={() => clickedSort("value")}> Sort by Number of WWTPs </button>
                 </div>
             </div>
             <div id="dotlegend">
@@ -735,6 +739,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 <h6><span className="dot" id="secondarydot"></span> Secondary</h6>
                 <h6><span className="dot" id="primarydot"></span> Primary </h6>
             </div>
+            <button id="reset" class="dist-reset-button"> Reset the Map</button>
             <div id="bottom">
                 <Tooltip className="tooltip" title={<h4>Level of treatment of the WWTP: Primary, Secondary, Advanced</h4>} arrow placement="right"><Button sx={{ m: 1 }}>Wastewater Treatment Level</Button></Tooltip>
                 <svg ref={barRef} className="graph" style={{ height: "88%", width: "100%" }}></svg>
