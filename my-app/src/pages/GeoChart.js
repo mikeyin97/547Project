@@ -100,7 +100,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 [...xaxvals].forEach((val) => {
                     var compare = val.innerHTML.split(' ').join('')
                     if (compare === (truncate(hoveredCountry, 14).split(' ').join(''))) {
-                        val.style.color = "green";
+                        val.style.color = "#0072B2";
                         val.style.fontWeight = "900";
                     } else {
                         val.style.color = "black";
@@ -146,7 +146,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 var compare = val.innerHTML.split(' ').join('')
                 try {
                     if (compare === (country.split(' ').join(''))) {
-                        val.style.color = "#04290e";
+                        val.style.color = "#0072B2";
                         val.style.fontWeight = "900";
                     } else {
                         val.style.color = "black";
@@ -223,14 +223,14 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr('width', '1000%')
             .attr('height', '1000%')
             .attr('stroke', 'black')
-            .attr('fill', '#69a3b2')
+            .attr('fill', '#9ad6e6')
             .attr("id", "bg2")
             .attr('z-index', '0');
 
         const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
         const pathGenerator = d3.geoPath().projection(projection);
 
-        const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
+        const colorScale = d3.scaleLinear().domain([0, 10]).range(["#56B4E9", "#56B4E9"]);
 
         var radius = d3.scaleSqrt().domain([0, 10146131]).range([0, 15]);
 
@@ -259,7 +259,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             })
             .attr("stroke", function (feature) {
                 if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-                    return ("#EF2F2F")
+                    return ("#D55E00")
                 } else {
                     return ("#262626")
                 }
@@ -290,21 +290,21 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .append("circle")
             .attr("fill", function (d, i) {
                 if (d.properties.LEVEL === "Advanced") {
-                    return "black"
+                    return "#CC79A7"
                 } else if (d.properties.LEVEL === "Secondary") {
-                    return "blue"
+                    return "#D55E00"
                 } else {
-                    return "darkgreen"
+                    return "#000000"
                 }
             })
-            .style("opacity", "0.2")
+            .style("opacity", "0.3")
             .attr("cx", function (d) {
                 return projection(d.geometry.coordinates)[0];
             })
             .attr("cy", function (d) {
                 return projection(d.geometry.coordinates)[1];
             })
-            .attr("r", 0.3)
+            .attr("r", 0.4)
             //.attr("r", function(d) { return radius(d.properties.POP_SERVED); })
             .attr("class", "locations")
             .attr("transform", "translate(300,-60)");
@@ -316,7 +316,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         countriesStr.innerHTML = (getAndUpdateCountries(selectedCountriesStrings, selectedCountriesCounts, selectedCountry));
         const svgCanvas = d3.select(svgRef.current)
         const svg = svgCanvas.select("g");
-        const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
+        const colorScale = d3.scaleLinear().domain([0, 10]).range(["#56B4E9", "#56B4E9"]);
         const width = 1200;
         const height = 1000;
         const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
@@ -348,7 +348,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             })
             .attr("stroke", function (feature) {
                 if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-                    return ("#EF2F2F")
+                    return ("#D55E00")
                 } else {
                     return ("#262626")
                 }
@@ -463,7 +463,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
 
         var levelColors = d3.scaleOrdinal()
             .domain(levelSubgroups)
-            .range(["darkgreen", 'blue', 'black'])
+            .range(["#000000", "#E69F00", "#CC79A7"])
 
         //stack the data? --> stack per subgroup
         var maxH = 0;
@@ -503,7 +503,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
 
         var levelColors = d3.scaleOrdinal()
             .domain(levelSubgroups)
-            .range(["darkgreen", 'blue', 'black'])
+            .range(["#000000", "#E69F00", "#CC79A7"])
 
         //stack the data, stack per subgroup
         var stackedData = null;

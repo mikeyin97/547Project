@@ -186,13 +186,13 @@ body {
 }
 
 #advanceddot {
-    background-color: black;
+    background-color: #CC79A7;
 }
 
 #secondarydot {
-    background-color: blue;
+    background-color: #E69F00;
 }
 
 #primarydot {
-    background-color: darkgreen;
+    background-color: #000000;
 }

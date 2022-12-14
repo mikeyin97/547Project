@@ -77,14 +77,14 @@ class OverviewComponent {
     const height = 550;
     const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
     const pathGenerator = d3.geoPath().projection(projection);
-    const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
+    const colorScale = d3.scaleLinear().domain([0, 10]).range(["#56B4E9", "#56B4E9"]);
 
     // map attributes
     gmap.append('rect')
       .attr('width', '100%')
       .attr('height', '100%')
       .attr('stroke', 'black')
-      .attr('fill', '#69a3b2')
+      .attr('fill', '#9ad6e6')
       .attr("id", "bgmap")
       .attr('z-index', '0')
       .attr("transform", "translate(0, 0)");
@@ -114,7 +114,7 @@ class OverviewComponent {
       })
       .attr("stroke", function (feature) {
         if (props.selectedCountriesStrings.has(feature.properties.brk_name)) {
-          return ("#EF2F2F")
+          return ("#D55E00")
         } else {
           return ("#262626")
         }
@@ -343,7 +343,7 @@ class OverviewComponent {
             return val;
           })
           .attr("fill", function (d) {
-            return "#69b3a2"
+            return "#009E73"
           }).on("mouseout", (event, feature) => {
             setHoveredCountry(null);
           })
@@ -682,7 +682,7 @@ class OverviewComponent {
       xaxvals.forEach((val) => {
         var country = d3.select(val).data()[0];
         if (country === hoveredCountry) {
-          val.style.color = "#0f6fd6";
+          val.style.color = "#0072B2";
           val.style.fontWeight = "900";
         } else {
           val.style.color = "black";
@@ -724,7 +724,7 @@ class OverviewComponent {
     const height = 550;
     const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
     const pathGenerator = d3.geoPath().projection(projection);
-    const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
+    const colorScale = d3.scaleLinear().domain([0, 10]).range(["#56B4E9", "#56B4E9"]);
 
     const svg = mapCanvas.select("g");
     svg.selectAll(".country")
@@ -751,7 +751,7 @@ class OverviewComponent {
       })
       .attr("stroke", function (feature) {
         if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-          return ("#EF2F2F")
+          return ("#D55E00")
         } else {
           return ("#262626")
         }

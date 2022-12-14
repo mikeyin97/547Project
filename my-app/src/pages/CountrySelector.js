@@ -78,11 +78,11 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             clonexaxvals.forEach((val) => {
                 var compare = val.innerHTML.split(' ').join('')
                 if (compare === (country.split(' ').join(''))) {
-                    val.style.color = "#04290e";
-                    val.style.fontWeight = "900";
+                    val.style.color = "#0072B2";
+                    val.style.fontWeight = "bold";
                 } else {
                     val.style.color = "black";
-                    val.style.fontWeight = "20";
+                    val.style.fontWeight = "normal";
                 }
 
             });
@@ -109,7 +109,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
 
             var clonexaxvals = [...xaxvals]
             clonexaxvals.forEach((val) => {
-                val.style.fontWeight = "20";
+                val.style.fontWeight = "normal";
                 val.style.color = "black";
 
 
@@ -276,7 +276,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         const height = 1100;
         const projection = d3.geoMercator().fitSize([width, height], geodata).precision(100);
         const pathGenerator = d3.geoPath().projection(projection);
-        const colorScale = d3.scaleLinear().domain([0, 10]).range(["#81e3ff", "#81e3ff"]);
+        const colorScale = d3.scaleLinear().domain([0, 10]).range(["#56B4E9", "#56B4E9"]);
         var radius = d3.scaleSqrt().domain([0, 10146131]).range([0, 15]);
 
         svg.append('rect')
@@ -285,7 +285,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             .attr('width', '1000%')
             .attr('height', '1000%')
             .attr('stroke', 'black')
-            .attr('fill', '#69a3b2')
+            .attr('fill', '#9ad6e6')
             .attr("id", "bg2")
             .attr('z-index', '0');
 
@@ -312,7 +312,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             })
             .attr("stroke", function (feature) {
                 if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-                    return ("#EF2F2F")
+                    return ("#D55E00")
                 } else {
                     return ("#262626")
                 }
@@ -370,7 +370,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
             })
             .attr("stroke", function (feature) {
                 if (selectedCountriesStrings.has(feature.properties.brk_name)) {
-                    return ("#EF2F2F")
+                    return ("#D55E00")
                 } else {
                     return ("#262626")
                 }
@@ -412,6 +412,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 .selectAll("text")
                 .attr("type", "xaxval")
                 .attr('text-align', "center")
+                .attr('font-size', "12px")
                 .attr("transform", "translate(15,0)rotate(-15)")
                 .style("text-anchor", "end");
 
@@ -543,7 +544,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                     })
 
                     .attr("fill", function (d) {
-                        return "#69b3a2"
+                        return "#009E73"
                     }
                     );
             } else if (i === 0) {
