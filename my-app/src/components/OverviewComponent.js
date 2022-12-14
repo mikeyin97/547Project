@@ -50,6 +50,7 @@ class OverviewComponent {
   onCountryClick = (event, feature) => {
     var a = document.getElementById("countriesStr").innerHTML.indexOf("(");
     var b = document.getElementById("countriesStr").innerHTML.indexOf("/10");
+    console.log("abc")
     var count = parseInt(document.getElementById("countriesStr").innerHTML.slice(a + 1, b))
     this.props.setSelectedCountry(feature);
     if (count <= 9) {
@@ -63,10 +64,10 @@ class OverviewComponent {
     this.props.setHoveredCountry(feature.properties.brk_name);
   }
 
-  componentDidUpdate = () => {
-    var countriesStr = document.getElementById("countriesStr")
-    countriesStr.innerHTML = (this.getAndUpdateCountries(this.props.selectedCountriesStrings, this.props.selectedCountriesCounts, this.props.selectedCountry));
-  }
+  // componentDidUpdate = () => {
+  //   var countriesStr = document.getElementById("countriesStr")
+  //   countriesStr.innerHTML = (this.getAndUpdateCountries(this.props.selectedCountriesStrings, this.props.selectedCountriesCounts, this.props.selectedCountry));
+  // }
 
   initMap = () => {
     const { mapCanvas, props: { geodata }, props } = this;
@@ -132,7 +133,6 @@ class OverviewComponent {
     gmap.call(zoom);
 
     d3.select("#reset").on("click", function () {
-      console.log("reset");
       gmap.transition()
         .duration(750)
         .call(zoom.transform, d3.zoomIdentity);
@@ -152,7 +152,7 @@ class OverviewComponent {
     var onCountryClick2 = this.onCountryClick2;
     var getAndUpdateCountries = this.getAndUpdateCountries;
     var countriesStr = document.getElementById("countriesStr")
-    countriesStr.innerHTML = (getAndUpdateCountries(this.props.selectedCountriesStrings, this.props.selectedCountriesCounts, this.props.selectedCountry));
+    // countriesStr.innerHTML = (getAndUpdateCountries(this.props.selectedCountriesStrings, this.props.selectedCountriesCounts, this.props.selectedCountry));
 
     const barCanvases = d3.selectAll(".graph");
     // convert to an array
@@ -161,9 +161,7 @@ class OverviewComponent {
       aggArr.push(data);
     });
 
-    console.log("My arr!!");
-    console.log(aggArr);
-    console.log(aggcounts);
+
     // define the scales for each bar chart
     var width = 1500,
       height = 100,
@@ -350,7 +348,7 @@ class OverviewComponent {
           .on("mouseover", (event, feature) => {
             setHoveredCountry(feature);
           }).on("click", function (event, d) {
-            console.log(d);
+
             onCountryClick2(event, d);
           });
       } else if (i === 5) {
@@ -644,7 +642,6 @@ class OverviewComponent {
         delete countryCounts[country.properties.brk_name];
       }
     }
-
     var countryStringsSet = new Set(countriesStrings);
     var setcount = countryStringsSet.size;
     if (setcount >= 11) {
@@ -708,11 +705,9 @@ class OverviewComponent {
     [...bars].forEach((bar) => {
       var selected = false
       selectedCountriesStrings.forEach((country) => {
-        console.log(country);
         if (bar.classList.contains(country.split(' ').join(''))) {
-          console.log(bar);
           selected = true
-          bar.style.outline = "2px solid red";
+          bar.style.outline = "2px solid #D55E00";
         }
       })
       if (!selected) {

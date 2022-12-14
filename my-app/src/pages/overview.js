@@ -52,7 +52,7 @@ function Overview({ page, setPage, selectedCountriesStrings, setSelectedCountrie
         var countriesStr = document.getElementById("countriesStr")
         countriesStr.innerHTML = (vis.getAndUpdateCountries(selectedCountriesStrings, selectedCountriesCounts, selectedCountry));
         vis.highlightSelected(selectedCountriesStrings);
-    }, [selectedCountriesStrings, maxCount, selectedCountry, selectedCountriesCounts])
+    }, [selectedCountriesStrings, maxCount])
 
     function clickedSort(val, tagName) {
         if (val !== sortby) {

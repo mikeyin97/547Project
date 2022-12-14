@@ -292,7 +292,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 if (d.properties.LEVEL === "Advanced") {
                     return "#CC79A7"
                 } else if (d.properties.LEVEL === "Secondary") {
-                    return "#D55E00"
+                    return "#E69F00"
                 } else {
                     return "#000000"
                 }
@@ -583,7 +583,7 @@ function GeoChart({ page, setPage, selectedCountriesStrings, setSelectedCountrie
                 selectedCountriesStrings.forEach((country) => {
                     if (bar.classList.contains(country.split(' ').join(''))) {
                         selected = true
-                        bar.style.outline = "2px solid red";
+                        bar.style.outline = "3px solid red";
                     }
                 })
                 if (!selected) {
