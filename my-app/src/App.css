@@ -24,8 +24,8 @@
   color: white;
 }
 
-.tooltip{
-  font-size:10px;
+.tooltip {
+  font-size: 10px;
   margin: 0px !important;
   padding: 0px !important;
 }
@@ -38,6 +38,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -50,4 +51,15 @@
   /* padding-left: 2%;
   padding-right: 2%; */
   background-color: lightsteelblue;
+}
+
+h2 {
+  font-size: 5em;
+  font-family: "Lato",
+}
+
+#main-welcome {
+  display: 'flex';
+  align-items: center;
+  padding-top: 15%;
 }

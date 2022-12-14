@@ -1,18 +1,11 @@
 import React from 'react';
 
 const Home = () => {
-return (
-	<div
-	style={{
-		display: 'flex',
-		justifyContent: 'Left',
-		alignItems: 'Left',
-		height: '10vh'
-	}}
-	>
-	<h1>Welcome to WWTP</h1>
-	</div>
-);
+	return (
+		<div id="main-welcome">
+			<h2>Welcome to WWTPViz!</h2>
+		</div>
+	);
 };
 
 export default Home;
